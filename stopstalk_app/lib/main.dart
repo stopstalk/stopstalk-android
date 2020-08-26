@@ -16,22 +16,23 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'StopStalk App',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-          visualDensity: VisualDensity.adaptivePlatformDensity,
-        ),
-        home: ProfileScreen(),
-        routes: {
-          ProfileScreen.routeName: (ctx) => ProfileScreen(),
-          UserEditorialScreen.routeName: (ctx)=>UserEditorialScreen(),
-          SearchFriendsScreen.routeName:(ctx)=>SearchFriendsScreen(),
-          UpcomingContestScreen.routeName:(ctx)=>UpcomingContestScreen(),
-          SearchProblemsScreen.routeName:(ctx)=>SearchProblemsScreen(),
-          LeaderBoardScreen.routeName:(ctx)=>LeaderBoardScreen(),
-          TrendingProblemsScreen.routeName:(ctx)=>TrendingProblemsScreen(),
-          SubmissionFiltersScreen.routeName:(ctx)=>SubmissionFiltersScreen(),
-          TestimonialsScreen.routeName: (ctx)=>TestimonialsScreen(),
-        });
+      title: 'StopStalk App',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
+      home: ProfileScreen(),
+      routes: {
+        ProfileScreen.routeName: (ctx) => ProfileScreen(),
+        UserEditorialScreen.routeName: (ctx) => UserEditorialScreen(),
+        SearchFriendsScreen.routeName: (ctx) => SearchFriendsScreen(),
+        UpcomingContestScreen.routeName: (ctx) => UpcomingContestScreen(),
+        SearchProblemsScreen.routeName: (ctx) => SearchProblemsScreen(),
+        LeaderBoardScreen.routeName: (ctx) => LeaderBoardScreen(),
+        TrendingProblemsScreen.routeName: (ctx) => TrendingProblemsScreen(),
+        SubmissionFiltersScreen.routeName: (ctx) => SubmissionFiltersScreen(),
+        TestimonialsScreen.routeName: (ctx) => TestimonialsScreen(),
+      },
+    );
   }
 }

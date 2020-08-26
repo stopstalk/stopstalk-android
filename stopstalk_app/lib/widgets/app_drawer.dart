@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:stopstalkapp/screens/leaderboard_screen.dart';
-import 'package:stopstalkapp/screens/profile.dart';
-import 'package:stopstalkapp/screens/search_friends_screen.dart';
-import 'package:stopstalkapp/screens/search_problems_screen.dart';
-import 'package:stopstalkapp/screens/submission_filters_screen.dart';
-import 'package:stopstalkapp/screens/testimonials_screen.dart';
-import 'package:stopstalkapp/screens/trending_problems_screen.dart';
-import 'package:stopstalkapp/screens/upcoming_contest_screen.dart';
-import 'package:stopstalkapp/screens/user_editorials.dart';
+
+import '../screens/leaderboard_screen.dart';
+import '../screens/profile.dart';
+import '../screens/search_friends_screen.dart';
+import '../screens/search_problems_screen.dart';
+import '../screens/submission_filters_screen.dart';
+import '../screens/testimonials_screen.dart';
+import '../screens/trending_problems_screen.dart';
+import '../screens/upcoming_contest_screen.dart';
+import '../screens/user_editorials.dart';
 
 class AppDrawer extends StatelessWidget {
   @override
@@ -23,7 +24,8 @@ class AppDrawer extends StatelessWidget {
               leading: Icon(Icons.person),
               title: Text('Profile'),
               onTap: () {
-                Navigator.of(context).pushReplacementNamed(ProfileScreen.routeName);
+                Navigator.of(context)
+                    .pushReplacementNamed(ProfileScreen.routeName);
               },
             ),
             Divider(),
@@ -31,7 +33,8 @@ class AppDrawer extends StatelessWidget {
               leading: Icon(Icons.people),
               title: Text('User Editorials'),
               onTap: () {
-                Navigator.of(context).pushReplacementNamed(UserEditorialScreen.routeName);
+                Navigator.of(context)
+                    .pushReplacementNamed(UserEditorialScreen.routeName);
               },
             ),
             Divider(),
@@ -39,7 +42,8 @@ class AppDrawer extends StatelessWidget {
               leading: Icon(Icons.search),
               title: Text('Search Friends'),
               onTap: () {
-                Navigator.of(context).pushReplacementNamed(SearchFriendsScreen.routeName);
+                Navigator.of(context)
+                    .pushReplacementNamed(SearchFriendsScreen.routeName);
               },
             ),
             Divider(),
@@ -47,7 +51,8 @@ class AppDrawer extends StatelessWidget {
               leading: Icon(Icons.calendar_today),
               title: Text('Upcoming contests'),
               onTap: () {
-                Navigator.of(context).pushReplacementNamed(UpcomingContestScreen.routeName);
+                Navigator.of(context)
+                    .pushReplacementNamed(UpcomingContestScreen.routeName);
               },
             ),
             Divider(),
@@ -55,7 +60,8 @@ class AppDrawer extends StatelessWidget {
               leading: Icon(Icons.find_in_page),
               title: Text('Search Problems'),
               onTap: () {
-                Navigator.of(context).pushReplacementNamed(SearchProblemsScreen.routeName);
+                Navigator.of(context)
+                    .pushReplacementNamed(SearchProblemsScreen.routeName);
               },
             ),
             Divider(),
@@ -63,7 +69,8 @@ class AppDrawer extends StatelessWidget {
               leading: Icon(Icons.insert_chart),
               title: Text('LeaderBoard'),
               onTap: () {
-                Navigator.of(context).pushReplacementNamed(LeaderBoardScreen.routeName);
+                Navigator.of(context)
+                    .pushReplacementNamed(LeaderBoardScreen.routeName);
               },
             ),
             Divider(),
@@ -71,7 +78,8 @@ class AppDrawer extends StatelessWidget {
               leading: Icon(Icons.show_chart),
               title: Text('Trending Problems'),
               onTap: () {
-                Navigator.of(context).pushReplacementNamed(TrendingProblemsScreen.routeName);
+                Navigator.of(context)
+                    .pushReplacementNamed(TrendingProblemsScreen.routeName);
               },
             ),
             Divider(),
@@ -79,7 +87,8 @@ class AppDrawer extends StatelessWidget {
               leading: Icon(Icons.sort),
               title: Text('Submission Filters'),
               onTap: () {
-                Navigator.of(context).pushReplacementNamed(SubmissionFiltersScreen.routeName);
+                Navigator.of(context)
+                    .pushReplacementNamed(SubmissionFiltersScreen.routeName);
               },
             ),
             Divider(),
@@ -87,7 +96,8 @@ class AppDrawer extends StatelessWidget {
               leading: Icon(Icons.favorite),
               title: Text('Testimonials'),
               onTap: () {
-                Navigator.of(context).pushReplacementNamed(TestimonialsScreen.routeName);
+                Navigator.of(context)
+                    .pushReplacementNamed(TestimonialsScreen.routeName);
               },
             ),
           ],
