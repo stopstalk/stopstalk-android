@@ -19,7 +19,7 @@ class UpcomingContestScreen extends StatelessWidget {
     List<Contest> contests = [];
     for (var contest in jsonData["upcoming"]) {
       Contest cont = Contest(
-          contest["Name"],
+          contest["Name"].replaceAll("\n", ""),
           contest["url"],
           contest["Platform"],
           contest["StartTime"],
@@ -27,7 +27,6 @@ class UpcomingContestScreen extends StatelessWidget {
           contest["EndTime"]);
       contests.add(cont);
     }
-    print(contests.length);
     return contests;
   }
 
@@ -71,11 +70,14 @@ class UpcomingContestScreen extends StatelessWidget {
                           left: 10.0, top: 5.0, right: 10.0, bottom: 5.0),
                       shadowColor: Colors.teal,
                       child: ListTile(
-                        contentPadding: EdgeInsets.only(left: 5.0),
-                        leading: CircleAvatar(
-                          backgroundImage: NetworkImage(
-                              images[snapshot.data[index].platform]),
-                          radius: 25.0,
+                        contentPadding: EdgeInsets.only(left: 5.0, right: 5.0),
+                        leading: Padding(
+                          padding: EdgeInsets.only(left: 10.0),
+                          child: CircleAvatar(
+                            backgroundImage: NetworkImage(
+                                images[snapshot.data[index].platform]),
+                            radius: 25.0,
+                          ),
                         ),
                         title: Text(snapshot.data[index].name),
                         subtitle: RichText(

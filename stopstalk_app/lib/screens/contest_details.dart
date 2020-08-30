@@ -30,6 +30,7 @@ class ContestPage extends StatelessWidget {
       body: Container(
         child: Center(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Padding(
                 padding: EdgeInsets.only(top: 20.0),

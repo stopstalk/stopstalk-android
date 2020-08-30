@@ -29,9 +29,11 @@ samples, guidance on mobile development, and a full API reference.
 3. Download an android emulator in the android studio or connect it to your phone(in debug mode) to run the app.
 3. When the app builds for the first time it might take a while for it to get launched.
 4. All the code that we have to work with is present in the lib folder.
-5. The screens folder contains the basic layout of each individual page. We add more widgets and make up the UI of the page.
-6. The widgets folder has individual widgets which can be used on multiple pages or are large in size and would reduce the readabilty and make a single page's code too long. 
-7. Before making a pull request, format the code with `Ctrl+Alt+L`. Add a comma after all the closing brackets as it will help the IDE in aligning the brackets and formatting the code. For more on this checkout [Code Formatting](https://flutter.dev/docs/development/tools/formatting) .
+5. To install any additionsl packages, first write its name under dependencies in file "pubspec.yaml". Then, run the command `flutter pub get`. The packages will be installed.
+6. To upgrade any package version, run the command `flutter pub upgrade`.
+7. The screens folder contains the basic layout of each individual page. We add more widgets and make up the UI of the page.
+8. The widgets folder has individual widgets which can be used on multiple pages or are large in size and would reduce the readabilty and make a single page's code too long. 
+9. Before making a pull request, format the code with `Ctrl+Alt+L`. Add a comma after all the closing brackets as it will help the IDE in aligning the brackets and formatting the code. For more on this checkout [Code Formatting](https://flutter.dev/docs/development/tools/formatting) .
 
 
 
