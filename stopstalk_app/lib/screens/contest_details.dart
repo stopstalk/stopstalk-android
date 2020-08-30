@@ -10,7 +10,7 @@ class ContestPage extends StatelessWidget {
 
   ContestPage(this.contest);
 
-  var images = {
+  final images = {
     "CODEFORCES":
         "https://1.bp.blogspot.com/-pBimI1ZhYAA/Wnde0nmCz8I/AAAAAAAABPI/5LZ2y9tBOZIV-pm9KNbyNy3WZJkGS54WgCPcBGAYYCw/s1600/codeforce.png",
     "CODECHEF":
