@@ -35,9 +35,14 @@ class ContestPage extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.only(top: 20.0),
               ),
-              CircleAvatar(
-                backgroundImage: NetworkImage(images[contest.platform]),
-                radius: 100.0,
+              Container(
+                width: 200.0,
+                height: 200.0,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: NetworkImage(images[contest.platform]),
+                      fit: BoxFit.fill),
+                ),
               ),
               Padding(
                 padding: EdgeInsets.only(top: 10.0),
