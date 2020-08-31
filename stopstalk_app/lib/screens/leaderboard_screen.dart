@@ -169,9 +169,18 @@ class LeaderBoardScreen extends StatelessWidget {
                                             text: '',
                                             style: TextStyle(
                                               color: Colors.black,
-
                                             ),
                                             children: <TextSpan>[
+//                                              TextSpan(
+//                                                  text: 'Handle: ',
+//                                                  style: TextStyle(
+//                                                    fontWeight: FontWeight.w600,
+//                                                  )),
+//                                              TextSpan(
+//                                                text:
+//                                                    '${snapshot.data[i].stopstalkHandle}\n',
+//                                              ),
+
                                               TextSpan(
                                                   text: 'Institute',
                                                   style: TextStyle(
@@ -179,14 +188,14 @@ class LeaderBoardScreen extends StatelessWidget {
                                                     height: 2,
                                                   )),
                                               TextSpan(
-                                                text:
-                                                    ' ${snapshot.data[i].institute}',
-                                              ),
+                                                  text:
+                                                      ' ${snapshot.data[i].institute}'),
                                             ],
                                           ),
-                                        ),
+                                        )
                                       ],
                                     ),
+                                    //isThreeLine: true,
                                     trailing: Container(
                                       padding: EdgeInsets.all(4),
                                       decoration: BoxDecoration(
