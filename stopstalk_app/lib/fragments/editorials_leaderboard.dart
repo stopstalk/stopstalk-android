@@ -9,8 +9,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../classes/user_editorial_class.dart';
 import '../widgets/preloader.dart';
 
-class EditorialLeaderboard extends StatelessWidget{
-
+class EditorialLeaderboard extends StatelessWidget {
   Future<List<UserEditorial>> _getUsers() async {
     String url = "https://www.stopstalk.com/user_editorials.json";
     var data = await http.get(url);
@@ -46,7 +45,7 @@ class EditorialLeaderboard extends StatelessWidget{
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            "#"+(index+1).toString(),
+                            "#" + (index + 1).toString(),
                             style: TextStyle(
                               fontSize: 16.0,
                             ),
@@ -77,8 +76,7 @@ class EditorialLeaderboard extends StatelessWidget{
                                   ),
                                 ),
                               ],
-                              mainAxisAlignment:
-                              MainAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
                             ),
                           ),
                           Padding(
@@ -98,8 +96,7 @@ class EditorialLeaderboard extends StatelessWidget{
                                   ),
                                 ),
                               ],
-                              mainAxisAlignment:
-                              MainAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
                             ),
                           ),
                         ],
@@ -114,5 +111,4 @@ class EditorialLeaderboard extends StatelessWidget{
       ),
     );
   }
-
 }
