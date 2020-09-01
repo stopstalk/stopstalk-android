@@ -26,6 +26,7 @@ dependencies:
   http: any
   url_launcher: any
   auto_size_text: ^2.1.0
+  flutter_spinkit: "^4.1.2"
 
 
   # The following adds the Cupertino Icons font to your application.

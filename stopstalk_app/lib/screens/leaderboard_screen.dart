@@ -7,6 +7,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 
 import '../widgets/app_drawer.dart';
 import '../classes/leaderboard.dart';
+import '../widgets/preloader.dart';
 
 class LeaderBoardScreen extends StatelessWidget {
   static const routeName = '/leaderBoard';
@@ -96,9 +97,7 @@ class LeaderBoardScreen extends StatelessWidget {
                         future: _getLeaderBoard(),
                         builder: (ctx, snapshot) {
                           if (!snapshot.hasData) {
-                            return Center(
-                              child: CircularProgressIndicator(),
-                            );
+                            return Preloader();
                           } else {
                             return ListView.builder(
                               itemCount: snapshot.data.length,
