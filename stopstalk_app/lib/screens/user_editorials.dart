@@ -4,8 +4,10 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../widgets/app_drawer.dart';
+import '../widgets/preloader.dart';
 
 class UserEditorialScreen extends StatelessWidget {
   static const routeName = '/user-editorial';
@@ -58,8 +60,9 @@ class UserEditorialScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Icon(
-                      Icons.edit,
+                      FontAwesomeIcons.solidEdit,
                       color: Colors.white,
+                      size: 20.0,
                     ),
                     Padding(
                       padding: EdgeInsets.only(left: 5.0),
@@ -82,11 +85,7 @@ class UserEditorialScreen extends StatelessWidget {
                 future: _getUsers(),
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
                   if (snapshot.data == null) {
-                    return Container(
-                      child: Center(
-                        child: Text("Loading..."),
-                      ),
-                    );
+                    return Preloader();
                   } else {
                     return ListView.builder(
                       itemCount: snapshot.data.length,
@@ -96,15 +95,17 @@ class UserEditorialScreen extends StatelessWidget {
                               left: 10.0, top: 5.0, right: 10.0, bottom: 5.0),
                           shadowColor: Colors.teal,
                           child: ListTile(
-                            leading: CircleAvatar(
-                              backgroundColor: Colors.blue,
-                              child: Text(
-                                (index + 1).toString(),
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 25.0,
-                                    fontWeight: FontWeight.bold),
-                                textAlign: TextAlign.center,
+                            leading: Container(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "#"+(index+1).toString(),
+                                    style: TextStyle(
+                                      fontSize: 16.0,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                             title: Text(snapshot.data[index].name),
@@ -117,11 +118,18 @@ class UserEditorialScreen extends StatelessWidget {
                                     child: Column(
                                       children: [
                                         Icon(
-                                          Icons.edit,
-                                          color: Colors.red,
+                                          FontAwesomeIcons.solidEdit,
+                                          size: 22.0,
                                         ),
-                                        Text(snapshot
-                                            .data[index].editorial_count),
+                                        Padding(
+                                          padding: EdgeInsets.only(top: 3.0),
+                                        ),
+                                        Text(
+                                          snapshot.data[index].editorial_count,
+                                          style: TextStyle(
+                                            fontSize: 12.0,
+                                          ),
+                                        ),
                                       ],
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
@@ -137,7 +145,12 @@ class UserEditorialScreen extends StatelessWidget {
                                           Icons.thumb_up,
                                           color: Colors.green,
                                         ),
-                                        Text(snapshot.data[index].votes_count),
+                                        Text(
+                                          snapshot.data[index].votes_count,
+                                          style: TextStyle(
+                                            fontSize: 12.0,
+                                          ),
+                                        ),
                                       ],
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,

@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/app_drawer.dart';
+import '../widgets/preloader.dart';
 import '../classes/contest_class.dart';
 import 'contest_details.dart';
 
@@ -56,11 +57,7 @@ class UpcomingContestScreen extends StatelessWidget {
           future: _getContests(),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (snapshot.data == null) {
-              return Container(
-                child: Center(
-                  child: Text("Loading..."),
-                ),
-              );
+              return Preloader();
             } else {
               return ListView.builder(
                   itemCount: snapshot.data.length,
