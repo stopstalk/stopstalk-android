@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:auto_size_text/auto_size_text.dart';
 
 import '../widgets/app_drawer.dart';
 import '../classes/leaderboard.dart';
@@ -52,7 +53,7 @@ class LeaderBoardScreen extends StatelessWidget {
                     width: 20,
                   ),
                   Text(
-                    'Global',
+                    'GLOBAL',
                     style: TextStyle(
                       fontSize: 18,
                     ),
@@ -69,7 +70,7 @@ class LeaderBoardScreen extends StatelessWidget {
                     width: 20,
                   ),
                   Text(
-                    'Friends',
+                    'FRIENDS',
                     style: TextStyle(
                       fontSize: 18,
                     ),
@@ -86,47 +87,6 @@ class LeaderBoardScreen extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: Column(
                 children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Padding(
-                          padding: EdgeInsets.only(
-                            left: 18,
-                          ),
-                          child: Text('Rank',
-                              textAlign: TextAlign.start,
-                              style: TextStyle(
-                                height: 3.0,
-                                fontSize: 15.2,
-                                fontWeight: FontWeight.bold,
-                              )),
-                        ),
-                      ),
-                      Expanded(
-                        child: Text('Details',
-                            textAlign: TextAlign.start,
-                            style: TextStyle(
-                              height: 3.0,
-                              fontSize: 15.2,
-                              fontWeight: FontWeight.bold,
-                            )),
-                      ),
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                            right: 10,
-                          ),
-                          child: Text('StopStalk Rating',
-                              textAlign: TextAlign.end,
-                              style: TextStyle(
-                                height: 3.0,
-                                fontSize: 15.2,
-                                fontWeight: FontWeight.bold,
-                              )),
-                        ),
-                      ),
-                    ],
-                  ),
                   Expanded(
                     child: Container(
                       padding: EdgeInsets.symmetric(
@@ -136,81 +96,113 @@ class LeaderBoardScreen extends StatelessWidget {
                         future: _getLeaderBoard(),
                         builder: (ctx, snapshot) {
                           if (!snapshot.hasData) {
-                            return Center(child: CircularProgressIndicator());
+                            return Center(
+                              child: CircularProgressIndicator(),
+                            );
                           } else {
                             return ListView.builder(
                               itemCount: snapshot.data.length,
                               itemBuilder: (ctx, i) {
-                                return Card(
-                                  elevation: 3.0,
-                                  child: ListTile(
-                                    leading: CircleAvatar(
-                                      backgroundColor: Colors.blue,
-                                      child: Text(
-                                        '${snapshot.data[i].rank}',
-                                        textAlign: TextAlign.center,
-                                      ),
-                                    ),
-                                    title: Text(
-                                      snapshot.data[i].name,
-                                      style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    subtitle: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        RichText(
-                                          maxLines: 2,
-                                          overflow: TextOverflow.ellipsis,
-                                          text: TextSpan(
-                                            text: '',
-                                            style: TextStyle(
-                                              color: Colors.black,
-                                            ),
-                                            children: <TextSpan>[
-//                                              TextSpan(
-//                                                  text: 'Handle: ',
-//                                                  style: TextStyle(
-//                                                    fontWeight: FontWeight.w600,
-//                                                  )),
-//                                              TextSpan(
-//                                                text:
-//                                                    '${snapshot.data[i].stopstalkHandle}\n',
-//                                              ),
-
-                                              TextSpan(
-                                                  text: 'Institute',
-                                                  style: TextStyle(
-                                                    fontWeight: FontWeight.w600,
-                                                    height: 2,
-                                                  )),
-                                              TextSpan(
-                                                  text:
-                                                      ' ${snapshot.data[i].institute}'),
-                                            ],
+                                if (i == 0) {
+                                  return Row(
+                                    children: [
+                                      Expanded(
+                                        child: Padding(
+                                          padding: EdgeInsets.only(
+                                            left: 25,
                                           ),
-                                        )
-                                      ],
-                                    ),
-                                    //isThreeLine: true,
-                                    trailing: Container(
-                                      padding: EdgeInsets.all(4),
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(8),
-                                        color: Colors.black12,
+                                          child: AutoSizeText('Rank',
+                                              maxLines: 1,
+                                              minFontSize: 12,
+                                              textAlign: TextAlign.start,
+                                              style: TextStyle(
+                                                height: 2.0,
+                                                fontSize: 15.2,
+                                                fontWeight: FontWeight.bold,
+                                              )),
+                                        ),
                                       ),
-                                      child: Text(
-                                        '${snapshot.data[i].stopstalkRating}',
+                                      Expanded(
+                                        child: AutoSizeText('Details',
+                                            maxLines: 1,
+                                            minFontSize: 12,
+                                            textAlign: TextAlign.start,
+                                            style: TextStyle(
+                                              height: 2.0,
+                                              fontSize: 15.2,
+                                              fontWeight: FontWeight.bold,
+                                            )),
+                                      ),
+                                      Expanded(
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                            right: 10,
+                                          ),
+                                          child: AutoSizeText('StopStalk Rating',
+                                              maxLines: 1,
+                                              minFontSize: 12,
+                                              textAlign: TextAlign.end,
+                                              style: TextStyle(
+                                                height: 2.0,
+                                                fontSize: 15.2,
+                                                fontWeight: FontWeight.bold,
+                                              )),
+                                        ),
+                                      ),
+                                    ],
+                                  );
+                                } else {
+                                  return Card(
+                                    elevation: 2.0,
+                                    margin: EdgeInsets.all(7),
+                                    child: ListTile(
+                                      leading: CircleAvatar(
+                                        backgroundColor: Colors.blue,
+                                        child: Text(
+                                          '${snapshot.data[i - 1].rank}',
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
+                                      title: Text(
+                                        snapshot.data[i].name,
                                         style: TextStyle(
                                           fontSize: 18,
                                         ),
                                       ),
+                                      subtitle: Column(
+                                        crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                        children: [
+                                          Row(
+                                            children: [
+                                              Icon(
+                                                Icons.school,
+                                                size: 15,
+                                              ),
+                                              Expanded(
+                                                child: Text(
+                                                  ' ${snapshot.data[i - 1].institute}',
+                                                  maxLines: 1,
+                                                  overflow:
+                                                  TextOverflow.ellipsis,
+                                                ),
+                                              ),
+                                            ],
+                                          )
+                                        ],
+                                      ),
+                                      trailing: Container(
+                                        padding: EdgeInsets.all(4),
+                                        child: Text(
+                                          '${snapshot.data[i - 1].stopstalkRating}',
+                                          style: TextStyle(
+                                            fontSize: 18,
+                                          ),
+                                        ),
+                                      ),
                                     ),
-                                  ),
-                                );
+                                  );
+                                }
                               },
                             );
                           }
@@ -223,7 +215,7 @@ class LeaderBoardScreen extends StatelessWidget {
             ),
             Container(
               child: Text('this is the friends leaderboard page'),
-            )
+            ),
           ],
         ),
       ),
