@@ -33,6 +33,7 @@ class EditorialLeaderboard extends StatelessWidget {
             return Preloader();
           } else {
             return ListView.builder(
+              padding: EdgeInsets.only(top: 10.0),
               itemCount: snapshot.data.length,
               itemBuilder: (BuildContext context, int index) {
                 return Card(
