@@ -70,7 +70,7 @@ class EditorialLeaderboard extends StatelessWidget {
                                   padding: EdgeInsets.only(top: 3.0),
                                 ),
                                 Text(
-                                  snapshot.data[index].editorial_count,
+                                  snapshot.data[index].editorialCount,
                                   style: TextStyle(
                                     fontSize: 12.0,
                                   ),
@@ -90,7 +90,7 @@ class EditorialLeaderboard extends StatelessWidget {
                                   color: Colors.green,
                                 ),
                                 Text(
-                                  snapshot.data[index].votes_count,
+                                  snapshot.data[index].votesCount,
                                   style: TextStyle(
                                     fontSize: 12.0,
                                   ),
