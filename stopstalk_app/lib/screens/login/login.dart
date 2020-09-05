@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
+
 import 'login_form.dart';
+import '../profile.dart';
 
 // ignore: must_be_immutable
 class Login extends StatelessWidget {
@@ -27,7 +30,14 @@ class Login extends StatelessWidget {
             padding: EdgeInsets.only(top: 10.0, bottom: 20.0),
             child: Image.asset('assets/google.png')),
         FlatButton(
-          onPressed: () {},
+          onPressed: () {
+            storage.write(key: "user", value: null);
+            Navigator.push(
+              context,
+              PageTransition(
+                  type: PageTransitionType.fade, child: ProfileScreen()),
+            );
+          },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
