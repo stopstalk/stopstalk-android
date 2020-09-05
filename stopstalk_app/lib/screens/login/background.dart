@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import '../../fragments/animations.dart';
 
 class Background extends StatelessWidget {
   @override
@@ -23,26 +24,33 @@ class Background extends StatelessWidget {
         ),
         Stack(
           children: [
-            ClipPath(
-              clipper: RightBox(),
-              child: Container(
-                color: Colors.grey[900],
+            FadeIn(
+              ClipPath(
+                clipper: RightBox(),
+                child: Container(
+                  color: Colors.grey[900],
+                ),
               ),
+              1,
             ),
-            ClipPath(
-              clipper: BottomBox(),
-              child: Container(
-                color: Colors.purple[900],
+            FadeIn(
+              ClipPath(
+                clipper: BottomBox(),
+                child: Container(
+                  color: Colors.purple[900],
+                ),
               ),
+              1,
             ),
             Positioned(
               top: 100,
               left: 150,
-              child: Container(
-                child: SvgPicture.network(
-                    'https://visualpharm.com/assets/843/Spy%20Male-595b40b85ba036ed117da3de.svg',
-                    width: 120,
-                    height: 120),
+              child: FadeIn(
+                Container(
+                  child: SvgPicture.asset('assets/images/Spy.svg',
+                      width: 120, height: 120),
+                ),
+                2,
               ),
             ),
           ],

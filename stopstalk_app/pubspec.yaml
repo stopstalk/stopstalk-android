@@ -28,6 +28,8 @@ dependencies:
   auto_size_text: ^2.1.0
   flutter_spinkit: "^4.1.2"
   font_awesome_flutter: any
+  simple_animations: "^2.2.1"
+  supercharged: "^1.10.0"
 
   flutter_svg: ^0.18.1
   # The following adds the Cupertino Icons font to your application.
@@ -51,6 +53,7 @@ flutter:
   assets:
     - assets/hlogo.png
     - assets/google.png
+    - assets/images/Spy.svg
   
   fonts:
     - family: WorkSansSemiBold

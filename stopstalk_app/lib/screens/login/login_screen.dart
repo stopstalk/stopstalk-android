@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import './background.dart';
 import './login.dart';
+import '../../fragments/animations.dart';
 
 class LoginPage extends StatefulWidget {
   static const routeName = '/login';
@@ -17,8 +18,8 @@ class _LoginPageState extends State<LoginPage> {
         backgroundColor: Colors.blue[400],
         body: Stack(
           children: <Widget>[
-            Background(),
-            Login(),
+            FadeIn(Background(), 0),
+            FadeIn(Login(), 2),
           ],
         ));
   }
