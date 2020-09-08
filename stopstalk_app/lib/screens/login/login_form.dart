@@ -6,7 +6,7 @@ import 'package:page_transition/page_transition.dart';
 
 import 'dart:async';
 import 'package:http/http.dart' as http;
-import 'dart:convert' show json, base64, ascii;
+import 'dart:convert';
 
 import '../profile.dart';
 
@@ -20,6 +20,7 @@ class LoginForm extends StatefulWidget {
 
 class _LoginFormState extends State<LoginForm> {
   bool _loader = false;
+  bool _passwordVisible = false;
 
   final TextEditingController _loginEmailController = TextEditingController();
 
@@ -28,26 +29,36 @@ class _LoginFormState extends State<LoginForm> {
 
   void displayDialog(context, title, text) => showDialog(
         context: context,
-        builder: (context) =>
-            AlertDialog(title: Text(title), content: Text(text)),
+        builder: (context) => AlertDialog(
+            title: Row(
+              children: [
+                Icon(Icons.warning),
+                SizedBox(width: 7),
+                Text(title),
+              ],
+            ),
+            content: Text(text)),
       );
 
   Future<String> attemptLogIn(String email, String password) async {
     var res = await http.get(
       "$SERVER_IP/api/login_token?email=$email&password=$password",
     );
-    if (res.statusCode == 200) return res.body;
+    if (res.statusCode == 200) {
+      var jsonData = jsonDecode(res.body);
+      return jsonData['token'];
+    }
     return null;
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Padding(
-          padding:
-              EdgeInsets.only(top: 20.0, bottom: 20.0, left: 50.0, right: 25.0),
-          child: TextField(
+    double width = MediaQuery.of(context).size.width;
+    return Container(
+      width: width / 1.2,
+      child: Column(
+        children: [
+          TextFormField(
             /* focusNode: myFocusNodeEmailLogin, */
             controller: _loginEmailController,
             keyboardType: TextInputType.emailAddress,
@@ -72,88 +83,111 @@ class _LoginFormState extends State<LoginForm> {
                   color: Colors.white),
             ),
           ),
-        ),
-        Padding(
-          padding: EdgeInsets.only(bottom: 50.0, left: 50.0, right: 25.0),
-          child: TextField(
-            /* focusNode: myFocusNodeEmailLogin, */
-            controller: _loginPasswordController,
-            obscureText: true,
-            style: TextStyle(
-                fontFamily: "WorkSansSemiBold",
-                fontSize: 20.0,
-                color: Colors.white),
-            decoration: InputDecoration(
-              enabledBorder: UnderlineInputBorder(
-                  borderSide: new BorderSide(color: Colors.white)),
-              focusedBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: Colors.white),
-              ),
-              icon: Icon(
-                Icons.lock,
-                color: Colors.white,
-                size: 26.0,
-              ),
-              hintText: "Password",
-              hintStyle: TextStyle(
+          Padding(
+            padding: EdgeInsets.only(top: 20),
+            child: TextFormField(
+              /* focusNode: myFocusNodeEmailLogin, */
+              controller: _loginPasswordController,
+              obscureText: !_passwordVisible,
+              style: TextStyle(
                   fontFamily: "WorkSansSemiBold",
-                  fontSize: 17.0,
+                  fontSize: 20.0,
                   color: Colors.white),
+              decoration: InputDecoration(
+                enabledBorder: UnderlineInputBorder(
+                    borderSide: new BorderSide(color: Colors.white)),
+                focusedBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: Colors.white),
+                ),
+                icon: Icon(
+                  Icons.lock,
+                  color: Colors.white,
+                  size: 26.0,
+                ),
+                suffixIcon: IconButton(
+                  icon: Icon(
+                    // Based on passwordVisible state choose the icon
+                    _passwordVisible ? Icons.visibility : Icons.visibility_off,
+                    color: Colors.white,
+                  ),
+                  onPressed: () {
+                    // Update the state i.e. toogle the state of passwordVisible variable
+                    setState(() {
+                      _passwordVisible = !_passwordVisible;
+                    });
+                  },
+                ),
+                hintText: "Password",
+                hintStyle: TextStyle(
+                    fontFamily: "WorkSansSemiBold",
+                    fontSize: 17.0,
+                    color: Colors.white),
+              ),
             ),
           ),
-        ),
-        Center(
-          child: Container(
+          FlatButton(
+            onPressed: () {},
+            child: Text(
+              "Forgot Password ?",
+              style: TextStyle(
+                  decoration: TextDecoration.underline,
+                  color: Colors.white,
+                  fontSize: 13.0,
+                  fontFamily: "WorkSansMedium"),
+            ),
+          ),
+          SizedBox(height: 25),
+          Container(
+            width: width / 2.25,
             decoration: BoxDecoration(
               color: Colors.deepPurpleAccent[400],
               borderRadius: BorderRadius.circular(8),
             ),
             child: MaterialButton(
-              child: Center(
-                widthFactor: 0.4,
-                child: _loader
-                    ? SpinKitCircle(size: 30.0, color: Colors.white)
-                    : Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 160, vertical: 10),
-                        child: Text(
-                          "LOGIN",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                              fontFamily: "WorkSansBold"),
-                        ),
+              child: _loader
+                  ? SpinKitCircle(size: 30.0, color: Colors.white)
+                  : Padding(
+                      padding: EdgeInsets.symmetric(vertical: 10),
+                      child: Text(
+                        "LOGIN",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontFamily: "WorkSansBold"),
                       ),
-              ),
+                    ),
               onPressed: _loader
                   ? null
                   : () async {
                       setState(() => _loader = true);
                       var email = _loginEmailController.text;
                       var password = _loginPasswordController.text;
-                      var jwt = await attemptLogIn(email, password);
-                      setState(() => _loader = false);
-                      if (jwt != null) {
-                        storage.write(key: "jwt", value: jwt);
-                        var data = json.decode(ascii.decode(base64
-                            .decode(base64.normalize(jwt.split(".")[1]))));
-                        storage.write(key: "user", value: data['user']);
-                        Navigator.push(
-                          context,
-                          PageTransition(
-                              type: PageTransitionType.fade,
-                              child: ProfileScreen()),
-                        );
-                      } else {
+                      if (email == '' || password == '') {
                         displayDialog(context, "An Error Occurred",
-                            "No account was found matching that username and password");
+                            "Email and password cannot be empty");
                         setState(() => _loader = false);
+                      } else {
+                        var jwt = await attemptLogIn(email, password);
+                        setState(() => _loader = false);
+                        if (jwt != null) {
+                          storage.write(key: "jwt", value: jwt);
+                          Navigator.push(
+                            context,
+                            PageTransition(
+                                type: PageTransitionType.fade,
+                                child: ProfileScreen()),
+                          );
+                        } else {
+                          displayDialog(context, "An Error Occurred",
+                              "No account was found matching that username and password");
+                          setState(() => _loader = false);
+                        }
                       }
                     },
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
