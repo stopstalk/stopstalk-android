@@ -27,7 +27,6 @@ class LeaderBoardScreen extends StatelessWidget {
     fontSize: 20,
     height: 1.8,
     letterSpacing: .3,
-    color: Color(0xff083e64),
   );
 
   Future<List<LeaderBoard>> _getLeaderBoard() async {
@@ -133,14 +132,11 @@ class LeaderBoardScreen extends StatelessWidget {
                                       titleTextStyle,
                                       contentTextStyle,
                                       snapshot.data[i].country != null
-                                          ? snapshot.data[i].country[0]
-                                          : 'NA',
+                                          ? snapshot.data[i].country
+                                          : ['NA', 'NA'],
                                     ),
                                     innerBottomWidget: _buildInnerBottomWidget(
                                       snapshot.data[i].institute,
-                                      snapshot.data[i].country != null
-                                          ? snapshot.data[i].country[1]
-                                          : 'NA',
                                       snapshot.data[i].stopstalkRating,
                                       snapshot.data[i].perDayChanges,
                                       snapshot.data[i].customUsers,
@@ -148,7 +144,7 @@ class LeaderBoardScreen extends StatelessWidget {
                                       contentTextStyle,
                                     ),
                                     cellSize: Size(
-                                        MediaQuery.of(context).size.width, 175),
+                                        MediaQuery.of(context).size.width, 125),
                                     padding: EdgeInsets.all(15),
                                     animationDuration:
                                     Duration(milliseconds: 300),
@@ -179,101 +175,147 @@ class LeaderBoardScreen extends StatelessWidget {
   Widget _buildFrontWidget(int index, String name, String institute) {
     return Builder(
       builder: (BuildContext context) {
-        return Container(
-          color: Colors.white,
-          alignment: Alignment.center,
-          child: Row(
-            children: [
-              Expanded(
-                flex: 1,
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                    color: Colors.lightBlueAccent.shade100,
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        '#${index + 1}',
-                        style: TextStyle(
-                          fontSize: 18,
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-              Expanded(
-                flex: 3,
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                    color: Colors.indigo.shade50,
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        '$name',
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          //fontFamily: 'Oswald',
-                          fontSize: 25,
-                          height: 1.8,
-                          letterSpacing: .3,
-                          fontWeight: FontWeight.w400,
-                          color: Color(0xff083e64),
-                        ),
+        return GestureDetector(
+          onTap: () {
+            final foldingCellState =
+            context.findAncestorStateOfType<SimpleFoldingCellState>();
+            foldingCellState?.toggleFold();
+          },
+          child: Container(
+//              margin: EdgeInsets.only(
+//                bottom: 6,
+//              ),
+//              decoration: BoxDecoration(
+//                borderRadius: BorderRadius.all(
+//                  Radius.circular(15),
+//                ),
+//                boxShadow: [
+//                  BoxShadow(
+//                    blurRadius: 6.0,
+//                    color: Colors.grey,
+//                    offset: Offset(0.0, 2.0),
+//                  ),
+//                ],
+            color: Color(0xfafafa).withOpacity(1),
+            alignment: Alignment.center,
+            child: Row(
+              children: [
+                Expanded(
+                  flex: 1,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(15),
+                      bottomLeft: Radius.circular(15),
+                    ),
+                    child: Container(
+                      margin: EdgeInsets.only(
+                        bottom: 6,
                       ),
-                      Row(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(15),
+                          bottomLeft: Radius.circular(15),
+                        ),
+                        color: Colors.lightBlueAccent.shade100,
+                        boxShadow: [
+                          BoxShadow(
+                            blurRadius: 6.0,
+                            color: Colors.grey,
+                            offset: Offset(0.0, 2.0),
+                          ),
+                        ],
+                      ),
+                      child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Icon(
-                              Icons.school,
-                              size: 20,
-                            ),
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Expanded(
-                            child: Text(
-                              institute,
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                //fontFamily: 'Oswald',
-                                fontSize: 15,
-                                height: 1.8,
-                                letterSpacing: .3,
-                                color: Color(0xff083e64),
-                              ),
+                          Text(
+                            '#${index + 1}',
+                            style: TextStyle(
+                              fontSize: 18,
                             ),
                           ),
                         ],
                       ),
-                      Divider(),
-                      IconButton(
-                        onPressed: () {
-                          final foldingCellState =
-                          context.findAncestorStateOfType<
-                              SimpleFoldingCellState>();
-                          foldingCellState?.toggleFold();
-                        },
-                        icon: Icon(Icons.keyboard_arrow_down),
-                        iconSize: 30,
-                      ),
-                    ],
+                    ),
                   ),
                 ),
-              ),
-            ],
+                Expanded(
+                  flex: 3,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.only(
+                        bottomRight: Radius.circular(15),
+                        topRight: Radius.circular(15)),
+                    child: Container(
+                      margin: EdgeInsets.only(
+                        bottom: 6,
+                      ),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                            bottomRight: Radius.circular(15),
+                            topRight: Radius.circular(15)),
+                        color: Colors.indigo.shade50,
+                        boxShadow: [
+                          BoxShadow(
+                            blurRadius: 6,
+                            color: Colors.grey,
+                            offset: Offset(0.0, 2.0),
+                          )
+                        ],
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            '$name',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontFamily: 'Oswald',
+                              fontSize: 25,
+                              height: 1.8,
+                              letterSpacing: .3,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Icon(
+                                  Icons.school,
+                                  size: 20,
+                                ),
+                              ),
+                              Expanded(
+                                child: Text(
+                                  institute,
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    //fontFamily: 'Oswald',
+                                    fontSize: 15,
+                                    height: 1.8,
+                                    letterSpacing: .3,
+                                    //color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
+          //),
         );
       },
     );
@@ -284,250 +326,243 @@ class LeaderBoardScreen extends StatelessWidget {
       String handle,
       TextStyle titleTextStyle,
       TextStyle contentTextStyle,
-      String countryCode) {
-    return Container(
-      color: Colors.lightBlueAccent.shade100,
-      alignment: Alignment.center,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Text(
-                    'Name'.toUpperCase(),
-                    style: titleTextStyle,
-                  ),
-                  Text(
-                    name,
-                    style: contentTextStyle,
-                  ),
-                ],
-              ),
-              SizedBox(
-                width: 20,
-              ),
-              Flag(
-                countryCode,
-                height: 40,
-                fit: BoxFit.fill,
-                width: 60,
-              ),
-            ],
+      List<dynamic> country) {
+    return GestureDetector(
+      onTap: null,
+      child: ClipRRect(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(15),
+          topRight: Radius.circular(15),
+        ),
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.lightBlueAccent.shade100,
           ),
-          Row(
+          alignment: Alignment.center,
+          child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    'Handle'.toUpperCase(),
-                    style: titleTextStyle,
-                  ),
-                  Text(
-                    handle,
-                    style: contentTextStyle,
-                  ),
-                ],
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Container(
-                    decoration: ShapeDecoration(
-                      color: Colors.amber,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                    ),
-                    child: FlatButton(
-                      onPressed: null,
-                      child: Text(''
-                          'Visit Profile'),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildInnerBottomWidget(
-      String institute,
-      String country,
-      int rating,
-      double perDayChanges,
-      int customUsers,
-      TextStyle titleTextStyle,
-      TextStyle contentTextStyle) {
-    return Container(
-      color: Colors.indigo.shade50,
-      alignment: Alignment.center,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          SizedBox(
-            height: 20,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 8, right: 8),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  flex:2,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Text(
-                        'Institute'.toUpperCase(),
-                        style: titleTextStyle,
-                      ),
-                      Text(
-                        institute,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
+                  Padding(
+                    padding: EdgeInsets.only(left: 8),
+                    child: Center(
+                      child: Text(
+                        name,
                         style: contentTextStyle,
                       ),
-                    ],
+                    ),
                   ),
-                ),
-                //SizedBox(width: 15,),
-                Expanded(
-                  flex: 2,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  SizedBox(
+                    width: 20,
+                  ),
+                  Column(
                     children: [
-                      Text(
-                        'Country'.toUpperCase(),
-                        style: titleTextStyle,
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Flag(
+                        country[0],
+                        height: 40,
+                        fit: BoxFit.fill,
+                        width: 60,
+                      ),
+                      SizedBox(
+                        height: 5,
                       ),
                       Text(
-                        country,
+                        country[1].toUpperCase(),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: contentTextStyle,
-                      ),
-                    ],
-                  ),
-                ),
-
-              ],
-            ),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Text(
-                    'StopStalk Rating'.toUpperCase(),
-                    style: titleTextStyle,
-                  ),
-                  Text(
-                    rating.toString(),
-                    style: contentTextStyle,
-                  ),
-                ],
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Text(
-                    'Per Day Changes'.toUpperCase(),
-                    style: titleTextStyle,
-                  ),
-                  Row(
-                    children: [
-                      perDayChanges < 0
-                          ? Icon(
-                        Icons.arrow_drop_down,
-                        size: 35,
-                        color: Colors.red,
-                      )
-                          : Icon(
-                        Icons.arrow_drop_up,
-                        size: 35,
-                        color: Colors.green,
-                      ),
-                      Text(
-                        perDayChanges.toStringAsPrecision(5),
                         style: TextStyle(
-                          fontFamily: 'Oswald',
-                          fontSize: 20,
-                          height: 1.8,
-                          letterSpacing: .3,
-                          color: perDayChanges < 0 ? Colors.red : Colors.green,
+                          fontFamily: 'OpenSans',
+                          fontSize: 15,
+                          height: 1,
+                          letterSpacing: .2,
+                          fontWeight: FontWeight.w300,
+                          color: Colors.black,
                         ),
                       ),
                     ],
                   ),
                 ],
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
+              Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Text(
-                    'Custom Users'.toUpperCase(),
-                    style: titleTextStyle,
-                  ),
-                  Text(
-                    customUsers.toString(),
-                    style: contentTextStyle,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 8.0),
+                        child: Text(
+                          '@ $handle',
+                          style: contentTextStyle,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
             ],
           ),
-          Divider(
-            height: 10,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildInnerBottomWidget(
+      String institute,
+      int rating,
+      double perDayChanges,
+      int customUsers,
+      TextStyle titleTextStyle,
+      TextStyle contentTextStyle) {
+    return Builder(builder: (context) {
+      return GestureDetector(
+        onTap: () {
+          final foldingCellState =
+          context.findAncestorStateOfType<SimpleFoldingCellState>();
+          foldingCellState?.toggleFold();
+        },
+        child: ClipRRect(
+          borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(15),
+            bottomRight: Radius.circular(15),
           ),
-          SizedBox(
-            height: 29,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
+          child: Container(
+            margin: EdgeInsets.only(bottom: 6),
+            decoration: BoxDecoration(
+              color: Colors.indigo.shade50,
+              borderRadius: BorderRadius.only(
+                bottomRight: Radius.circular(15),
+                bottomLeft: Radius.circular(15),
+              ),
+              boxShadow: [
+                BoxShadow(
+                  blurRadius: 6.0,
+                  color: Colors.grey,
+                  offset: Offset(0.0, 2.0),
+                ),
+              ],
+            ),
+            alignment: Alignment.center,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Builder(
-                  builder: (context) {
-                    return IconButton(
-                      padding: EdgeInsets.all(0),
-                      icon: Icon(
-                        Icons.keyboard_arrow_up,
-                        size: 30,
+                Padding(
+                  padding: const EdgeInsets.only(left: 8, right: 8),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(Icons.school),
+                                SizedBox(
+                                  width: 15,
+                                ),
+                                Flexible(
+                                  child: Text(
+                                    institute,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: contentTextStyle,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
-                      onPressed: () {
-                        final foldingCellState = context
-                            .findAncestorStateOfType<SimpleFoldingCellState>();
-                        foldingCellState?.toggleFold();
-                      },
-                    );
-                  },
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Text(
+                            'StopStalk Rating'.toUpperCase(),
+                            style: titleTextStyle,
+                          ),
+                          Text(
+                            rating.toString(),
+                            style: contentTextStyle,
+                          ),
+                        ],
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Text(
+                            'Per Day Changes'.toUpperCase(),
+                            style: titleTextStyle,
+                          ),
+                          Row(
+                            children: [
+                              perDayChanges < 0
+                                  ? Icon(
+                                Icons.arrow_drop_down,
+                                size: 35,
+                                color: Colors.red,
+                              )
+                                  : Icon(
+                                Icons.arrow_drop_up,
+                                size: 35,
+                                color: Colors.green,
+                              ),
+                              Text(
+                                perDayChanges.toStringAsPrecision(5),
+                                style: TextStyle(
+                                  fontFamily: 'Oswald',
+                                  fontSize: 20,
+                                  height: 1.8,
+                                  letterSpacing: .3,
+                                  color: perDayChanges < 0
+                                      ? Colors.red
+                                      : Colors.green,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Text(
+                            'Custom Users'.toUpperCase(),
+                            style: titleTextStyle,
+                          ),
+                          Text(
+                            customUsers.toString(),
+                            style: contentTextStyle,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
           ),
-        ],
-      ),
-    );
+        ),
+      );
+    });
   }
 }
