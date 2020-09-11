@@ -15,20 +15,20 @@ class LeaderBoardScreen extends StatelessWidget {
   static const routeName = '/leaderBoard';
 
   TextStyle get titleTextStyle => TextStyle(
-    fontFamily: 'OpenSans',
-    fontSize: 12,
-    height: 1,
-    letterSpacing: .2,
-    fontWeight: FontWeight.w800,
-    color: Color(0xffafaabf),
-  );
+        fontFamily: 'OpenSans',
+        fontSize: 12,
+        height: 1,
+        letterSpacing: .2,
+        fontWeight: FontWeight.w800,
+        color: Color(0xffafaabf),
+      );
 
   TextStyle get contentTextStyle => TextStyle(
-    fontFamily: 'Oswald',
-    fontSize: 20,
-    height: 1.8,
-    letterSpacing: .3,
-  );
+        fontFamily: 'Oswald',
+        fontSize: 20,
+        height: 1.8,
+        letterSpacing: .3,
+      );
 
   Future<List<LeaderBoard>> _getLeaderBoard() async {
     const url = "https://www.stopstalk.com/leaderboard.json";
@@ -149,7 +149,7 @@ class LeaderBoardScreen extends StatelessWidget {
                                         MediaQuery.of(context).size.width, 125),
                                     padding: EdgeInsets.all(15),
                                     animationDuration:
-                                    Duration(milliseconds: 300),
+                                        Duration(milliseconds: 300),
                                     borderRadius: 10,
                                     onOpen: () => print('$i cell opened'),
                                     onClose: () => print('$i cell closed'),
@@ -180,7 +180,7 @@ class LeaderBoardScreen extends StatelessWidget {
         return GestureDetector(
           onTap: () {
             final foldingCellState =
-            context.findAncestorStateOfType<SimpleFoldingCellState>();
+                context.findAncestorStateOfType<SimpleFoldingCellState>();
             foldingCellState?.toggleFold();
           },
           child: Container(
@@ -366,11 +366,20 @@ class LeaderBoardScreen extends StatelessWidget {
                         SizedBox(
                           height: 20,
                         ),
-                        Flag(
-                          country[0],
-                          height: 40,
-                          fit: BoxFit.fill,
-                          width: 60,
+                        Stack(
+                          children: [
+                            Container(
+                              height: 40,
+                              width: 60,
+                              color: Colors.grey,
+                            ),
+                            Flag(
+                              country[0],
+                              height: 40,
+                              fit: BoxFit.fill,
+                              width: 60,
+                            ),
+                          ],
                         ),
                         SizedBox(
                           height: 5,
@@ -429,7 +438,7 @@ class LeaderBoardScreen extends StatelessWidget {
       return GestureDetector(
         onTap: () {
           final foldingCellState =
-          context.findAncestorStateOfType<SimpleFoldingCellState>();
+              context.findAncestorStateOfType<SimpleFoldingCellState>();
           foldingCellState?.toggleFold();
         },
         child: ClipRRect(
@@ -496,88 +505,82 @@ class LeaderBoardScreen extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              AutoSizeText(
-                                'StopStalk Rating'.toUpperCase(),
-                                minFontSize: 6,
-                                maxLines: 1,
-                                style: titleTextStyle,
-                              ),
-                              AutoSizeText(
-                                rating.toString(),
-                                maxLines: 1,
-                                minFontSize: 6,
-                                style: contentTextStyle,
-                              ),
-                            ],
-                          ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            AutoSizeText(
+                              'StopStalk Rating'.toUpperCase(),
+                              minFontSize: 6,
+                              maxLines: 1,
+                              style: titleTextStyle,
+                            ),
+                            AutoSizeText(
+                              rating.toString(),
+                              maxLines: 1,
+                              minFontSize: 6,
+                              style: contentTextStyle,
+                            ),
+                          ],
                         ),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              AutoSizeText(
-                                'Per Day Changes'.toUpperCase(),
-                                maxLines: 1,
-                                minFontSize: 6,
-                                style: titleTextStyle,
-                              ),
-                              Row(
-                                children: [
-                                  perDayChanges < 0
-                                      ? Icon(
-                                    Icons.arrow_drop_down,
-                                    size: 35,
-                                    color: Colors.red,
-                                  )
-                                      : Icon(
-                                    Icons.arrow_drop_up,
-                                    size: 35,
-                                    color: Colors.green,
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            AutoSizeText(
+                              'Per Day Changes'.toUpperCase(),
+                              maxLines: 1,
+                              minFontSize: 6,
+                              style: titleTextStyle,
+                            ),
+                            Row(
+                              children: [
+                                perDayChanges < 0
+                                    ? Icon(
+                                        Icons.arrow_drop_down,
+                                        size: 35,
+                                        color: Colors.red,
+                                      )
+                                    : Icon(
+                                        Icons.arrow_drop_up,
+                                        size: 35,
+                                        color: Colors.green,
+                                      ),
+                                AutoSizeText(
+                                  perDayChanges.toStringAsPrecision(5),
+                                  minFontSize: 6,
+                                  maxLines: 1,
+                                  style: TextStyle(
+                                    fontFamily: 'Oswald',
+                                    fontSize: 20,
+                                    height: 1.8,
+                                    letterSpacing: .3,
+                                    color: perDayChanges < 0
+                                        ? Colors.red
+                                        : Colors.green,
                                   ),
-                                  AutoSizeText(
-                                    perDayChanges.toStringAsPrecision(5),
-                                    minFontSize: 6,
-                                    maxLines: 1,
-                                    style: TextStyle(
-                                      fontFamily: 'Oswald',
-                                      fontSize: 20,
-                                      height: 1.8,
-                                      letterSpacing: .3,
-                                      color: perDayChanges < 0
-                                          ? Colors.red
-                                          : Colors.green,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              AutoSizeText(
-                                'Custom Users'.toUpperCase(),
-                                maxLines: 1,
-                                minFontSize: 6,
-                                style: titleTextStyle,
-                              ),
-                              AutoSizeText(
-                                customUsers.toString(),
-                                minFontSize: 6,
-                                maxLines: 1,
-                                style: contentTextStyle,
-                              ),
-                            ],
-                          ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            AutoSizeText(
+                              'Custom Users'.toUpperCase(),
+                              maxLines: 1,
+                              minFontSize: 6,
+                              style: titleTextStyle,
+                            ),
+                            AutoSizeText(
+                              customUsers.toString(),
+                              minFontSize: 6,
+                              maxLines: 1,
+                              style: contentTextStyle,
+                            ),
+                          ],
                         ),
                       ],
                     ),
