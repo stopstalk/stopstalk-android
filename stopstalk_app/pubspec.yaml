@@ -53,9 +53,7 @@ flutter:
   # the material Icons class.
   uses-material-design: true
   assets:
-    - assets/hlogo.png
-    - assets/google.png
-    - assets/images/Spy.svg
+    - assets/images/
   
   fonts:
     - family: WorkSansSemiBold
