@@ -28,6 +28,8 @@ dependencies:
   auto_size_text: ^2.1.0
   flutter_spinkit: "^4.1.2"
   font_awesome_flutter: any
+  folding_cell: "^1.0.0"
+  flag: "3.0.5"
   simple_animations: "^2.2.1"
   supercharged: "^1.10.0"
   flutter_secure_storage: "^3.3.3"

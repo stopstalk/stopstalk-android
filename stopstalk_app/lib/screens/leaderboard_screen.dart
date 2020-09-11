@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:folding_cell/folding_cell.dart';
+import 'package:flag/flag.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
 import '../widgets/app_drawer.dart';
@@ -11,6 +13,22 @@ import '../widgets/preloader.dart';
 
 class LeaderBoardScreen extends StatelessWidget {
   static const routeName = '/leaderBoard';
+
+  TextStyle get titleTextStyle => TextStyle(
+        fontFamily: 'OpenSans',
+        fontSize: 12,
+        height: 1,
+        letterSpacing: .2,
+        fontWeight: FontWeight.w800,
+        color: Color(0xffafaabf),
+      );
+
+  TextStyle get contentTextStyle => TextStyle(
+        fontFamily: 'Oswald',
+        fontSize: 20,
+        height: 1.8,
+        letterSpacing: .3,
+      );
 
   Future<List<LeaderBoard>> _getLeaderBoard() async {
     const url = "https://www.stopstalk.com/leaderboard.json";
@@ -102,106 +120,41 @@ class LeaderBoardScreen extends StatelessWidget {
                             return ListView.builder(
                               itemCount: snapshot.data.length,
                               itemBuilder: (ctx, i) {
-                                if (i == 0) {
-                                  return Row(
-                                    children: [
-                                      Expanded(
-                                        child: Padding(
-                                          padding: EdgeInsets.only(
-                                            left: 25,
-                                          ),
-                                          child: AutoSizeText('Rank',
-                                              maxLines: 1,
-                                              minFontSize: 12,
-                                              textAlign: TextAlign.start,
-                                              style: TextStyle(
-                                                height: 2.0,
-                                                fontSize: 15.2,
-                                                fontWeight: FontWeight.bold,
-                                              )),
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: AutoSizeText('Details',
-                                            maxLines: 1,
-                                            minFontSize: 12,
-                                            textAlign: TextAlign.start,
-                                            style: TextStyle(
-                                              height: 2.0,
-                                              fontSize: 15.2,
-                                              fontWeight: FontWeight.bold,
-                                            )),
-                                      ),
-                                      Expanded(
-                                        child: Padding(
-                                          padding: const EdgeInsets.only(
-                                            right: 10,
-                                          ),
-                                          child: AutoSizeText('StopStalk Rating',
-                                              maxLines: 1,
-                                              minFontSize: 12,
-                                              textAlign: TextAlign.end,
-                                              style: TextStyle(
-                                                height: 2.0,
-                                                fontSize: 15.2,
-                                                fontWeight: FontWeight.bold,
-                                              )),
-                                        ),
-                                      ),
-                                    ],
-                                  );
-                                } else {
-                                  return Card(
-                                    elevation: 2.0,
-                                    margin: EdgeInsets.all(7),
-                                    child: ListTile(
-                                      leading: CircleAvatar(
-                                        backgroundColor: Colors.blue,
-                                        child: Text(
-                                          '${snapshot.data[i - 1].rank}',
-                                          textAlign: TextAlign.center,
-                                        ),
-                                      ),
-                                      title: Text(
-                                        snapshot.data[i].name,
-                                        style: TextStyle(
-                                          fontSize: 18,
-                                        ),
-                                      ),
-                                      subtitle: Column(
-                                        crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Icon(
-                                                Icons.school,
-                                                size: 15,
-                                              ),
-                                              Expanded(
-                                                child: Text(
-                                                  ' ${snapshot.data[i - 1].institute}',
-                                                  maxLines: 1,
-                                                  overflow:
-                                                  TextOverflow.ellipsis,
-                                                ),
-                                              ),
-                                            ],
-                                          )
-                                        ],
-                                      ),
-                                      trailing: Container(
-                                        padding: EdgeInsets.all(4),
-                                        child: Text(
-                                          '${snapshot.data[i - 1].stopstalkRating}',
-                                          style: TextStyle(
-                                            fontSize: 18,
-                                          ),
-                                        ),
-                                      ),
+                                return Container(
+                                  child: SimpleFoldingCell(
+                                    frontWidget: _buildFrontWidget(
+                                      i,
+                                      snapshot.data[i].name,
+                                      snapshot.data[i].institute,
                                     ),
-                                  );
-                                }
+                                    innerTopWidget: _buildInnerTopWidget(
+                                      context,
+                                      snapshot.data[i].name,
+                                      snapshot.data[i].stopstalkHandle,
+                                      titleTextStyle,
+                                      contentTextStyle,
+                                      snapshot.data[i].country != null
+                                          ? snapshot.data[i].country
+                                          : ['NA', 'NA'],
+                                    ),
+                                    innerBottomWidget: _buildInnerBottomWidget(
+                                      snapshot.data[i].institute,
+                                      snapshot.data[i].stopstalkRating,
+                                      snapshot.data[i].perDayChanges,
+                                      snapshot.data[i].customUsers,
+                                      titleTextStyle,
+                                      contentTextStyle,
+                                    ),
+                                    cellSize: Size(
+                                        MediaQuery.of(context).size.width, 125),
+                                    padding: EdgeInsets.all(15),
+                                    animationDuration:
+                                        Duration(milliseconds: 300),
+                                    borderRadius: 10,
+                                    onOpen: () => print('$i cell opened'),
+                                    onClose: () => print('$i cell closed'),
+                                  ),
+                                );
                               },
                             );
                           }
@@ -219,5 +172,425 @@ class LeaderBoardScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Widget _buildFrontWidget(int index, String name, String institute) {
+    return Builder(
+      builder: (BuildContext context) {
+        return GestureDetector(
+          onTap: () {
+            final foldingCellState =
+                context.findAncestorStateOfType<SimpleFoldingCellState>();
+            foldingCellState?.toggleFold();
+          },
+          child: Container(
+//              margin: EdgeInsets.only(
+//                bottom: 6,
+//              ),
+//              decoration: BoxDecoration(
+//                borderRadius: BorderRadius.all(
+//                  Radius.circular(15),
+//                ),
+//                boxShadow: [
+//                  BoxShadow(
+//                    blurRadius: 6.0,
+//                    color: Colors.grey,
+//                    offset: Offset(0.0, 2.0),
+//                  ),
+//                ],
+            color: Color(0xfafafa).withOpacity(1),
+            alignment: Alignment.center,
+            child: Row(
+              children: [
+                Expanded(
+                  flex: 1,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(15),
+                      bottomLeft: Radius.circular(15),
+                    ),
+                    child: Container(
+                      margin: EdgeInsets.only(
+                        bottom: 6,
+                      ),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(15),
+                          bottomLeft: Radius.circular(15),
+                        ),
+                        color: Colors.lightBlueAccent.shade100,
+                        boxShadow: [
+                          BoxShadow(
+                            blurRadius: 6.0,
+                            color: Colors.grey,
+                            offset: Offset(0.0, 2.0),
+                          ),
+                        ],
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            '#${index + 1}',
+                            style: TextStyle(
+                              fontSize: 18,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  flex: 3,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.only(
+                        bottomRight: Radius.circular(15),
+                        topRight: Radius.circular(15)),
+                    child: Container(
+                      margin: EdgeInsets.only(
+                        bottom: 6,
+                      ),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                            bottomRight: Radius.circular(15),
+                            topRight: Radius.circular(15)),
+                        color: Colors.indigo.shade50,
+                        boxShadow: [
+                          BoxShadow(
+                            blurRadius: 6,
+                            color: Colors.grey,
+                            offset: Offset(0.0, 2.0),
+                          )
+                        ],
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            '$name',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontFamily: 'Oswald',
+                              fontSize: 25,
+                              height: 1.8,
+                              letterSpacing: .3,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Icon(
+                                  Icons.school,
+                                  size: 20,
+                                ),
+                              ),
+                              Expanded(
+                                child: Text(
+                                  institute,
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    //fontFamily: 'Oswald',
+                                    fontSize: 15,
+                                    height: 1.8,
+                                    letterSpacing: .3,
+                                    //color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          //),
+        );
+      },
+    );
+  }
+
+  Widget _buildInnerTopWidget(
+      BuildContext context,
+      String name,
+      String handle,
+      TextStyle titleTextStyle,
+      TextStyle contentTextStyle,
+      List<dynamic> country) {
+    return GestureDetector(
+      onTap: null,
+      child: ClipRRect(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(15),
+          topRight: Radius.circular(15),
+        ),
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.lightBlueAccent.shade100,
+          ),
+          alignment: Alignment.center,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Flexible(
+                    child: Text(
+                      name,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: contentTextStyle,
+                    ),
+                  ),
+                  SizedBox(
+                    width: 20,
+                  ),
+                  Flexible(
+                    fit: FlexFit.loose,
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Stack(
+                          children: [
+                            Container(
+                              height: 40,
+                              width: 60,
+                              color: Colors.grey,
+                            ),
+                            Flag(
+                              country[0],
+                              height: 40,
+                              fit: BoxFit.fill,
+                              width: 60,
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          country[1].toUpperCase(),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            fontFamily: 'OpenSans',
+                            fontSize: 15,
+                            height: 1,
+                            letterSpacing: .2,
+                            fontWeight: FontWeight.w300,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 8.0),
+                        child: Text(
+                          '@ $handle',
+                          style: contentTextStyle,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildInnerBottomWidget(
+      String institute,
+      int rating,
+      double perDayChanges,
+      int customUsers,
+      TextStyle titleTextStyle,
+      TextStyle contentTextStyle) {
+    return Builder(builder: (context) {
+      return GestureDetector(
+        onTap: () {
+          final foldingCellState =
+              context.findAncestorStateOfType<SimpleFoldingCellState>();
+          foldingCellState?.toggleFold();
+        },
+        child: ClipRRect(
+          borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(15),
+            bottomRight: Radius.circular(15),
+          ),
+          child: Container(
+            margin: EdgeInsets.only(bottom: 6),
+            decoration: BoxDecoration(
+              color: Colors.indigo.shade50,
+              borderRadius: BorderRadius.only(
+                bottomRight: Radius.circular(15),
+                bottomLeft: Radius.circular(15),
+              ),
+              boxShadow: [
+                BoxShadow(
+                  blurRadius: 6.0,
+                  color: Colors.grey,
+                  offset: Offset(0.0, 2.0),
+                ),
+              ],
+            ),
+            alignment: Alignment.center,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 8, right: 8),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(Icons.school),
+                                SizedBox(
+                                  width: 15,
+                                ),
+                                Flexible(
+                                  child: AutoSizeText(
+                                    institute,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: contentTextStyle,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Expanded(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            AutoSizeText(
+                              'StopStalk Rating'.toUpperCase(),
+                              minFontSize: 6,
+                              maxLines: 1,
+                              style: titleTextStyle,
+                            ),
+                            AutoSizeText(
+                              rating.toString(),
+                              maxLines: 1,
+                              minFontSize: 6,
+                              style: contentTextStyle,
+                            ),
+                          ],
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            AutoSizeText(
+                              'Per Day Changes'.toUpperCase(),
+                              maxLines: 1,
+                              minFontSize: 6,
+                              style: titleTextStyle,
+                            ),
+                            Row(
+                              children: [
+                                perDayChanges < 0
+                                    ? Icon(
+                                        Icons.arrow_drop_down,
+                                        size: 35,
+                                        color: Colors.red,
+                                      )
+                                    : Icon(
+                                        Icons.arrow_drop_up,
+                                        size: 35,
+                                        color: Colors.green,
+                                      ),
+                                AutoSizeText(
+                                  perDayChanges.toStringAsPrecision(5),
+                                  minFontSize: 6,
+                                  maxLines: 1,
+                                  style: TextStyle(
+                                    fontFamily: 'Oswald',
+                                    fontSize: 20,
+                                    height: 1.8,
+                                    letterSpacing: .3,
+                                    color: perDayChanges < 0
+                                        ? Colors.red
+                                        : Colors.green,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            AutoSizeText(
+                              'Custom Users'.toUpperCase(),
+                              maxLines: 1,
+                              minFontSize: 6,
+                              style: titleTextStyle,
+                            ),
+                            AutoSizeText(
+                              customUsers.toString(),
+                              minFontSize: 6,
+                              maxLines: 1,
+                              style: contentTextStyle,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+    });
   }
 }

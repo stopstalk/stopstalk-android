@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../screens/leaderboard_screen.dart';
 import '../screens/profile.dart';
@@ -30,7 +31,7 @@ class AppDrawer extends StatelessWidget {
             ),
             Divider(),
             ListTile(
-              leading: Icon(Icons.people),
+              leading: Icon(FontAwesomeIcons.solidEdit),
               title: Text('User Editorials'),
               onTap: () {
                 Navigator.of(context)
