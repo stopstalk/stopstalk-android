@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:folding_cell/folding_cell.dart';
 import 'package:flag/flag.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../widgets/app_drawer.dart';
 import '../classes/leaderboard.dart';
@@ -15,20 +16,20 @@ class LeaderBoardScreen extends StatelessWidget {
   static const routeName = '/leaderBoard';
 
   TextStyle get titleTextStyle => TextStyle(
-        fontFamily: 'OpenSans',
-        fontSize: 12,
-        height: 1,
-        letterSpacing: .2,
-        fontWeight: FontWeight.w800,
-        color: Color(0xffafaabf),
-      );
+    fontFamily: 'OpenSans',
+    fontSize: 12,
+    height: 1,
+    letterSpacing: .2,
+    fontWeight: FontWeight.w800,
+    color: Color(0xffafaabf),
+  );
 
   TextStyle get contentTextStyle => TextStyle(
-        fontFamily: 'Oswald',
-        fontSize: 20,
-        height: 1.8,
-        letterSpacing: .3,
-      );
+    fontFamily: 'Oswald',
+    fontSize: 20,
+    height: 1.8,
+    letterSpacing: .3,
+  );
 
   Future<List<LeaderBoard>> _getLeaderBoard() async {
     const url = "https://www.stopstalk.com/leaderboard.json";
@@ -134,8 +135,12 @@ class LeaderBoardScreen extends StatelessWidget {
                                       titleTextStyle,
                                       contentTextStyle,
                                       snapshot.data[i].country != null
-                                          ? snapshot.data[i].country
-                                          : ['NA', 'NA'],
+                                          ? snapshot.data[i].country[0]
+                                          .toLowerCase()
+                                          : 'NA',
+                                      snapshot.data[i].country != null
+                                          ? snapshot.data[i].country[1]
+                                          : 'NA',
                                     ),
                                     innerBottomWidget: _buildInnerBottomWidget(
                                       snapshot.data[i].institute,
@@ -149,7 +154,7 @@ class LeaderBoardScreen extends StatelessWidget {
                                         MediaQuery.of(context).size.width, 125),
                                     padding: EdgeInsets.all(15),
                                     animationDuration:
-                                        Duration(milliseconds: 300),
+                                    Duration(milliseconds: 300),
                                     borderRadius: 10,
                                     onOpen: () => print('$i cell opened'),
                                     onClose: () => print('$i cell closed'),
@@ -180,7 +185,7 @@ class LeaderBoardScreen extends StatelessWidget {
         return GestureDetector(
           onTap: () {
             final foldingCellState =
-                context.findAncestorStateOfType<SimpleFoldingCellState>();
+            context.findAncestorStateOfType<SimpleFoldingCellState>();
             foldingCellState?.toggleFold();
           },
           child: Container(
@@ -329,7 +334,9 @@ class LeaderBoardScreen extends StatelessWidget {
       String handle,
       TextStyle titleTextStyle,
       TextStyle contentTextStyle,
-      List<dynamic> country) {
+      String countryCode,
+      String countryName,
+      ) {
     return GestureDetector(
       onTap: null,
       child: ClipRRect(
@@ -366,26 +373,18 @@ class LeaderBoardScreen extends StatelessWidget {
                         SizedBox(
                           height: 20,
                         ),
-                        Stack(
-                          children: [
-                            Container(
-                              height: 40,
-                              width: 60,
-                              color: Colors.grey,
-                            ),
-                            Flag(
-                              country[0],
-                              height: 40,
-                              fit: BoxFit.fill,
-                              width: 60,
-                            ),
-                          ],
+                        Container(
+                          child: SvgPicture.network(
+                            'https://www.stopstalk.com/static/flag-icon/flags/4x3/$countryCode.svg',
+                            width: 60,
+                            height: 40,
+                          ),
                         ),
                         SizedBox(
                           height: 5,
                         ),
                         Text(
-                          country[1].toUpperCase(),
+                          countryName.toUpperCase(),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
@@ -438,7 +437,7 @@ class LeaderBoardScreen extends StatelessWidget {
       return GestureDetector(
         onTap: () {
           final foldingCellState =
-              context.findAncestorStateOfType<SimpleFoldingCellState>();
+          context.findAncestorStateOfType<SimpleFoldingCellState>();
           foldingCellState?.toggleFold();
         },
         child: ClipRRect(
@@ -537,15 +536,15 @@ class LeaderBoardScreen extends StatelessWidget {
                               children: [
                                 perDayChanges < 0
                                     ? Icon(
-                                        Icons.arrow_drop_down,
-                                        size: 35,
-                                        color: Colors.red,
-                                      )
+                                  Icons.arrow_drop_down,
+                                  size: 35,
+                                  color: Colors.red,
+                                )
                                     : Icon(
-                                        Icons.arrow_drop_up,
-                                        size: 35,
-                                        color: Colors.green,
-                                      ),
+                                  Icons.arrow_drop_up,
+                                  size: 35,
+                                  color: Colors.green,
+                                ),
                                 AutoSizeText(
                                   perDayChanges.toStringAsPrecision(5),
                                   minFontSize: 6,
