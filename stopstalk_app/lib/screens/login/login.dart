@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 import 'login_form.dart';
 import '../profile.dart';
@@ -29,9 +28,9 @@ class Login extends StatelessWidget {
                     fontFamily: "WorkSansMedium")),
           ),
           FlatButton(
-            padding: EdgeInsets.all(0),
-            child: SvgPicture.asset(
-              'assets/images/Layer 1.svg',
+            padding: EdgeInsets.all(0.0),
+            child: Image.asset(
+              'assets/images/google.png',
               width: width / 2,
             ),
             onPressed: () {},
