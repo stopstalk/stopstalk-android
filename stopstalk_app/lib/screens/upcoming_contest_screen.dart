@@ -21,22 +21,6 @@ class UpcomingContestScreen extends StatefulWidget {
 }
 
 class _UpcomingContestState extends State<UpcomingContestScreen> {
-  TextStyle get titleTextStyle => TextStyle(
-    fontFamily: 'OpenSans',
-    fontSize: 12,
-    height: 1,
-    letterSpacing: .2,
-    fontWeight: FontWeight.w800,
-    color: Color(0xffafaabf),
-  );
-
-  TextStyle get contentTextStyle => TextStyle(
-    fontFamily: 'Oswald',
-    fontSize: 20,
-    height: 1.8,
-    letterSpacing: .3,
-  );
-
   Future<List<Contest>> _getContests() async {
     String url = "https://www.stopstalk.com/contests.json";
     var data = await http.get(url);
@@ -57,15 +41,15 @@ class _UpcomingContestState extends State<UpcomingContestScreen> {
 
   List<String> startTimes = ["Loading"];
 
-  Future<List<String>> _getStartTimes() async {
-    startTimes = [];
-    String url = "https://www.stopstalk.com/contests.json";
-    var data = await http.get(url);
-    var jsonData = jsonDecode(data.body);
-    for (var contest in jsonData["upcoming"]) {
-      startTimes.add(timeToDate(contest["StartTime"]));
-    }
-  }
+  // Future<List<String>> _getStartTimes() async {
+  //   startTimes = [];
+  //   String url = "https://www.stopstalk.com/contests.json";
+  //   var data = await http.get(url);
+  //   var jsonData = jsonDecode(data.body);
+  //   for (var contest in jsonData["upcoming"]) {
+  //     startTimes.add(timeToDate(contest["StartTime"]));
+  //   }
+  // }
 
   String timeToDate(String startTime) {
     final List<String> months = [
@@ -173,13 +157,13 @@ class _UpcomingContestState extends State<UpcomingContestScreen> {
 
   final images = {
     "CODEFORCES":
-    "https://1.bp.blogspot.com/-pBimI1ZhYAA/Wnde0nmCz8I/AAAAAAAABPI/5LZ2y9tBOZIV-pm9KNbyNy3WZJkGS54WgCPcBGAYYCw/s1600/codeforce.png",
+        "https://1.bp.blogspot.com/-pBimI1ZhYAA/Wnde0nmCz8I/AAAAAAAABPI/5LZ2y9tBOZIV-pm9KNbyNy3WZJkGS54WgCPcBGAYYCw/s1600/codeforce.png",
     "CODECHEF":
-    "https://i.pinimg.com/originals/c5/d9/fc/c5d9fc1e18bcf039f464c2ab6cfb3eb6.jpg",
+        "https://i.pinimg.com/originals/c5/d9/fc/c5d9fc1e18bcf039f464c2ab6cfb3eb6.jpg",
     "HACKEREARTH":
-    "https://upload.wikimedia.org/wikipedia/commons/e/e8/HackerEarth_logo.png",
+        "https://upload.wikimedia.org/wikipedia/commons/e/e8/HackerEarth_logo.png",
     "HACKERRANK":
-    "https://info.hackerrank.com/rs/487-WAY-049/images/Podcast-ChannelCover-Final.jpg"
+        "https://info.hackerrank.com/rs/487-WAY-049/images/Podcast-ChannelCover-Final.jpg"
   };
 
   @override
@@ -222,7 +206,7 @@ class _UpcomingContestState extends State<UpcomingContestScreen> {
                             snapshot.data[index].startTime,
                             snapshot.data[index].url),
                         cellSize:
-                        Size(MediaQuery.of(context).size.width, 125.0),
+                            Size(MediaQuery.of(context).size.width, 125.0),
                         padding: EdgeInsets.all(10.0),
                         animationDuration: Duration(milliseconds: 300),
                         borderRadius: 10.0,
@@ -244,7 +228,7 @@ class _UpcomingContestState extends State<UpcomingContestScreen> {
         return GestureDetector(
           onTap: () {
             final foldingCellState =
-            context.findAncestorStateOfType<SimpleFoldingCellState>();
+                context.findAncestorStateOfType<SimpleFoldingCellState>();
             foldingCellState?.toggleFold();
           },
           child: Container(
@@ -342,7 +326,11 @@ class _UpcomingContestState extends State<UpcomingContestScreen> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Padding(
-                                padding: const EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0, bottom: 4.0),
+                                padding: const EdgeInsets.only(
+                                    left: 8.0,
+                                    right: 8.0,
+                                    top: 8.0,
+                                    bottom: 4.0),
                                 child: Icon(
                                   Icons.calendar_today,
                                   size: 20,
@@ -364,7 +352,8 @@ class _UpcomingContestState extends State<UpcomingContestScreen> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Padding(
-                                padding: const EdgeInsets.only(right: 8.0, top: 4.0),
+                                padding:
+                                    const EdgeInsets.only(right: 8.0, top: 4.0),
                                 child: Icon(
                                   Icons.access_alarm,
                                   size: 20,
@@ -456,7 +445,8 @@ class _UpcomingContestState extends State<UpcomingContestScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(top: 8.0, right: 8.0, left: 8.0, bottom: 4.0),
+                          padding: const EdgeInsets.only(
+                              top: 8.0, right: 8.0, left: 8.0, bottom: 4.0),
                           child: Icon(
                             Icons.calendar_today,
                             size: 20,
@@ -511,7 +501,7 @@ class _UpcomingContestState extends State<UpcomingContestScreen> {
       return GestureDetector(
         onTap: () {
           final foldingCellState =
-          context.findAncestorStateOfType<SimpleFoldingCellState>();
+              context.findAncestorStateOfType<SimpleFoldingCellState>();
           foldingCellState?.toggleFold();
         },
         child: ClipRRect(
