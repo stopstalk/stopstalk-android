@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:folding_cell/folding_cell.dart';
 import 'package:flag/flag.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 import '../widgets/app_drawer.dart';
 import '../classes/leaderboard.dart';
@@ -127,6 +128,7 @@ class LeaderBoardScreen extends StatelessWidget {
                                       snapshot.data[i].institute,
                                     ),
                                     innerTopWidget: _buildInnerTopWidget(
+                                      context,
                                       snapshot.data[i].name,
                                       snapshot.data[i].stopstalkHandle,
                                       titleTextStyle,
@@ -322,6 +324,7 @@ class LeaderBoardScreen extends StatelessWidget {
   }
 
   Widget _buildInnerTopWidget(
+      BuildContext context,
       String name,
       String handle,
       TextStyle titleTextStyle,
@@ -345,46 +348,48 @@ class LeaderBoardScreen extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Padding(
-                    padding: EdgeInsets.only(left: 8),
-                    child: Center(
-                      child: Text(
-                        name,
-                        style: contentTextStyle,
-                      ),
+                  Flexible(
+                    child: Text(
+                      name,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: contentTextStyle,
                     ),
                   ),
                   SizedBox(
                     width: 20,
                   ),
-                  Column(
-                    children: [
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Flag(
-                        country[0],
-                        height: 40,
-                        fit: BoxFit.fill,
-                        width: 60,
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Text(
-                        country[1].toUpperCase(),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          fontFamily: 'OpenSans',
-                          fontSize: 15,
-                          height: 1,
-                          letterSpacing: .2,
-                          fontWeight: FontWeight.w300,
-                          color: Colors.black,
+                  Flexible(
+                    fit: FlexFit.loose,
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: 20,
                         ),
-                      ),
-                    ],
+                        Flag(
+                          country[0],
+                          height: 40,
+                          fit: BoxFit.fill,
+                          width: 60,
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          country[1].toUpperCase(),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            fontFamily: 'OpenSans',
+                            fontSize: 15,
+                            height: 1,
+                            letterSpacing: .2,
+                            fontWeight: FontWeight.w300,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
@@ -470,7 +475,7 @@ class LeaderBoardScreen extends StatelessWidget {
                                   width: 15,
                                 ),
                                 Flexible(
-                                  child: Text(
+                                  child: AutoSizeText(
                                     institute,
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
@@ -487,75 +492,95 @@ class LeaderBoardScreen extends StatelessWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Text(
-                            'StopStalk Rating'.toUpperCase(),
-                            style: titleTextStyle,
-                          ),
-                          Text(
-                            rating.toString(),
-                            style: contentTextStyle,
-                          ),
-                        ],
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Text(
-                            'Per Day Changes'.toUpperCase(),
-                            style: titleTextStyle,
-                          ),
-                          Row(
+                  child: Expanded(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-                              perDayChanges < 0
-                                  ? Icon(
-                                Icons.arrow_drop_down,
-                                size: 35,
-                                color: Colors.red,
-                              )
-                                  : Icon(
-                                Icons.arrow_drop_up,
-                                size: 35,
-                                color: Colors.green,
+                              AutoSizeText(
+                                'StopStalk Rating'.toUpperCase(),
+                                minFontSize: 6,
+                                maxLines: 1,
+                                style: titleTextStyle,
                               ),
-                              Text(
-                                perDayChanges.toStringAsPrecision(5),
-                                style: TextStyle(
-                                  fontFamily: 'Oswald',
-                                  fontSize: 20,
-                                  height: 1.8,
-                                  letterSpacing: .3,
-                                  color: perDayChanges < 0
-                                      ? Colors.red
-                                      : Colors.green,
-                                ),
+                              AutoSizeText(
+                                rating.toString(),
+                                maxLines: 1,
+                                minFontSize: 6,
+                                style: contentTextStyle,
                               ),
                             ],
                           ),
-                        ],
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Text(
-                            'Custom Users'.toUpperCase(),
-                            style: titleTextStyle,
+                        ),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              AutoSizeText(
+                                'Per Day Changes'.toUpperCase(),
+                                maxLines: 1,
+                                minFontSize: 6,
+                                style: titleTextStyle,
+                              ),
+                              Row(
+                                children: [
+                                  perDayChanges < 0
+                                      ? Icon(
+                                    Icons.arrow_drop_down,
+                                    size: 35,
+                                    color: Colors.red,
+                                  )
+                                      : Icon(
+                                    Icons.arrow_drop_up,
+                                    size: 35,
+                                    color: Colors.green,
+                                  ),
+                                  AutoSizeText(
+                                    perDayChanges.toStringAsPrecision(5),
+                                    minFontSize: 6,
+                                    maxLines: 1,
+                                    style: TextStyle(
+                                      fontFamily: 'Oswald',
+                                      fontSize: 20,
+                                      height: 1.8,
+                                      letterSpacing: .3,
+                                      color: perDayChanges < 0
+                                          ? Colors.red
+                                          : Colors.green,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
-                          Text(
-                            customUsers.toString(),
-                            style: contentTextStyle,
+                        ),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              AutoSizeText(
+                                'Custom Users'.toUpperCase(),
+                                maxLines: 1,
+                                minFontSize: 6,
+                                style: titleTextStyle,
+                              ),
+                              AutoSizeText(
+                                customUsers.toString(),
+                                minFontSize: 6,
+                                maxLines: 1,
+                                style: contentTextStyle,
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                    ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],
