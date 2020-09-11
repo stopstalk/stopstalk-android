@@ -11,6 +11,7 @@ class Login extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
     return Center(
       child: Column(
         children: [
@@ -21,17 +22,18 @@ class Login extends StatelessWidget {
           LoginForm(),
           Padding(
             padding: const EdgeInsets.only(top: 15, bottom: 12),
-            child: Text(
-              "or",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20.0,
-                  fontFamily: "WorkSansMedium"),
-            ),
+            child: Text("or",
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20.0,
+                    fontFamily: "WorkSansMedium")),
           ),
           FlatButton(
             padding: EdgeInsets.all(0),
-            child: SvgPicture.asset('assets/images/Layer 1.svg', height: 50.0),
+            child: SvgPicture.asset(
+              'assets/images/Layer 1.svg',
+              width: width / 2,
+            ),
             onPressed: () {},
           ),
           SizedBox(height: 30),

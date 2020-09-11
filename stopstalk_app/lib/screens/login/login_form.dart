@@ -138,7 +138,7 @@ class _LoginFormState extends State<LoginForm> {
           ),
           SizedBox(height: 25),
           Container(
-            width: width / 2.25,
+            width: width / 2,
             decoration: BoxDecoration(
               color: Colors.deepPurpleAccent[400],
               borderRadius: BorderRadius.circular(8),
