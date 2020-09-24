@@ -500,86 +500,103 @@ class LeaderBoardScreen extends StatelessWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Expanded(
+                  child: Container(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            AutoSizeText(
-                              'StopStalk Rating'.toUpperCase(),
-                              minFontSize: 6,
-                              maxLines: 1,
-                              style: titleTextStyle,
-                            ),
-                            AutoSizeText(
-                              rating.toString(),
-                              maxLines: 1,
-                              minFontSize: 6,
-                              style: contentTextStyle,
-                            ),
-                          ],
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.28,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              AutoSizeText(
+                                'StopStalk Rating'.toUpperCase(),
+                                minFontSize: 4,
+                                maxLines: 1,
+                                style: titleTextStyle,
+                              ),
+                              AutoSizeText(
+                                rating.toString(),
+                                maxLines: 1,
+                                minFontSize: 4,
+                                style: contentTextStyle,
+                              ),
+                            ],
+                          ),
                         ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            AutoSizeText(
-                              'Per Day Changes'.toUpperCase(),
-                              maxLines: 1,
-                              minFontSize: 6,
-                              style: titleTextStyle,
-                            ),
-                            Row(
-                              children: [
-                                perDayChanges < 0
-                                    ? Icon(
-                                  Icons.arrow_drop_down,
-                                  size: 35,
-                                  color: Colors.red,
-                                )
-                                    : Icon(
-                                  Icons.arrow_drop_up,
-                                  size: 35,
-                                  color: Colors.green,
-                                ),
-                                AutoSizeText(
-                                  perDayChanges.toStringAsPrecision(5),
-                                  minFontSize: 6,
-                                  maxLines: 1,
-                                  style: TextStyle(
-                                    fontFamily: 'Oswald',
-                                    fontSize: 20,
-                                    height: 1.8,
-                                    letterSpacing: .3,
-                                    color: perDayChanges < 0
-                                        ? Colors.red
-                                        : Colors.green,
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.28,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              AutoSizeText(
+                                'Per Day Changes'.toUpperCase(),
+                                maxLines: 1,
+                                minFontSize: 4,
+                                style: titleTextStyle,
+                              ),
+                              Row(
+                                children: [
+                                  perDayChanges < 0
+                                      ? Icon(
+                                    Icons.arrow_drop_down,
+                                    size: MediaQuery.of(context)
+                                        .size
+                                        .width *
+                                        0.07,
+                                    color: Colors.red,
+                                  )
+                                      : Icon(
+                                    Icons.arrow_drop_up,
+                                    size: MediaQuery.of(context)
+                                        .size
+                                        .width *
+                                        0.07,
+                                    color: Colors.green,
                                   ),
-                                ),
-                              ],
-                            ),
-                          ],
+                                  AutoSizeText(
+                                    perDayChanges > 1 || perDayChanges < -1
+                                        ? perDayChanges.toStringAsPrecision(5)
+                                        : perDayChanges.toStringAsPrecision(4),
+                                    minFontSize: 4,
+                                    maxLines: 1,
+                                    style: TextStyle(
+                                      fontFamily: 'Oswald',
+                                      fontSize: 20,
+                                      height: 1.8,
+                                      letterSpacing: .3,
+                                      color: perDayChanges < 0
+                                          ? Colors.red
+                                          : Colors.green,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            AutoSizeText(
-                              'Custom Users'.toUpperCase(),
-                              maxLines: 1,
-                              minFontSize: 6,
-                              style: titleTextStyle,
-                            ),
-                            AutoSizeText(
-                              customUsers.toString(),
-                              minFontSize: 6,
-                              maxLines: 1,
-                              style: contentTextStyle,
-                            ),
-                          ],
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.24,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              AutoSizeText(
+                                'Custom Users'.toUpperCase(),
+                                maxLines: 1,
+                                minFontSize: 4,
+                                style: titleTextStyle,
+                              ),
+                              AutoSizeText(
+                                customUsers.toString(),
+                                minFontSize: 4,
+                                maxLines: 1,
+                                style: contentTextStyle,
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     ),
