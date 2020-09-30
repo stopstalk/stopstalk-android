@@ -10,6 +10,7 @@ import '../screens/testimonials_screen.dart';
 import '../screens/trending_problems_screen.dart';
 import '../screens/upcoming_contest_screen.dart';
 import '../screens/user_editorials.dart';
+import '../screens/dashboard.dart';
 
 class AppDrawer extends StatelessWidget {
   @override
@@ -27,6 +28,15 @@ class AppDrawer extends StatelessWidget {
               onTap: () {
                 Navigator.of(context)
                     .pushReplacementNamed(ProfileScreen.routeName);
+              },
+            ),
+            Divider(),
+            ListTile(
+              leading: Icon(Icons.dashboard),
+              title: Text('Dashboard'),
+              onTap: () {
+                Navigator.of(context)
+                    .pushReplacementNamed(Dashboard.routeName);
               },
             ),
             Divider(),

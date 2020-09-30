@@ -10,6 +10,7 @@ import './screens/trending_problems_screen.dart';
 import './screens/upcoming_contest_screen.dart';
 import './screens/login/login_screen.dart';
 import './screens/user_editorials.dart';
+import './screens/dashboard.dart';
 
 void main() => runApp(MyApp());
 
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
       home: LoginPage(),
       routes: {
         LoginPage.routeName: (ctx) => LoginPage(),
+        Dashboard.routeName: (ctx) => Dashboard(),
         ProfileScreen.routeName: (ctx) => ProfileScreen(),
         UserEditorialScreen.routeName: (ctx) => UserEditorialScreen(),
         SearchFriendsScreen.routeName: (ctx) => SearchFriendsScreen(),
