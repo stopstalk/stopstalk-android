@@ -106,7 +106,7 @@ class ProfileScreen extends StatelessWidget {
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: AutoSizeText(
-                                      'LR SM Vissanji Academy School',
+                                      'LR SM Vissanjii Academy School',
                                       minFontSize: 10,
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
