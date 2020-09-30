@@ -6,7 +6,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import '../widgets/app_drawer.dart';
 import '../widgets/streaks_profile.dart';
 import '../widgets/platform_data_profile.dart';
-import '../widgets/acceptance_graph.dart';
+//import '../widgets/acceptance_graph.dart';
 
 class ProfileScreen extends StatelessWidget {
   static const routeName = '/profile';
@@ -88,7 +88,7 @@ class ProfileScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             Expanded(
-                            flex: 2,
+                              flex: 2,
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 //crossAxisAlignment: CrossAxisAlignment.center,
@@ -122,7 +122,8 @@ class ProfileScreen extends StatelessWidget {
                             Expanded(
                               flex: 1,
                               child: Column(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   SvgPicture.network(
@@ -183,48 +184,47 @@ class ProfileScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                 Container(
-                    height: MediaQuery.of(context).size.height * 0.14,
-                    width: MediaQuery.of(context).size.width,
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
-                      children: <Widget>[
-                        Streaks(
-                          heading: "Days",
-                          subtitle1: "Current",
-                          subtitle2: "Maximum",
-                          value1: 54,
-                          value2: 80,
-                        ),
-                        Streaks(
-                          heading: "Accepted Solutions",
-                          subtitle1: "Current",
-                          subtitle2: "Maximum",
-                          value1: 54,
-                          value2: 80,
-                        ),
-                        Streaks(
-                          heading: "Problems",
-                          subtitle1: "Solved",
-                          subtitle2: "Total",
-                          value1: 54,
-                          value2: 80,
-                        ),
-                      ],
-                    ),
-                  ),
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Text(
-                    'Acceptance Graph',
-                    style: TextStyle(
-                      fontSize: 17,
-                      fontWeight: FontWeight.bold,
-                    ),
+                Container(
+                  height: MediaQuery.of(context).size.height * 0.14,
+                  width: MediaQuery.of(context).size.width,
+                  child: ListView(
+                    scrollDirection: Axis.horizontal,
+                    children: <Widget>[
+                      Streaks(
+                        heading: "Days",
+                        subtitle1: "Current",
+                        subtitle2: "Maximum",
+                        value1: 54,
+                        value2: 80,
+                      ),
+                      Streaks(
+                        heading: "Accepted Solutions",
+                        subtitle1: "Current",
+                        subtitle2: "Maximum",
+                        value1: 54,
+                        value2: 80,
+                      ),
+                      Streaks(
+                        heading: "Problems",
+                        subtitle1: "Solved",
+                        subtitle2: "Total",
+                        value1: 54,
+                        value2: 80,
+                      ),
+                    ],
                   ),
                 ),
-                AcceptanceGraph(),
-
+//                Padding(
+//                  padding: const EdgeInsets.all(10.0),
+//                  child: Text(
+//                    'Acceptance Graph',
+//                    style: TextStyle(
+//                      fontSize: 17,
+//                      fontWeight: FontWeight.bold,
+//                    ),
+//                  ),
+//                ),
+//                AcceptanceGraph(),
               ],
             ),
           ),
