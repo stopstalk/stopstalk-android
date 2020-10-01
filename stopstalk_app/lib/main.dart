@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_config/flutter_config.dart';
 
 import './screens/profile.dart';
 import './screens/leaderboard_screen.dart';
@@ -11,7 +12,14 @@ import './screens/upcoming_contest_screen.dart';
 import './screens/login/login_screen.dart';
 import './screens/user_editorials.dart';
 
-void main() => runApp(MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await FlutterConfig.loadEnvVariables();
+  FlutterConfig.variables.forEach((k, v) {
+    print('$k: $v');
+  });
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override

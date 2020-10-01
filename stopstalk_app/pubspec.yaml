@@ -34,6 +34,7 @@ dependencies:
   supercharged: "^1.10.0"
   flutter_secure_storage: "^3.3.3"
   page_transition: "^1.1.6"
+  flutter_config: "^1.0.7"
 
   flutter_svg: ^0.18.1
   # The following adds the Cupertino Icons font to your application.
