@@ -17,23 +17,26 @@ class Streaks extends StatelessWidget {
   });
 
   TextStyle get titleTextStyle => TextStyle(
-    color: Colors.black54,
-    fontWeight: FontWeight.bold,
-    fontSize: 13,
-  );
+        color: Colors.black54,
+        fontWeight: FontWeight.bold,
+        fontSize: 13,
+      );
 
   TextStyle get contentTextStyle => TextStyle(
-    color: Colors.black,
-    fontWeight: FontWeight.bold,
-    fontSize: 13,
-  );
+        color: Colors.black,
+        fontWeight: FontWeight.bold,
+        fontSize: 13,
+      );
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
-        width: 180,
+        height: MediaQuery.of(context).orientation == Orientation.landscape
+            ? MediaQuery.of(context).size.height * 0.3
+            : MediaQuery.of(context).size.height * 0.15,
+        width: MediaQuery.of(context).size.width * 0.4,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
           boxShadow: [

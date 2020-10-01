@@ -33,12 +33,18 @@ class ProfileScreen extends StatelessWidget {
                 Stack(
                   children: [
                     Container(
-                      height: MediaQuery.of(context).size.height * 0.18,
+                      height: MediaQuery.of(context).orientation ==
+                              Orientation.landscape
+                          ? MediaQuery.of(context).size.height * 0.4
+                          : MediaQuery.of(context).size.height * 0.18,
                     ),
                     Positioned(
                       child: Container(
                         width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.height * 0.1,
+                        height: MediaQuery.of(context).orientation ==
+                                Orientation.landscape
+                            ? MediaQuery.of(context).size.height * 0.2
+                            : MediaQuery.of(context).size.height * 0.1,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.only(
                             bottomLeft: Radius.circular(30),
@@ -56,7 +62,6 @@ class ProfileScreen extends StatelessWidget {
                       ),
                     ),
                     Positioned(
-                      //top: MediaQuery.of(context).size.height * 0.0001,
                       left: MediaQuery.of(context).size.width * 0.35,
                       child: AutoSizeText(
                         "My Profile",
@@ -68,11 +73,17 @@ class ProfileScreen extends StatelessWidget {
                       ),
                     ),
                     Positioned(
-                      top: MediaQuery.of(context).size.height * 0.047,
+                      top: MediaQuery.of(context).orientation ==
+                              Orientation.landscape
+                          ? MediaQuery.of(context).size.height * 0.075
+                          : MediaQuery.of(context).size.height * 0.047,
                       left: MediaQuery.of(context).size.width * 0.15,
                       child: Container(
                         width: MediaQuery.of(context).size.width * 0.7,
-                        height: MediaQuery.of(context).size.height * 0.12,
+                        height: MediaQuery.of(context).orientation ==
+                                Orientation.landscape
+                            ? MediaQuery.of(context).size.height * 0.3
+                            : MediaQuery.of(context).size.height * 0.12,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(30),
                           boxShadow: [
@@ -151,7 +162,10 @@ class ProfileScreen extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  height: MediaQuery.of(context).size.height * 0.15,
+                  height: MediaQuery.of(context).orientation ==
+                          Orientation.landscape
+                      ? MediaQuery.of(context).size.height * 0.3
+                      : MediaQuery.of(context).size.height * 0.15,
                   width: MediaQuery.of(context).size.width,
                   child: ListView(
                     scrollDirection: Axis.horizontal,
@@ -185,7 +199,10 @@ class ProfileScreen extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  height: MediaQuery.of(context).size.height * 0.14,
+                  height: MediaQuery.of(context).orientation ==
+                          Orientation.landscape
+                      ? MediaQuery.of(context).size.height * 0.3
+                      : MediaQuery.of(context).size.height * 0.15,
                   width: MediaQuery.of(context).size.width,
                   child: ListView(
                     scrollDirection: Axis.horizontal,

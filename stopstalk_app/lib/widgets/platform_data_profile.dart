@@ -27,7 +27,10 @@ class ProfilePlatformData extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
-        width: MediaQuery.of(context).size.width * 0.45,
+        height: MediaQuery.of(context).orientation == Orientation.landscape
+            ? MediaQuery.of(context).size.height * 0.3
+            : MediaQuery.of(context).size.height * 0.15,
+        width: MediaQuery.of(context).size.width * 0.4,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
           color: Color(0XFFeeeeee),
@@ -43,7 +46,7 @@ class ProfilePlatformData extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             SizedBox(
-              width: MediaQuery.of(context).size.width * 0.15,
+              width: MediaQuery.of(context).size.width * 0.13,
               child: Image.network(platformImgUrl),
             ),
             Padding(
@@ -70,7 +73,7 @@ class ProfilePlatformData extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    "Solved Count",
+                    "Solved",
                     style: titleTextStyle,
                   ),
                   Text(
