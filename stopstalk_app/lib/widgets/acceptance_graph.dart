@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:heatmap_calendar/heatmap_calendar.dart';
 import 'package:heatmap_calendar/time_utils.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AcceptanceGraph extends StatelessWidget {
   final List<int> colorNum = [1, 5, 10, 15, 20, 25, 30, 35, 4, 18];
@@ -134,11 +135,36 @@ class AcceptanceGraph extends StatelessWidget {
                   padding: const EdgeInsets.only(left: 8.0),
                   child: Text('More'),
                 ),
+                SizedBox(
+                  width: 50,
+                ),
+                FlatButton(
+                  color: Color(0xFF0018ca),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(6.0),
+                  ),
+                  child: Text(
+                    'Know more',
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                  onPressed: _launchURL,
+                ),
               ],
             ),
           ),
         ),
       ],
     );
+  }
+}
+
+_launchURL() async {
+  const url = 'https://www.stopstalk.com/user/profile/duhaditi';
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    throw 'Could not launch $url';
   }
 }
