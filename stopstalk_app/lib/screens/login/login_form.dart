@@ -155,7 +155,7 @@ class _LoginFormState extends State<LoginForm> {
                         setState(() => _loader = false);
                         if (jwt != null) {
                           writeDataSecureStore("jwt", jwt);
-                          Navigator.push(
+                          Navigator.pushReplacement(
                             context,
                             PageTransition(
                                 type: PageTransitionType.fade,
