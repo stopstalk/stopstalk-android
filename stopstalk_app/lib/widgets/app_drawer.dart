@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import '../screens/leaderboard_screen.dart';
 import '../screens/profile.dart';
@@ -11,7 +12,14 @@ import '../screens/trending_problems_screen.dart';
 import '../screens/upcoming_contest_screen.dart';
 import '../screens/user_editorials.dart';
 
-class AppDrawer extends StatelessWidget {
+import '../utils/auth.dart';
+
+class AppDrawer extends StatefulWidget {
+  @override
+  _AppDrawerState createState() => _AppDrawerState();
+}
+
+class _AppDrawerState extends State<AppDrawer> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -19,7 +27,14 @@ class AppDrawer extends StatelessWidget {
         child: Column(
           children: <Widget>[
             AppBar(
-              title: Text('Hello User'),
+              title: FutureBuilder(
+                  future: getCurrentUser(),
+                  builder: (ctx, snapshot) {
+                    if (snapshot.data != null) {
+                      return Text(snapshot.data.stopstalk_handle);
+                    }
+                    return Text('Hello User');
+                  }),
             ),
             ListTile(
               leading: Icon(Icons.person),
