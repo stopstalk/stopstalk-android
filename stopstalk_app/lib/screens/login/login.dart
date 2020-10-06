@@ -41,7 +41,6 @@ class Login extends StatelessWidget {
             children: [
               FlatButton(
                 onPressed: () {
-                  storage.write(key: "user", value: '');
                   Navigator.push(
                     context,
                     PageTransition(

@@ -1,17 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:page_transition/page_transition.dart';
 
-import 'dart:async';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-
 import '../profile.dart';
 
-const SERVER_IP = 'http://10.0.2.2:8001';
-final storage = FlutterSecureStorage();
+import '../../utils/api.dart';
+import '../../utils/storage.dart';
 
 class LoginForm extends StatefulWidget {
   @override
@@ -39,17 +34,6 @@ class _LoginFormState extends State<LoginForm> {
             ),
             content: Text(text)),
       );
-
-  Future<String> attemptLogIn(String email, String password) async {
-    var res = await http.get(
-      "$SERVER_IP/api/login_token?email=$email&password=$password",
-    );
-    if (res.statusCode == 200) {
-      var jsonData = jsonDecode(res.body);
-      return jsonData['token'];
-    }
-    return null;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -170,8 +154,8 @@ class _LoginFormState extends State<LoginForm> {
                         var jwt = await attemptLogIn(email, password);
                         setState(() => _loader = false);
                         if (jwt != null) {
-                          storage.write(key: "jwt", value: jwt);
-                          Navigator.push(
+                          writeDataSecureStore("jwt", jwt);
+                          Navigator.pushReplacement(
                             context,
                             PageTransition(
                                 type: PageTransitionType.fade,
