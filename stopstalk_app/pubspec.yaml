@@ -58,6 +58,8 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/
+    - assets/platform_logos/
+    - assets/flags/
   
   fonts:
     - family: WorkSansSemiBold

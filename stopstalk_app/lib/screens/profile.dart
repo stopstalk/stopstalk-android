@@ -10,6 +10,7 @@ import '../widgets/acceptance_graph.dart';
 
 class ProfileScreen extends StatelessWidget {
   static const routeName = '/profile';
+  final scaffoldKey = GlobalKey<ScaffoldState>();
 
   TextStyle get titleTextStyle => TextStyle(
         color: Colors.black,
@@ -19,11 +20,7 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color(0xFF2542ff),
-        elevation: 0,
-        toolbarHeight: 40,
-      ),
+      key: scaffoldKey,
       drawer: AppDrawer(),
       body: Stack(
         children: [
@@ -36,7 +33,7 @@ class ProfileScreen extends StatelessWidget {
                       height: MediaQuery.of(context).orientation ==
                               Orientation.landscape
                           ? MediaQuery.of(context).size.height * 0.4
-                          : MediaQuery.of(context).size.height * 0.18,
+                          : MediaQuery.of(context).size.height * 0.2,
                     ),
                     Positioned(
                       child: Container(
@@ -44,7 +41,7 @@ class ProfileScreen extends StatelessWidget {
                         height: MediaQuery.of(context).orientation ==
                                 Orientation.landscape
                             ? MediaQuery.of(context).size.height * 0.2
-                            : MediaQuery.of(context).size.height * 0.1,
+                            : MediaQuery.of(context).size.height * 0.12,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.only(
                             bottomLeft: Radius.circular(30),
@@ -62,21 +59,23 @@ class ProfileScreen extends StatelessWidget {
                       ),
                     ),
                     Positioned(
-                      left: MediaQuery.of(context).size.width * 0.35,
-                      child: AutoSizeText(
-                        "My Profile",
-                        minFontSize: 15,
-                        style: TextStyle(
+                      top: MediaQuery.of(context).size.height * 0.03,
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.menu,
                           color: Colors.white,
-                          fontSize: 25,
                         ),
+                        onPressed: () {
+                          AppDrawer();
+                          scaffoldKey.currentState.openDrawer();
+                        },
                       ),
                     ),
                     Positioned(
                       top: MediaQuery.of(context).orientation ==
                               Orientation.landscape
                           ? MediaQuery.of(context).size.height * 0.075
-                          : MediaQuery.of(context).size.height * 0.047,
+                          : MediaQuery.of(context).size.height * 0.07,
                       left: MediaQuery.of(context).size.width * 0.15,
                       child: Container(
                         width: MediaQuery.of(context).size.width * 0.7,
@@ -137,8 +136,8 @@ class ProfileScreen extends StatelessWidget {
                                     MainAxisAlignment.spaceAround,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  SvgPicture.network(
-                                    'https://www.stopstalk.com/static/flag-icon/flags/4x3/in.svg',
+                                  SvgPicture.asset(
+                                    'assets/flags/in.svg',
                                     width: 65,
                                     height: 45,
                                   ),
@@ -172,17 +171,39 @@ class ProfileScreen extends StatelessWidget {
                     children: <Widget>[
                       ProfilePlatformData(
                         platformImgUrl:
-                            'https://1.bp.blogspot.com/-pBimI1ZhYAA/Wnde0nmCz8I/AAAAAAAABPI/5LZ2y9tBOZIV-pm9KNbyNy3WZJkGS54WgCPcBGAYYCw/s1600/codeforce.png',
+                            'assets/platform_logos/codeforces_small.png',
                         solvedCount: 65,
                       ),
                       ProfilePlatformData(
                         platformImgUrl:
-                            'https://i.pinimg.com/originals/c5/d9/fc/c5d9fc1e18bcf039f464c2ab6cfb3eb6.jpg',
+                            'assets/platform_logos/codechef_small.png',
+                        solvedCount: 65,
+                      ),
+                      ProfilePlatformData(
+                        platformImgUrl: 'assets/platform_logos/spoj_small.png',
                         solvedCount: 65,
                       ),
                       ProfilePlatformData(
                         platformImgUrl:
-                            'https://res-5.cloudinary.com/crunchbase-production/image/upload/c_lpad,h_170,w_170,f_auto,b_white,q_auto:eco/p1mckvzowm4fzzixscah',
+                            'assets/platform_logos/atcoder_small.png',
+                        solvedCount: 65,
+                      ),
+                      ProfilePlatformData(
+                        platformImgUrl:
+                            'assets/platform_logos/hackerearth_small.png',
+                        solvedCount: 65,
+                      ),
+                      ProfilePlatformData(
+                        platformImgUrl:
+                            'assets/platform_logos/hackerrank_small.png',
+                        solvedCount: 65,
+                      ),
+                      ProfilePlatformData(
+                        platformImgUrl: 'assets/platform_logos/uva_small.png',
+                        solvedCount: 65,
+                      ),
+                      ProfilePlatformData(
+                        platformImgUrl: 'assets/platform_logos/timus_small.png',
                         solvedCount: 65,
                       ),
                     ],

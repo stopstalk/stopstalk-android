@@ -47,7 +47,7 @@ class ProfilePlatformData extends StatelessWidget {
           children: [
             SizedBox(
               width: MediaQuery.of(context).size.width * 0.13,
-              child: Image.network(platformImgUrl),
+              child: Image.asset(platformImgUrl),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),

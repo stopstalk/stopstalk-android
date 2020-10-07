@@ -374,8 +374,8 @@ class LeaderBoardScreen extends StatelessWidget {
                           height: 20,
                         ),
                         Container(
-                          child: SvgPicture.network(
-                            'https://www.stopstalk.com/static/flag-icon/flags/4x3/$countryCode.svg',
+                          child: SvgPicture.asset(
+                            'assets/flags/$countryCode.svg',
                             width: 60,
                             height: 40,
                           ),
