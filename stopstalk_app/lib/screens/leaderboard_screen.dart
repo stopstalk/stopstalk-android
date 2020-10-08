@@ -378,8 +378,7 @@ class LeaderBoardScreen extends StatelessWidget {
                             width: 60,
                             height: 40,
                             placeholderBuilder: (context) => Container(
-                              child: CircularProgressIndicator(),
-                            ),
+                              child: CircularProgressIndicator()),
                           ),
                         ),
                         SizedBox(
