@@ -50,8 +50,7 @@ class _AppDrawerState extends State<AppDrawer> {
               leading: Icon(Icons.dashboard),
               title: Text('Dashboard'),
               onTap: () {
-                Navigator.of(context)
-                    .pushReplacementNamed(Dashboard.routeName);
+                Navigator.of(context).pushReplacementNamed(Dashboard.routeName);
               },
             ),
             Divider(),
