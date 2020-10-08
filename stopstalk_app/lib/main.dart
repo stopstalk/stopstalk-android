@@ -12,6 +12,7 @@ import './screens/upcoming_contest_screen.dart';
 import './screens/login/login_screen.dart';
 import './screens/user_editorials.dart';
 import './screens/dashboard.dart';
+import './screens/todoList_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -36,6 +37,7 @@ class MyApp extends StatelessWidget {
         LoginPage.routeName: (ctx) => LoginPage(),
         Dashboard.routeName: (ctx) => Dashboard(),
         ProfileScreen.routeName: (ctx) => ProfileScreen(),
+        ToDoListScreen.routeName:(ctx)=>ToDoListScreen(),
         UserEditorialScreen.routeName: (ctx) => UserEditorialScreen(),
         SearchFriendsScreen.routeName: (ctx) => SearchFriendsScreen(),
         UpcomingContestScreen.routeName: (ctx) => UpcomingContestScreen(),

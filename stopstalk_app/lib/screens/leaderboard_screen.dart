@@ -377,10 +377,9 @@ class LeaderBoardScreen extends StatelessWidget {
                             'assets/flags/$countryCode.svg',
                             width: 60,
                             height: 40,
-                            placeholderBuilder: (BuildContext context) =>
-                                Container(
-                                    child: const CircularProgressIndicator()),
-                            allowDrawingOutsideViewBox: true,
+                            placeholderBuilder: (context) => Container(
+                              child: CircularProgressIndicator(),
+                            ),
                           ),
                         ),
                         SizedBox(

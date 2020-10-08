@@ -11,6 +11,7 @@ import '../screens/trending_problems_screen.dart';
 import '../screens/upcoming_contest_screen.dart';
 import '../screens/user_editorials.dart';
 import '../screens/dashboard.dart';
+import '../screens/todoList_screen.dart';
 
 class AppDrawer extends StatelessWidget {
   @override
@@ -37,6 +38,15 @@ class AppDrawer extends StatelessWidget {
               onTap: () {
                 Navigator.of(context)
                     .pushReplacementNamed(Dashboard.routeName);
+              },
+            ),
+            Divider(),
+            ListTile(
+              leading: Icon(Icons.list),
+              title: Text('ToDo List'),
+              onTap: () {
+                Navigator.of(context)
+                    .pushReplacementNamed(ToDoListScreen.routeName);
               },
             ),
             Divider(),
