@@ -7,6 +7,7 @@ import '../profile.dart';
 
 import '../../utils/api.dart';
 import '../../utils/storage.dart';
+import '../../utils/auth.dart';
 
 class LoginForm extends StatefulWidget {
   @override
@@ -155,11 +156,13 @@ class _LoginFormState extends State<LoginForm> {
                         setState(() => _loader = false);
                         if (jwt != null) {
                           writeDataSecureStore("jwt", jwt);
+                          var user = await getCurrentUser();
                           Navigator.pushReplacement(
                             context,
                             PageTransition(
                                 type: PageTransitionType.fade,
-                                child: ProfileScreen()),
+                                child: ProfileScreen(
+                                    handle: user.stopstalkHandle)),
                           );
                         } else {
                           displayDialog(context, "An Error Occurred",

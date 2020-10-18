@@ -80,12 +80,12 @@ class Streaks extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   AutoSizeText(
-                    '$value1',
+                    value1 != null ? '$value1' : '-',
                     minFontSize: 8,
                     style: contentTextStyle,
                   ),
                   AutoSizeText(
-                    '$value2',
+                    value2 != null ? '$value2' : '-',
                     minFontSize: 8,
                     style: contentTextStyle,
                   ),

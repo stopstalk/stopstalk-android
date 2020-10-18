@@ -12,5 +12,7 @@ Future<User> getCurrentUser() async {
   }
   final payload = utf8.decode(base64Url.decode(parts[1]));
   Map<String, dynamic> payloadMap = jsonDecode(payload);
-  return userFromPayloapMap(payloadMap);
+  var user = userFromPayloapMap(payloadMap);
+  getProfileFromHandle(user.stopstalkHandle);
+  return user;
 }

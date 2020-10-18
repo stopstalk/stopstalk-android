@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import '../screens/leaderboard_screen.dart';
 import '../screens/profile.dart';
@@ -32,7 +31,7 @@ class _AppDrawerState extends State<AppDrawer> {
                   future: getCurrentUser(),
                   builder: (ctx, snapshot) {
                     if (snapshot.data != null) {
-                      return Text(snapshot.data.stopstalk_handle);
+                      return Text(snapshot.data.stopstalkHandle);
                     }
                     return Text('Hello User');
                   }),
