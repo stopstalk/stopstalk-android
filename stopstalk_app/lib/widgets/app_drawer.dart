@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:page_transition/page_transition.dart';
+import 'package:stopstalkapp/screens/login/login_screen.dart';
+import 'package:stopstalkapp/utils/storage.dart';
 
 import '../screens/leaderboard_screen.dart';
 import '../screens/profile.dart';
@@ -20,6 +23,19 @@ class AppDrawer extends StatefulWidget {
 }
 
 class _AppDrawerState extends State<AppDrawer> {
+  dynamic _userData;
+
+  void setUser() async {
+    var user = await getCurrentUser();
+    setState(() => _userData = user);
+  }
+
+  @override
+  void initState() {
+    setUser();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -27,23 +43,31 @@ class _AppDrawerState extends State<AppDrawer> {
         child: Column(
           children: <Widget>[
             AppBar(
-              title: FutureBuilder(
-                  future: getCurrentUser(),
-                  builder: (ctx, snapshot) {
-                    if (snapshot.data != null) {
-                      return Text(snapshot.data.stopstalkHandle);
-                    }
-                    return Text('Hello User');
-                  }),
-            ),
-            ListTile(
-              leading: Icon(Icons.person),
-              title: Text('Profile'),
-              onTap: () {
-                Navigator.of(context)
-                    .pushReplacementNamed(ProfileScreen.routeName);
-              },
-            ),
+                title: _userData != null
+                    ? Text(_userData.stopstalkHandle)
+                    : Text('Hello User')),
+            _userData != null
+                ? ListTile(
+                    leading: Icon(Icons.person),
+                    title: Text('Profile'),
+                    onTap: () {
+                      Navigator.pushReplacement(
+                          context,
+                          PageTransition(
+                              type: PageTransitionType.fade,
+                              child: ProfileScreen(
+                                  handle: _userData.stopstalkHandle)));
+                    },
+                  )
+                : ListTile(
+                    leading: Icon(Icons.person_add),
+                    title: Text('Login/Register'),
+                    onTap: () {
+                      deleteAllDataSecureStore();
+                      Navigator.of(context)
+                          .pushReplacementNamed(LoginPage.routeName);
+                    },
+                  ),
             Divider(),
             ListTile(
               leading: Icon(Icons.dashboard),
@@ -124,6 +148,17 @@ class _AppDrawerState extends State<AppDrawer> {
                     .pushReplacementNamed(TestimonialsScreen.routeName);
               },
             ),
+            _userData != null
+                ? ListTile(
+                    leading: Icon(Icons.exit_to_app),
+                    title: Text('Logout'),
+                    onTap: () {
+                      deleteAllDataSecureStore();
+                      Navigator.of(context)
+                          .pushReplacementNamed(LoginPage.routeName);
+                    },
+                  )
+                : SizedBox(),
           ],
         ),
       ),

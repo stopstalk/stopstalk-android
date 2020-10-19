@@ -31,7 +31,9 @@ class MyApp extends StatelessWidget {
       routes: {
         LoginPage.routeName: (ctx) => LoginPage(),
         Dashboard.routeName: (ctx) => Dashboard(),
-        ProfileScreen.routeName: (ctx) => ProfileScreen(),
+        ProfileScreen.routeName: (ctx) => ProfileScreen(
+              handle: null,
+            ),
         UserEditorialScreen.routeName: (ctx) => UserEditorialScreen(),
         SearchFriendsScreen.routeName: (ctx) => SearchFriendsScreen(),
         UpcomingContestScreen.routeName: (ctx) => UpcomingContestScreen(),
