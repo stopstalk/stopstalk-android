@@ -2,13 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ProfilePlatformData extends StatelessWidget {
-  final String platformImgUrl;
-  final int solvedCount;
+  final data;
 
-  ProfilePlatformData({
-    this.platformImgUrl,
-    this.solvedCount,
-  });
+  ProfilePlatformData(this.data);
 
   TextStyle get titleTextStyle => TextStyle(
         color: Colors.black54,
@@ -47,7 +43,7 @@ class ProfilePlatformData extends StatelessWidget {
           children: [
             SizedBox(
               width: MediaQuery.of(context).size.width * 0.13,
-              child: Image.asset(platformImgUrl),
+              child: Image.asset(this.data['img']),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
@@ -59,7 +55,7 @@ class ProfilePlatformData extends StatelessWidget {
                     style: titleTextStyle,
                   ),
                   Text(
-                    '$solvedCount%',
+                    '${this.data['accuracy']}%',
                     style: contentTextStyle,
                   ),
                   SizedBox(
@@ -77,7 +73,7 @@ class ProfilePlatformData extends StatelessWidget {
                     style: titleTextStyle,
                   ),
                   Text(
-                    '$solvedCount',
+                    '${this.data['solved']}',
                     style: contentTextStyle,
                   ),
                 ],
@@ -88,4 +84,11 @@ class ProfilePlatformData extends StatelessWidget {
       ),
     );
   }
+}
+
+List<Widget> listPlatform(mapPayload) {
+  List<Widget> sites = [];
+  if (mapPayload == null) return [Text("No Handels Available Please Add them")];
+  mapPayload.forEach((key, value) => sites.add(ProfilePlatformData(value)));
+  return sites;
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_config/flutter_config.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import './screens/profile.dart';
 import './screens/leaderboard_screen.dart';
@@ -14,11 +14,7 @@ import './screens/user_editorials.dart';
 import './screens/dashboard.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await FlutterConfig.loadEnvVariables();
-  FlutterConfig.variables.forEach((k, v) {
-    print('$k: $v');
-  });
+  await DotEnv().load('.env');
   runApp(MyApp());
 }
 
@@ -35,7 +31,9 @@ class MyApp extends StatelessWidget {
       routes: {
         LoginPage.routeName: (ctx) => LoginPage(),
         Dashboard.routeName: (ctx) => Dashboard(),
-        ProfileScreen.routeName: (ctx) => ProfileScreen(),
+        ProfileScreen.routeName: (ctx) => ProfileScreen(
+              handle: null,
+            ),
         UserEditorialScreen.routeName: (ctx) => UserEditorialScreen(),
         SearchFriendsScreen.routeName: (ctx) => SearchFriendsScreen(),
         UpcomingContestScreen.routeName: (ctx) => UpcomingContestScreen(),

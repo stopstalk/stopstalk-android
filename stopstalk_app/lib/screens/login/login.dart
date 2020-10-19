@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
+import '../dashboard.dart';
 import 'login_form.dart';
-import '../profile.dart';
 
 // ignore: must_be_immutable
 class Login extends StatelessWidget {
@@ -44,7 +44,7 @@ class Login extends StatelessWidget {
                   Navigator.push(
                     context,
                     PageTransition(
-                        type: PageTransitionType.fade, child: ProfileScreen()),
+                        type: PageTransitionType.fade, child: Dashboard()),
                   );
                 },
                 child: Row(

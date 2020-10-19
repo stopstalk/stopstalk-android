@@ -22,6 +22,7 @@ jobs:
           channel: 'stable'
       - name: Generate Debug APK
         run: |
+          cp .env.example .env
           flutter pub get
           flutter build apk --split-per-abi
       - name: Create a Release APK
