@@ -32,7 +32,7 @@ class _ToDoListScreenState extends State<ToDoListScreen> {
     end: Offset.zero,
   );
   final GlobalKey<AnimatedListState> _animatedListKey =
-      GlobalKey<AnimatedListState>();
+  GlobalKey<AnimatedListState>();
 
   Future<List<ToDoList>> _getToDoList() async {
     for (int i = 1; i < 5; i++) {
@@ -80,26 +80,32 @@ class _ToDoListScreenState extends State<ToDoListScreen> {
           IconButton(
             icon: Icon(Icons.delete_forever),
             tooltip: "Delete All",
-            onPressed: () => showDialog(
-              context: context,
-              builder: (context) => AlertDialog(
-                title: const Text("Confirmation"),
-                content: Text("Are you sure you wish to delete all the items"),
-                actions: <Widget>[
-                  FlatButton(
-                    onPressed: () {
-                      _deleteAll();
-                      Navigator.of(context).pop();
-                    },
-                    child: const Text("DELETE ALL"),
+            onPressed: () =>
+                showDialog(
+                  context: context,
+                  builder: (context) =>
+                  flag != true ? AlertDialog(
+                    title: const Text("Confirmation"),
+                    content: Text(
+                        "Are you sure you wish to delete all the items"),
+                    actions: <Widget>[
+                      FlatButton(
+                        onPressed: () {
+                          _deleteAll();
+                          Navigator.of(context).pop();
+                        },
+                        child: const Text("DELETE ALL"),
+                      ),
+                      FlatButton(
+                        onPressed: () => Navigator.of(context).pop(),
+                        child: const Text("CANCEL"),
+                      ),
+                    ],
+                  ) : AlertDialog(
+                    title: const Text("Confirmation"),
+                    content: Text("All tasks are completed."),
                   ),
-                  FlatButton(
-                    onPressed: () => Navigator.of(context).pop(),
-                    child: const Text("CANCEL"),
-                  ),
-                ],
-              ),
-            ),
+                ),
           ),
         ],
       ),
@@ -107,6 +113,9 @@ class _ToDoListScreenState extends State<ToDoListScreen> {
       body: Container(
         padding: EdgeInsets.all(8),
         child: SingleChildScrollView(
+          physics: flag == true
+              ? NeverScrollableScrollPhysics()
+              : BouncingScrollPhysics(),
           child: Column(
             children: [
               Padding(
@@ -153,19 +162,22 @@ class _ToDoListScreenState extends State<ToDoListScreen> {
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     return Container(
-                      height: MediaQuery.of(context).size.height,
+                      height: MediaQuery
+                          .of(context)
+                          .size
+                          .height,
                       child: flag != true
                           ? AnimatedList(
-                              key: _animatedListKey,
-                              primary: true,
-                              shrinkWrap: true,
-                              physics: BouncingScrollPhysics(),
-                              initialItemCount: snapshot.data.length,
-                              itemBuilder: (context, i, animation) {
-                                return buildToDoItem(
-                                    snapshot.data[i], context, i, animation);
-                              },
-                            )
+                        key: _animatedListKey,
+                        primary: true,
+                        shrinkWrap: true,
+                        physics: BouncingScrollPhysics(),
+                        initialItemCount: snapshot.data.length,
+                        itemBuilder: (context, i, animation) {
+                          return buildToDoItem(
+                              snapshot.data[i], context, i, animation);
+                        },
+                      )
                           : _showAllComplete(),
                     );
                   } else if (snapshot.hasError) {
@@ -263,13 +275,13 @@ class _ToDoListScreenState extends State<ToDoListScreen> {
     deletedToDo = todos[i];
     _animatedListKey.currentState.removeItem(
       i,
-      (BuildContext context, Animation<double> animation) {
+          (BuildContext context, Animation<double> animation) {
         return FadeTransition(
           opacity:
-              CurvedAnimation(parent: animation, curve: Interval(0.5, 1.0)),
+          CurvedAnimation(parent: animation, curve: Interval(0.5, 1.0)),
           child: SizeTransition(
             sizeFactor:
-                CurvedAnimation(parent: animation, curve: Interval(0.0, 1.0)),
+            CurvedAnimation(parent: animation, curve: Interval(0.0, 1.0)),
             axisAlignment: 0.0,
             child: buildToDoItem(deletedToDo, context, i, animation),
           ),
@@ -286,13 +298,14 @@ class _ToDoListScreenState extends State<ToDoListScreen> {
       duration: Duration(seconds: 2),
       action: SnackBarAction(
         label: 'Undo',
-        onPressed: () => setState(() {
-          todos.insert(i, deletedToDo);
-          _animatedListKey.currentState
-              .insertItem(i, duration: Duration(milliseconds: 500));
-          deletedToDo.isChecked = false;
-          flag = false;
-        }),
+        onPressed: () =>
+            setState(() {
+              todos.insert(i, deletedToDo);
+              _animatedListKey.currentState
+                  .insertItem(i, duration: Duration(milliseconds: 500));
+              deletedToDo.isChecked = false;
+              flag = false;
+            }),
       ),
     ));
     if (todos.length == 0) {
@@ -306,13 +319,13 @@ class _ToDoListScreenState extends State<ToDoListScreen> {
       deletedToDo = todos[0];
       _animatedListKey.currentState.removeItem(
         0,
-        (BuildContext context, Animation<double> animation) {
+            (BuildContext context, Animation<double> animation) {
           return FadeTransition(
             opacity:
-                CurvedAnimation(parent: animation, curve: Interval(0.5, 1.0)),
+            CurvedAnimation(parent: animation, curve: Interval(0.5, 1.0)),
             child: SizeTransition(
               sizeFactor:
-                  CurvedAnimation(parent: animation, curve: Interval(0.0, 1.0)),
+              CurvedAnimation(parent: animation, curve: Interval(0.0, 1.0)),
               axisAlignment: 0.0,
               child: buildToDoItem(deletedToDo, context, 0, animation),
             ),
@@ -332,12 +345,15 @@ class _ToDoListScreenState extends State<ToDoListScreen> {
       opacity: 1,
       duration: Duration(milliseconds: 600),
       child: Container(
-        height: MediaQuery.of(context).size.height * 0.3,
+        height: MediaQuery
+            .of(context)
+            .size
+            .height * 0.3,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(
-              'assets/images/todosDone.jpg',
+              'assets/images/todosDone.png',
               width: 150,
               height: 150,
             ),
