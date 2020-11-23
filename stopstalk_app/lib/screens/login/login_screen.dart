@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
+import 'package:stopstalkapp/utils/auth.dart';
+import 'package:stopstalkapp/widgets/preloader.dart';
+import '../dashboard.dart';
+import '../profile.dart';
 import './background.dart';
 import './login.dart';
 import '../../fragments/animations.dart';
@@ -19,7 +24,20 @@ class _LoginPageState extends State<LoginPage> {
         body: Stack(
           children: <Widget>[
             FadeIn(Background(), 0),
-            FadeIn(Login(), 2),
+            FutureBuilder(
+              future: checkAuthUser(),
+              builder: (context, snapshot) {
+                if (snapshot.data == null) return Preloader();
+                if (snapshot.data == true)
+                  Navigator.pushReplacement(
+                      context,
+                      PageTransition(
+                        type: PageTransitionType.fade,
+                        child: Dashboard(),
+                      ));
+                return FadeIn(Login(), 2);
+              },
+            )
           ],
         ));
   }

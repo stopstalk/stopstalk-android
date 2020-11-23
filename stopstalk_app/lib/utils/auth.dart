@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import './storage.dart';
+import './api.dart';
 import '../classes/user.dart';
 
 Future<User> getCurrentUser() async {
@@ -15,4 +16,15 @@ Future<User> getCurrentUser() async {
   var user = userFromPayloapMap(payloadMap);
   getProfileFromHandle(user.stopstalkHandle);
   return user;
+}
+
+Future<bool> checkAuthUser() async {
+  var jwt = await getDataSecureStore("jwt");
+  if (jwt == null) return false;
+  print('ll');
+  var userJwt = await resetToken(jwt);
+  print(userJwt);
+  if (userJwt == null) return false;
+  writeDataSecureStore("jwt", userJwt);
+  return true;
 }
