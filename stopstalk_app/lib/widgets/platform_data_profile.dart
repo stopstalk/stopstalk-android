@@ -88,7 +88,7 @@ class ProfilePlatformData extends StatelessWidget {
 
 List<Widget> listPlatform(mapPayload) {
   List<Widget> sites = [];
-  if (mapPayload == null) return [Text("No Handels Available Please Add them")];
+  //if (mapPayload == null) return [Text("No Handels Available Please Add them")];
   mapPayload.forEach((key, value) => sites.add(ProfilePlatformData(value)));
   return sites;
 }

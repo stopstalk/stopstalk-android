@@ -141,23 +141,6 @@ class _AppDrawerState extends State<AppDrawer> {
               },
             ),
             Divider(),
-            ListTile(
-              leading: Icon(Icons.sort),
-              title: Text('Submission Filters'),
-              onTap: () {
-                Navigator.of(context)
-                    .pushReplacementNamed(SubmissionFiltersScreen.routeName);
-              },
-            ),
-            Divider(),
-            ListTile(
-              leading: Icon(Icons.favorite),
-              title: Text('Testimonials'),
-              onTap: () {
-                Navigator.of(context)
-                    .pushReplacementNamed(TestimonialsScreen.routeName);
-              },
-            ),
             _userData != null
                 ? ListTile(
                     leading: Icon(Icons.exit_to_app),
