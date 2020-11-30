@@ -36,6 +36,7 @@ dependencies:
   page_transition: "^1.1.6"
   flutter_dotenv: ^2.1.0
   heatmap_calendar: ^1.2.8
+  expansion_card: ^0.1.0
 
   flutter_svg: ^0.18.1
   # The following adds the Cupertino Icons font to your application.
