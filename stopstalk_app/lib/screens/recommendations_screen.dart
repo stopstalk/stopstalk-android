@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:expansion_card/expansion_card.dart';
+import 'package:expandable/expandable.dart';
+import 'package:sliding_card/sliding_card.dart';
 
 import '../widgets/app_drawer.dart';
 import'../classes/problems_class.dart';
@@ -58,7 +59,7 @@ class _RecommendationsScreenState extends State<RecommendationsScreen> {
             totalSubmissions: '500',
             accuracy: '25%',
             tags: [
-              'hard','easy','dp'
+              'hard','easy','dp','easy','dp','easy','dp','easy','dp','easy','dp'
             ]
         );
         recom.add(prob);
@@ -129,81 +130,117 @@ class _RecommendationsScreenState extends State<RecommendationsScreen> {
   }
 
   Widget buildRecommendationItem(Problems recom, BuildContext context, int i, animation) {
-    return GestureDetector(
-      onLongPress: ()=>_launchURL(recom.problemUrl),
-      child: FadeTransition(
-        opacity: animation,
-        child: SlideTransition(
-          position: _offSetTween.animate(animation),
-          child: Padding(
-            padding: const EdgeInsets.all(4.0),
-            child: Card(
-              elevation: 3,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(15),
-                ),
-              ),
-              color: Color(0XFFeeeeee),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Expanded(
-                    flex: 1,
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(6.0),
-                          child: Text(
-                            recom.problemName,
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
+    return ExpandableNotifier(
+        child:Column(children:[
+          Expandable(           // <-- Driven by ExpandableController from ExpandableNotifier
+            collapsed: ExpandableButton(
+              child: FadeTransition(
+                opacity: animation,
+                child: SlideTransition(
+                  position: _offSetTween.animate(animation),
+                  child: Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: Card(
+                      elevation: 3,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(15),
+                        ),
+                      ),
+                      color: Color(0XFFeeeeee),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Expanded(
+                            flex: 1,
+                            child: Column(
+                              children: [
+                                Padding(
+                                    padding: const EdgeInsets.all(6.0),
+                                    child:InkWell(child: Text(
+                                      recom.problemName,
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                      onTap: ()=>_launchURL(recom.problemUrl),)
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
+                          Expanded(
+                            child: Column(
+                              children: [
+                                Image.asset(
+                                  RecommendationsScreen.platformImgs[recom.platform],
+                                  height: 80,
+                                  width: 60,
+                                ),
+                              ],
+                            ),
+                          ),
+                          Expanded(child: Column(
+                            children: [
+                              IconButton(
+                                icon: Icon(Icons.lightbulb_outline,),
+                                onPressed: ()=>_launchURL(recom.editorialUrl),
+                              )
+                            ],
+                          )),
+                          Expanded(
+                            child: Column(
+                              children: [
+                                Text(recom.accuracy),
+                              ],
+                            ),
+                          ),
+                          Expanded(
+                            child: Column(
+                              children: [
+                                Icon(Icons.check),
+                                Divider(),
+                                Text(recom.totalSubmissions),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                  Expanded(
-                    child: Column(
-                      children: [
-                        Image.asset(
-                          RecommendationsScreen.platformImgs[recom.platform],
-                          height: 80,
-                          width: 60,
-                        ),
-                      ],
-                    ),
-                  ),
-                  Expanded(child: Column(
-                    children: [
-                      IconButton(
-                        icon: Icon(Icons.lightbulb_outline,),
-                        onPressed: ()=>_launchURL(recom.editorialUrl),
-                      )
-                    ],
-                  )),
-                  Expanded(
-                    child: Column(
-                      children: [
-                        Text(recom.accuracy),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    child: Column(
-                      children: [
-                        Icon(Icons.check),
-                        Divider(),
-                        Text(recom.totalSubmissions),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
+                ),
+              ),),
+            expanded: Column(
+                children: [
+                  ExpandableButton(       // <-- Collapses when tapped on
+                    child: FadeTransition(
+                      opacity: animation,
+                      child: SlideTransition(
+                        position: _offSetTween.animate(animation),
+                        child: Container(
+                          padding: const EdgeInsets.all(4.0),width: double.infinity,
+                          child: Card(
+                            elevation: 3,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(15),
+                              ),
+                            ),
+                            color: Color(0XFFeeeeee),
+                            child: Container(
+                              padding: const EdgeInsets.all(4.0),
+                              child:
+                              Wrap(
+                                spacing: 6.0,
+                                runSpacing: 6.0,
+                                children: List<Widget>.generate(recom.tags.length, (int index) {
+                                  return Chip(
+                                    label: Text(recom.tags[index]),
+                                  );
+                                }),
+                              ),
+
+                            ),),),),),)
+                ]
+            ),)])
     );
   }
 
@@ -239,4 +276,3 @@ class _RecommendationsScreenState extends State<RecommendationsScreen> {
     }
   }
 }
-
