@@ -90,68 +90,6 @@ class _TrendingProblemsScreenState extends State<TrendingProblemsScreen> {
               physics: BouncingScrollPhysics(),
               child: Column(
                 children: [
-//                  Table(
-//                    border: TableBorder.all(
-//                      color: Colors.black26,
-//                      width: 3,
-//                    ),
-//                    columnWidths: {
-//                      0: FixedColumnWidth(178.0),
-//                      1: FixedColumnWidth(85),
-//                      2: FixedColumnWidth(75),
-//                      3: FixedColumnWidth(75),
-//                    },
-//                    children: [
-//                      TableRow(children: [
-//                        TableCell(
-//                          child: Padding(
-//                            padding: const EdgeInsets.all(6.0),
-//                            child: Center(
-//                              child: Text(
-//                                "Problem Name",
-//                                style: TextStyle(
-//                                  fontWeight: FontWeight.bold,
-//                                  fontSize: 13,
-//                                ),
-//                              ),
-//                            ),
-//                          ),
-//                        ),
-//                        TableCell(
-//                          child: Padding(
-//                            padding: const EdgeInsets.all(6.0),
-//                            child: Center(
-//                              child: Text(
-//                                "Submission",
-//                                style: TextStyle(
-//                                  fontWeight: FontWeight.bold,
-//                                  fontSize: 13,
-//                                ),
-//                              ),
-//                            ),
-//                          ),
-//                        ),
-//                        TableCell(
-//                          child: Padding(
-//                            padding: const EdgeInsets.all(6.0),
-//                            child: Center(
-//                              child: Text(
-//                                "Users",
-//                                style: TextStyle(
-//                                  fontWeight: FontWeight.bold,
-//                                  fontSize: 13,
-//                                ),
-//                              ),
-//                            ),
-//                          ),
-//                        ),
-//                        TableCell(
-//                            child: Container(
-//                          width: 80,
-//                        )),
-//                      ])
-//                    ],
-//                  ),
                   FutureBuilder(
                     future: myFuture,
                     builder: (context, snapshot) {
