@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 import '../widgets/app_drawer.dart';
 import '../widgets/preloader.dart';
@@ -124,8 +125,7 @@ class _TrendingProblemsScreenState extends State<TrendingProblemsScreen> {
                                     i != 0
                                         ? problemCard(
                                             snapshot.data[i], context, i)
-                                        : TableRow(
-                                        children: [
+                                        : TableRow(children: [
                                             TableCell(
                                               child: Container(
                                                 height: 60,
@@ -133,8 +133,10 @@ class _TrendingProblemsScreenState extends State<TrendingProblemsScreen> {
                                                   padding:
                                                       const EdgeInsets.all(6.0),
                                                   child: Center(
-                                                    child: Text(
+                                                    child: AutoSizeText(
                                                       "Problem Name",
+                                                      maxLines:1,
+                                                      minFontSize:12,
                                                       style: TextStyle(
                                                         fontWeight:
                                                             FontWeight.bold,
@@ -152,8 +154,10 @@ class _TrendingProblemsScreenState extends State<TrendingProblemsScreen> {
                                                   padding:
                                                       const EdgeInsets.all(6.0),
                                                   child: Center(
-                                                    child: Text(
+                                                    child: AutoSizeText(
                                                       "Submission",
+                                                      maxLines:1,
+                                                      minFontSize:12,
                                                       style: TextStyle(
                                                         fontWeight:
                                                             FontWeight.bold,
@@ -171,8 +175,10 @@ class _TrendingProblemsScreenState extends State<TrendingProblemsScreen> {
                                                   padding:
                                                       const EdgeInsets.all(6.0),
                                                   child: Center(
-                                                    child: Text(
-                                                      "Users",
+                                                    child: AutoSizeText(
+                                                      "User",
+                                                      maxLines:1,
+                                                      minFontSize:12,
                                                       style: TextStyle(
                                                         fontWeight:
                                                             FontWeight.bold,
@@ -258,9 +264,14 @@ class _TrendingProblemsScreenState extends State<TrendingProblemsScreen> {
               child: Container(
                 height: 50,
                 child: Padding(
-                  padding: const EdgeInsets.only(top:8.0, bottom: 8.0,left: 15, right: 15,),
+                  padding: const EdgeInsets.only(
+                    top: 8.0,
+                    bottom: 8.0,
+                    left: 12,
+                    right: 12,
+                  ),
                   child: RaisedButton(
-                    elevation: 10,
+                    elevation: 5,
                     padding: EdgeInsets.symmetric(vertical: 0, horizontal: 8),
                     color: Color(0xFF0018ca),
                     child: Row(
@@ -268,12 +279,17 @@ class _TrendingProblemsScreenState extends State<TrendingProblemsScreen> {
                         Icon(
                           Icons.add,
                           color: Colors.white,
-                          size: 12,
+                          size: 10,
                         ),
-                        Text('Todo', style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 11,
-                        ),),
+                        AutoSizeText(
+                          'Todo',
+                          maxLines: 1,
+                          minFontSize: 7,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 11,
+                          ),
+                        ),
                       ],
                     ),
                     onPressed: () {
