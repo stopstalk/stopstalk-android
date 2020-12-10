@@ -163,7 +163,9 @@ class _UpcomingContestState extends State<UpcomingContestScreen> {
     "HACKEREARTH":
         "https://upload.wikimedia.org/wikipedia/commons/e/e8/HackerEarth_logo.png",
     "HACKERRANK":
-        "https://info.hackerrank.com/rs/487-WAY-049/images/Podcast-ChannelCover-Final.jpg"
+        "https://info.hackerrank.com/rs/487-WAY-049/images/Podcast-ChannelCover-Final.jpg",
+    "OTHER":
+        "https://coursereport-s3-production.global.ssl.fastly.net/rich/rich_files/rich_files/3942/s200/asia-developer-academy.png"
   };
 
   @override
