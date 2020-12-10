@@ -10,7 +10,7 @@ Future<User> getCurrentUser() async {
   if (parts.length != 3) {
     throw Exception('invalid token');
   }
-  final payload = utf8.decode(base64Url.decode(parts[1]));
+  final payload = utf8.decode(base64Url.decode(base64.normalize(parts[1])));
   Map<String, dynamic> payloadMap = jsonDecode(payload);
   var user = userFromPayloapMap(payloadMap);
   getProfileFromHandle(user.stopstalkHandle);
