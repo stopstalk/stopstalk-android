@@ -26,7 +26,6 @@ class ProblemsCard extends StatelessWidget {
     'Uva': 'assets/platform_logos/uva_small.png',
     'Timus': 'assets/platform_logos/timus_small.png',
   };
-  //_ProblemsCardState createState() => _ProblemsCardState();
   Tween<Offset> _offSetTween = Tween(
     begin: Offset(1, 0),
     end: Offset.zero,
@@ -35,14 +34,14 @@ class ProblemsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return ExpandableNotifier(
           child:Column(children:[
-            Expandable(           // <-- Driven by ExpandableController from ExpandableNotifier
+            Expandable(
               collapsed: ExpandableButton(
                 child: FadeTransition(
                   opacity: animation,
                   child: SlideTransition(
                     position: _offSetTween.animate(animation),
                     child: Padding(
-                      padding: const EdgeInsets.all(4.0),
+                      padding: const EdgeInsets.all(3.0),
                       child: Card(
                         elevation: 3,
                         shape: RoundedRectangleBorder(
@@ -59,7 +58,7 @@ class ProblemsCard extends StatelessWidget {
                               child: Column(
                                 children: [
                                   Padding(
-                                      padding: const EdgeInsets.all(6.0),
+                                      padding: new EdgeInsets.only(left: 8.0,right:8.0,top: 6.0,bottom: 6.0),
                                       child:InkWell(child: Text(
                                         recom.problemName,
                                         maxLines: 2,
@@ -92,7 +91,7 @@ class ProblemsCard extends StatelessWidget {
                             Expanded(
                               child: Column(
                                 children: [
-                                  Icon(Icons.arrow_upward_rounded),
+                                  Icon(Icons.check),
                                   Divider(),
                                   Text(recom.accuracy),
                                 ],
@@ -101,7 +100,7 @@ class ProblemsCard extends StatelessWidget {
                             Expanded(
                               child: Column(
                                 children: [
-                                  Icon(Icons.check),
+                                  Icon(Icons.arrow_upward_rounded),
                                   Divider(),
                                   Text(recom.totalSubmissions),
                                 ],
