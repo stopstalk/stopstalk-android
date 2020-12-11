@@ -32,7 +32,7 @@ dependencies:
   flag: "3.0.5"
   simple_animations: "^2.2.1"
   supercharged: "^1.10.0"
-  flutter_secure_storage: "^3.3.3"
+  flutter_secure_storage: "^3.3.5"
   page_transition: "^1.1.6"
   flutter_dotenv: ^2.1.0
   heatmap_calendar: ^1.2.8
