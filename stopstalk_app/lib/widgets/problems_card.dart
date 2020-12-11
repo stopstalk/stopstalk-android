@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:expandable/expandable.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import'../classes/problems_class.dart';
 
@@ -58,7 +59,7 @@ class ProblemsCard extends StatelessWidget {
                               child: Column(
                                 children: [
                                   Padding(
-                                      padding: new EdgeInsets.only(left: 8.0,right:8.0,top: 6.0,bottom: 6.0),
+                                      padding: new EdgeInsets.only(left: 14.0,right:8.0,top: 6.0,bottom: 6.0),
                                       child:InkWell(child: Text(
                                         recom.problemName,
                                         maxLines: 2,
@@ -80,18 +81,10 @@ class ProblemsCard extends StatelessWidget {
                                 ],
                               ),
                             ),
-                            Expanded(child: Column(
-                              children: [
-                                IconButton(
-                                  icon: Icon(Icons.lightbulb_outline,),
-                                  onPressed: ()=>_launchURL(recom.editorialUrl),
-                                )
-                              ],
-                            )),
                             Expanded(
                               child: Column(
                                 children: [
-                                  Icon(Icons.check),
+                                  Icon(FontAwesomeIcons.bullseye),
                                   Divider(),
                                   Text(recom.accuracy),
                                 ],
@@ -106,6 +99,15 @@ class ProblemsCard extends StatelessWidget {
                                 ],
                               ),
                             ),
+                            Expanded(child: Column(
+                              children: [
+                                IconButton(
+                                  iconSize: 28.0,
+                                  icon: Icon(FontAwesomeIcons.clipboard),
+                                  onPressed: ()=>_launchURL(recom.editorialUrl),
+                                )
+                              ],
+                            )),
                           ],
                         ),
                       ),
