@@ -188,7 +188,9 @@ class _RecommendationsScreenState extends State<RecommendationsScreen> {
                           )),
                           Expanded(
                             child: Column(
-                              children: [
+                                children: [
+                                Icon(Icons.arrow_upward_rounded),
+                            Divider(),
                                 Text(recom.accuracy),
                               ],
                             ),
