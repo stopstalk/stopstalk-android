@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
 import 'dart:convert';
+import 'package:timer_builder/timer_builder.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -265,11 +266,13 @@ class _UpcomingContestState extends State<UpcomingContestScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           ClipRRect(
-                            child: Image(
-                              image: NetworkImage(images[image]),
-                              height: 60.0,
-                              width: 60.0,
-                            ),
+                            child: images[image] != null
+                                ? Image(
+                                    image: NetworkImage(images[image]),
+                                    height: 80.0,
+                                    width: 80.0,
+                                  )
+                                : SizedBox(),
                             borderRadius: BorderRadius.circular(8.0),
                           ),
                         ],
@@ -409,11 +412,13 @@ class _UpcomingContestState extends State<UpcomingContestScreen> {
               Expanded(
                 flex: 1,
                 child: ClipRRect(
-                  child: Image(
-                    image: NetworkImage(images[image]),
-                    height: 80.0,
-                    width: 80.0,
-                  ),
+                  child: images[image] != null
+                      ? Image(
+                          image: NetworkImage(images[image]),
+                          height: 80.0,
+                          width: 80.0,
+                        )
+                      : SizedBox(),
                   borderRadius: BorderRadius.circular(12.0),
                 ),
               ),
@@ -536,12 +541,15 @@ class _UpcomingContestState extends State<UpcomingContestScreen> {
                     Padding(
                       padding: EdgeInsets.only(right: 8.0),
                     ),
-                    Text(
-                      timeLeft(DateTime.parse(timeToDate(startTime))),
-                      style: TextStyle(
-                        fontSize: 18.0,
-                      ),
-                    )
+                    TimerBuilder.periodic(Duration(seconds: 1),
+                        builder: (context) {
+                      return Text(
+                        timeLeft(DateTime.parse(timeToDate(startTime))),
+                        style: TextStyle(
+                          fontSize: 18.0,
+                        ),
+                      );
+                    })
                   ],
                 ),
                 Padding(
