@@ -1,10 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'package:expandable/expandable.dart';
 
 import '../widgets/app_drawer.dart';
-import'../classes/problems_class.dart';
+import '../widgets/problems_card.dart';
+import '../classes/problems_class.dart';
 
 class RecommendationsScreen extends StatefulWidget {
   static const routeName = '/recommendations';
@@ -27,10 +26,7 @@ class RecommendationsScreen extends StatefulWidget {
 class _RecommendationsScreenState extends State<RecommendationsScreen> {
   List<Problems> recom = [];
   bool flag = false;
-  Tween<Offset> _offSetTween = Tween(
-    begin: Offset(1, 0),
-    end: Offset.zero,
-  );
+
   final GlobalKey<AnimatedListState> _animatedListKey =
   GlobalKey<AnimatedListState>();
 
@@ -108,7 +104,7 @@ class _RecommendationsScreenState extends State<RecommendationsScreen> {
                         physics: BouncingScrollPhysics(),
                         initialItemCount: snapshot.data.length,
                         itemBuilder: (context, i, animation) {
-                          return buildRecommendationItem(
+                          return ProblemsCard(
                               snapshot.data[i], context, i, animation);
                         },
                       )
@@ -128,7 +124,7 @@ class _RecommendationsScreenState extends State<RecommendationsScreen> {
     );
   }
 
-  Widget buildRecommendationItem(Problems recom, BuildContext context, int i, animation) {
+  /*Widget buildRecommendationItem(Problems recom, BuildContext context, int i, animation) {
     return ExpandableNotifier(
         child:Column(children:[
           Expandable(           // <-- Driven by ExpandableController from ExpandableNotifier
@@ -242,9 +238,7 @@ class _RecommendationsScreenState extends State<RecommendationsScreen> {
                             ),),),),),)
                 ]
             ),)])
-    );
-  }
-
+    );*/
   Widget _showNoRecommendation() {
     return AnimatedOpacity(
       opacity: 1,
@@ -267,13 +261,5 @@ class _RecommendationsScreenState extends State<RecommendationsScreen> {
         ),
       ),
     );
-  }
-
-  _launchURL(String url) async {
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
-    }
   }
 }
