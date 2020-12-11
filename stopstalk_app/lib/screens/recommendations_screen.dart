@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:expandable/expandable.dart';
-import 'package:sliding_card/sliding_card.dart';
 
 import '../widgets/app_drawer.dart';
 import'../classes/problems_class.dart';
