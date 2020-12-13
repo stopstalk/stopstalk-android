@@ -44,6 +44,7 @@ class _AppDrawerState extends State<AppDrawer> {
         child: Column(
           children: <Widget>[
             AppBar(
+                backgroundColor: Color(0xFF2542ff),
                 title: _userData != null
                     ? Text(_userData.stopstalkHandle)
                     : Text('Hello User')),

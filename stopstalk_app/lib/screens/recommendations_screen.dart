@@ -34,7 +34,7 @@ class _RecommendationsScreenState extends State<RecommendationsScreen> {
     for (int i = 1; i < 5; i++) {
       if (i % 2 == 0) {
         Problems prob = Problems(
-            problemName: 'Special Permutation',
+            problemName: 'Special Permutation Permutation',
             platform: 'Codechef',
             problemUrl: 'https://codeforces.com/contest/1454/problem/A',
             editorialUrl: 'https://codeforces.com/contest/1454/problem/B',
@@ -75,6 +75,7 @@ class _RecommendationsScreenState extends State<RecommendationsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Color(0xFF2542ff),
         title: Text(
           'Recommendations',
           textAlign: TextAlign.center,

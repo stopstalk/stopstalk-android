@@ -51,69 +51,81 @@ class ProblemsCard extends StatelessWidget {
                           ),
                         ),
                         color: Color(0XFFeeeeee),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Expanded(
-                              flex: 1,
-                              child: Column(
-                                children: [
-                                  Padding(
-                                      padding: new EdgeInsets.only(left: 14.0,right:8.0,top: 6.0,bottom: 6.0),
-                                      child:InkWell(child: Text(
-                                        recom.problemName,
-                                        maxLines: 2,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                        onTap: ()=>_launchURL(recom.problemUrl),)
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Expanded(
-                              child: Column(
-                                children: [
-                                  Image.asset(
-                                    ProblemsCard.platformImgs[recom.platform],
-                                    height: 80,
-                                    width: 60,
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Expanded(
-                              child: Column(
-                                children: [
-                                  Icon(FontAwesomeIcons.bullseye),
-                                  Divider(),
-                                  Text(recom.accuracy),
-                                ],
-                              ),
-                            ),
-                            Expanded(
-                              child: Column(
-                                children: [
-                                  Icon(Icons.arrow_upward_rounded),
-                                  Divider(),
-                                  Text(recom.totalSubmissions),
-                                ],
-                              ),
-                            ),
-                            Expanded(child: Column(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            children:[
+                              Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
-                                IconButton(
-                                  iconSize: 28.0,
-                                  icon: Icon(MyFlutterApp.contract),
-                                  onPressed: ()=>_launchURL(recom.editorialUrl),
+                                CircleAvatar(
+                                      radius: 30,
+                                      backgroundColor: Color(0xFF2542ff),
+                                      child: CircleAvatar(
+                                        backgroundColor: Color(0XFFeeeeee),
+                                        radius: 28,
+                                        child: Image.asset(ProblemsCard.platformImgs[recom.platform],
+                                        fit: BoxFit.cover,),
+                                      ),
+                                    ),
+                                //SizedBox(width: 50),
+                                      Padding(
+                                          padding: new EdgeInsets.only(left: 0.0,right:6.0,top: 6.0,bottom: 6.0),
+                                          child:InkWell(child: Text(
+                                            recom.problemName,
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: TextStyle(
+                                            fontSize: 18,
+                                            color: Colors.black
+                                          ),
+                                          ),
+                                          onTap: ()=>_launchURL(recom.problemUrl),)
+                                      ),
+                                ]),
+                                Divider(color: Colors.grey,
+                                  thickness: 2,
+                                  indent: 20,
+                                  endIndent: 20,),
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children:[
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                        children: <Widget>[
+                                          Text(recom.accuracy+" Accuracy",style: TextStyle(
+                                            fontSize: 15,
+                                            color: Colors.grey[800]
+                                          ),),//Icon(FontAwesomeIcons.bullseye),
+                                          Text(recom.totalSubmissions+" Submissions",style: TextStyle(
+                                              fontSize: 15,
+                                              color: Colors.grey[800]
+                                          ),),//Icon(Icons.arrow_upward_rounded),
+                                        ],
+                                      ),
+                                    ),
+                                    RaisedButton.icon(
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(8.0),
+                                      ),
+                                      padding: EdgeInsets.only(top:8.0,bottom: 8.0,left: 17.0,right:17.0),
+                                      onPressed: ()=>_launchURL(recom.editorialUrl),
+                                      color: Color(0xFF2542ff),
+                                      icon:Icon(MyFlutterApp.contract),
+                                      label:Text('Editorials'),
+                                      textColor: Colors.white,
+                                    )
+                                  ],
                                 )
                               ],
-                            )),
-                          ],
+                            ),
                         ),
+                        ),),//new card
                       ),
                     ),
                   ),
-                ),),
               expanded: Column(
                   children: [
                     ExpandableButton(       // <-- Collapses when tapped on
@@ -143,7 +155,6 @@ class ProblemsCard extends StatelessWidget {
                                     );
                                   }),
                                 ),
-
                               ),),),),),)
                   ]
               ),)])
