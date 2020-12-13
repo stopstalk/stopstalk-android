@@ -68,19 +68,21 @@ class ProblemsCard extends StatelessWidget {
                                         fit: BoxFit.cover,),
                                       ),
                                     ),
-                                //SizedBox(width: 50),
-                                      Padding(
-                                          padding: new EdgeInsets.only(left: 0.0,right:6.0,top: 6.0,bottom: 6.0),
-                                          child:InkWell(child: Text(
-                                            recom.problemName,
-                                            maxLines: 2,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: TextStyle(
-                                            fontSize: 18,
-                                            color: Colors.black
-                                          ),
-                                          ),
-                                          onTap: ()=>_launchURL(recom.problemUrl),)
+                                //SizedBox(width: 20),
+                                      Flexible(
+                                        child: Padding(
+                                            padding: new EdgeInsets.only(left: 0.0,right:6.0,top: 6.0,bottom: 6.0),
+                                            child:InkWell(child: Text(
+                                              recom.problemName,
+                                              maxLines: 2,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: TextStyle(
+                                              fontSize: 18,
+                                              color: Colors.black
+                                            ),
+                                            ),
+                                            onTap: ()=>_launchURL(recom.problemUrl),)
+                                        ),
                                       ),
                                 ]),
                                 Divider(color: Colors.grey,

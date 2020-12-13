@@ -34,7 +34,7 @@ class _RecommendationsScreenState extends State<RecommendationsScreen> {
     for (int i = 1; i < 5; i++) {
       if (i % 2 == 0) {
         Problems prob = Problems(
-            problemName: 'Special Permutation Permutation',
+            problemName: 'Special Permutation ',
             platform: 'Codechef',
             problemUrl: 'https://codeforces.com/contest/1454/problem/A',
             editorialUrl: 'https://codeforces.com/contest/1454/problem/B',
@@ -47,7 +47,7 @@ class _RecommendationsScreenState extends State<RecommendationsScreen> {
         recom.add(prob);
       } else {
         Problems prob = Problems(
-            problemName: 'Special Permutation',
+            problemName: 'Special Permutation Permutation',
             platform: 'Codeforces',
             problemUrl: 'https://codeforces.com/contest/1454/problem/A',
             editorialUrl: 'https://codeforces.com/contest/1454/problem/B',
