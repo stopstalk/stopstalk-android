@@ -6,6 +6,7 @@ import 'dart:convert';
 Future<String> getURL(String url, Map<String, String> parameters) async {
   var server = DotEnv().env['SERVER'];
   var apiToken = DotEnv().env['API_TOKEN'];
+  assert(apiToken != '', "API token must be Present");
   String param = '';
   parameters.forEach((key, value) {
     param += '&' + key + '=' + value;
