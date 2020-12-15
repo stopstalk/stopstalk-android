@@ -6,21 +6,11 @@ import '../widgets/app_drawer.dart';
 import '../widgets/preloader.dart';
 import '../classes/todoList_class.dart';
 import '../utils/api.dart';
+import '../utils/platforms.dart' as platforms;
 
 class ToDoListScreen extends StatefulWidget {
   static const routeName = '/todoList';
-
-  static const platformImgs = {
-    'codechef': 'assets/platform_logos/codechef_small.png',
-    'codeforces': 'assets/platform_logos/codeforces_small.png',
-    'spoj': 'assets/platform_logos/spoj_small.png',
-    'atcoder': 'assets/platform_logos/atcoder_small.png',
-    'hackerearth': 'assets/platform_logos/hackerearth_small.png',
-    'hackerrank': 'assets/platform_logos/hackerrank_small.png',
-    'uva': 'assets/platform_logos/uva_small.png',
-    'timus': 'assets/platform_logos/timus_small.png',
-  };
-
+  static const platformImgs = platforms.platformImgs;
   @override
   _ToDoListScreenState createState() => _ToDoListScreenState();
 }
@@ -38,6 +28,7 @@ class _ToDoListScreenState extends State<ToDoListScreen> {
 
   Future<List<ToDoList>> _getToDoList() async {
     var probs = await getTodos();
+    if (probs == null) return [];
     List todosFetched = probs['todos'];
     todosFetched.forEach((element) {
       ToDoList todo = ToDoList(
@@ -229,7 +220,9 @@ class _ToDoListScreenState extends State<ToDoListScreen> {
                   Expanded(
                     child: Column(
                       children: [
-                        todo.platform != null
+                        todo.platform != null &&
+                                ToDoListScreen.platformImgs[todo.platform] !=
+                                    null
                             ? Image.asset(
                                 ToDoListScreen.platformImgs[todo.platform],
                                 height: 80,
@@ -374,7 +367,6 @@ class _ToDoListScreenState extends State<ToDoListScreen> {
   }
 
   _senddelrequest(String link) async {
-    print(link);
     deleteTodoUsingLink(link);
   }
 }

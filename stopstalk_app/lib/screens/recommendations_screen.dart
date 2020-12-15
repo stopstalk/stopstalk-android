@@ -3,21 +3,11 @@ import 'package:flutter/material.dart';
 
 import '../widgets/app_drawer.dart';
 import '../widgets/problems_card.dart';
+
 import '../classes/problems_class.dart';
 
 class RecommendationsScreen extends StatefulWidget {
   static const routeName = '/recommendations';
-
-  static const platformImgs = {
-    'Codechef': 'assets/platform_logos/codechef_small.png',
-    'Codeforces': 'assets/platform_logos/codeforces_small.png',
-    'Spoj': 'assets/platform_logos/spoj_small.png',
-    'Atcoder': 'assets/platform_logos/atcoder_small.png',
-    'Hackerearth': 'assets/platform_logos/hackerearth_small.png',
-    'Hackerrank': 'assets/platform_logos/hackerrank_small.png',
-    'Uva': 'assets/platform_logos/uva_small.png',
-    'Timus': 'assets/platform_logos/timus_small.png',
-  };
 
   @override
   _RecommendationsScreenState createState() => _RecommendationsScreenState();
@@ -28,7 +18,7 @@ class _RecommendationsScreenState extends State<RecommendationsScreen> {
   bool flag = false;
 
   final GlobalKey<AnimatedListState> _animatedListKey =
-  GlobalKey<AnimatedListState>();
+      GlobalKey<AnimatedListState>();
 
   Future<List<Problems>> _getRecommendations() async {
     for (int i = 1; i < 5; i++) {
@@ -40,10 +30,7 @@ class _RecommendationsScreenState extends State<RecommendationsScreen> {
             editorialUrl: 'https://codeforces.com/contest/1454/problem/B',
             totalSubmissions: '500',
             accuracy: '25%',
-            tags: [
-              'hard','easy','dp'
-            ]
-        );
+            tags: ['hard', 'easy', 'dp']);
         recom.add(prob);
       } else {
         Problems prob = Problems(
@@ -54,9 +41,18 @@ class _RecommendationsScreenState extends State<RecommendationsScreen> {
             totalSubmissions: '500',
             accuracy: '25%',
             tags: [
-              'hard','easy','dp','easy','dp','easy','dp','easy','dp','easy','dp'
-            ]
-        );
+              'hard',
+              'easy',
+              'dp',
+              'easy',
+              'dp',
+              'easy',
+              'dp',
+              'easy',
+              'dp',
+              'easy',
+              'dp'
+            ]);
         recom.add(prob);
       }
     }
@@ -71,6 +67,7 @@ class _RecommendationsScreenState extends State<RecommendationsScreen> {
     myF = _getRecommendations();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -93,22 +90,19 @@ class _RecommendationsScreenState extends State<RecommendationsScreen> {
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     return Container(
-                      height: MediaQuery
-                          .of(context)
-                          .size
-                          .height,
+                      height: MediaQuery.of(context).size.height,
                       child: flag != true
                           ? AnimatedList(
-                        key: _animatedListKey,
-                        primary: true,
-                        shrinkWrap: true,
-                        physics: BouncingScrollPhysics(),
-                        initialItemCount: snapshot.data.length,
-                        itemBuilder: (context, i, animation) {
-                          return ProblemsCard(
-                              snapshot.data[i], context, i, animation);
-                        },
-                      )
+                              key: _animatedListKey,
+                              primary: true,
+                              shrinkWrap: true,
+                              physics: BouncingScrollPhysics(),
+                              initialItemCount: snapshot.data.length,
+                              itemBuilder: (context, i, animation) {
+                                return ProblemsCard(
+                                    snapshot.data[i], context, i, animation);
+                              },
+                            )
                           : _showNoRecommendation(),
                     );
                   } else if (snapshot.hasError) {
@@ -124,15 +118,13 @@ class _RecommendationsScreenState extends State<RecommendationsScreen> {
       ),
     );
   }
+
   Widget _showNoRecommendation() {
     return AnimatedOpacity(
       opacity: 1,
       duration: Duration(milliseconds: 600),
       child: Container(
-        height: MediaQuery
-            .of(context)
-            .size
-            .height * 0.3,
+        height: MediaQuery.of(context).size.height * 0.3,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
