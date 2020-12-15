@@ -14,6 +14,8 @@ import '../screens/upcoming_contest_screen.dart';
 import '../screens/user_editorials.dart';
 import '../screens/dashboard.dart';
 import '../screens/todoList_screen.dart';
+import '../classes/leaderboard.dart';
+import '../classes/dashboard_class.dart';
 
 import '../utils/auth.dart';
 
@@ -73,19 +75,23 @@ class _AppDrawerState extends State<AppDrawer> {
               leading: Icon(Icons.dashboard),
               title: Text('Dashboard'),
               onTap: () {
-                Navigator.of(context).pushReplacementNamed(Dashboard.routeName);
+                Navigator.of(context).pushReplacementNamed(Dashboard.routeName,
+                    arguments: DashboardClass(
+                        loggedin: _userData != null ? true : false));
               },
             ),
             Divider(),
-            ListTile(
-              leading: Icon(Icons.list),
-              title: Text('ToDo List'),
-              onTap: () {
-                Navigator.of(context)
-                    .pushReplacementNamed(ToDoListScreen.routeName);
-              },
-            ),
-            Divider(),
+            _userData != null
+                ? ListTile(
+                    leading: Icon(Icons.list),
+                    title: Text('ToDo List'),
+                    onTap: () {
+                      Navigator.of(context)
+                          .pushReplacementNamed(ToDoListScreen.routeName);
+                    },
+                  )
+                : Container(),
+            _userData != null ? Divider() : Container(),
             ListTile(
               leading: Icon(FontAwesomeIcons.solidEdit),
               title: Text('User Editorials'),
@@ -126,8 +132,10 @@ class _AppDrawerState extends State<AppDrawer> {
               leading: Icon(Icons.insert_chart),
               title: Text('LeaderBoard'),
               onTap: () {
-                Navigator.of(context)
-                    .pushReplacementNamed(LeaderBoardScreen.routeName);
+                Navigator.of(context).pushReplacementNamed(
+                    LeaderBoardScreen.routeName,
+                    arguments: LeaderBoard(
+                        loggedin: _userData != null ? true : false));
               },
             ),
             Divider(),

@@ -1,4 +1,5 @@
 class LeaderBoard {
+  final bool loggedin;
   final String name;
   final String stopstalkHandle;
   final String institute;
@@ -9,6 +10,7 @@ class LeaderBoard {
   final int rank;
 
   LeaderBoard({
+    this.loggedin,
     this.name,
     this.stopstalkHandle,
     this.institute,

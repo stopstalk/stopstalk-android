@@ -12,16 +12,15 @@ import '../../screens/upcoming_contest_screen.dart';
 
 class UpcomingContests extends StatelessWidget {
   final images = {
-    "CODEFORCES":
-        "https://1.bp.blogspot.com/-pBimI1ZhYAA/Wnde0nmCz8I/AAAAAAAABPI/5LZ2y9tBOZIV-pm9KNbyNy3WZJkGS54WgCPcBGAYYCw/s1600/codeforce.png",
-    "CODECHEF":
-        "https://i.pinimg.com/originals/c5/d9/fc/c5d9fc1e18bcf039f464c2ab6cfb3eb6.jpg",
-    "HACKEREARTH":
-        "https://upload.wikimedia.org/wikipedia/commons/e/e8/HackerEarth_logo.png",
-    "HACKERRANK":
-        "https://info.hackerrank.com/rs/487-WAY-049/images/Podcast-ChannelCover-Final.jpg",
-    "OTHER":
-        "https://coursereport-s3-production.global.ssl.fastly.net/rich/rich_files/rich_files/3942/s200/asia-developer-academy.png"
+    'CODECHEF': 'assets/platform_logos/codechef_small.png',
+    'CODEFORCES': 'assets/platform_logos/codeforces_small.png',
+    'OTHER': 'assets/platform_logos/other.jpeg',
+    'SPOJ': 'assets/platform_logos/spoj_small.png',
+    'ATCODER': 'assets/platform_logos/atcoder_small.png',
+    'HACKEREARTH': 'assets/platform_logos/hackerearth_small.png',
+    'HACKERRANK': 'assets/platform_logos/hackerrank_small.png',
+    'UVA': 'assets/platform_logos/uva_small.png',
+    'TIMUS': 'assets/platform_logos/timus_small.png',
   };
 
   Future<List<Contest>> _getContests() async {
@@ -124,7 +123,7 @@ class UpcomingContests extends StatelessWidget {
                             Expanded(
                               flex: 2,
                               child: Image(
-                                image: NetworkImage(
+                                image: AssetImage(
                                   images[snapshot.data[index].platform],
                                 ),
                                 height: 40.0,
