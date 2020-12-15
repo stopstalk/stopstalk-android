@@ -138,24 +138,6 @@ class _UpcomingContestState extends State<UpcomingContestScreen> {
     }
   }
 
-  // List<String> timeLeftStrings(List<String> times) {
-  //   for (int i = 0; i < times.length; i++) {
-  //     times[i] = timeLeft(DateTime.parse(times[i]));
-  //   }
-  // }
-
-  // void _startTimer() {
-  //   if (startTimes.length > 0) {
-  //     Timer.periodic(Duration(seconds: 1), (timer) {
-  //       setState(() {
-  //         startTimes = timeLeftStrings(startTimes);
-  //       });
-  //     });
-  //   } else {
-  //     _getStartTimes();
-  //   }
-  // }
-
   final images = {
     'CODECHEF': 'assets/platform_logos/codechef_small.png',
     'CODEFORCES': 'assets/platform_logos/codeforces_small.png',
@@ -192,29 +174,29 @@ class _UpcomingContestState extends State<UpcomingContestScreen> {
               return Preloader();
             } else {
               return ListView.builder(
-                  itemCount: snapshot.data.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Container(
-                      child: SimpleFoldingCell(
-                        frontWidget: frontWidget(
-                            snapshot.data[index].name,
-                            snapshot.data[index].platform,
-                            snapshot.data[index].startTime),
-                        innerTopWidget: innerTopWidget(
-                            snapshot.data[index].name,
-                            snapshot.data[index].platform,
-                            snapshot.data[index].startTime),
-                        innerBottomWidget: innerBottomWidget(
-                            snapshot.data[index].startTime,
-                            snapshot.data[index].url),
-                        cellSize:
-                            Size(MediaQuery.of(context).size.width, 125.0),
-                        padding: EdgeInsets.all(10.0),
-                        animationDuration: Duration(milliseconds: 300),
-                        borderRadius: 10.0,
-                      ),
-                    );
-                  });
+                itemCount: snapshot.data.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Container(
+                    child: SimpleFoldingCell(
+                      frontWidget: frontWidget(
+                          snapshot.data[index].name,
+                          snapshot.data[index].platform,
+                          snapshot.data[index].startTime),
+                      innerTopWidget: innerTopWidget(
+                          snapshot.data[index].name,
+                          snapshot.data[index].platform,
+                          snapshot.data[index].startTime),
+                      innerBottomWidget: innerBottomWidget(
+                          snapshot.data[index].startTime,
+                          snapshot.data[index].url),
+                      cellSize: Size(MediaQuery.of(context).size.width, 125.0),
+                      padding: EdgeInsets.all(10.0),
+                      animationDuration: Duration(milliseconds: 300),
+                      borderRadius: 10.0,
+                    ),
+                  );
+                },
+              );
             }
           },
         ),
@@ -516,85 +498,87 @@ class _UpcomingContestState extends State<UpcomingContestScreen> {
   }
 
   Widget innerBottomWidget(String startTime, String url) {
-    return Builder(builder: (context) {
-      return GestureDetector(
-        onTap: () {
-          final foldingCellState =
-              context.findAncestorStateOfType<SimpleFoldingCellState>();
-          foldingCellState?.toggleFold();
-        },
-        child: ClipRRect(
-          borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(15),
-            bottomRight: Radius.circular(15),
-          ),
-          child: Container(
-            margin: EdgeInsets.only(bottom: 6),
-            decoration: BoxDecoration(
-              color: Colors.indigo.shade50,
-              borderRadius: BorderRadius.only(
-                bottomRight: Radius.circular(15),
-                bottomLeft: Radius.circular(15),
+    return Builder(
+      builder: (context) {
+        return GestureDetector(
+          onTap: () {
+            final foldingCellState =
+                context.findAncestorStateOfType<SimpleFoldingCellState>();
+            foldingCellState?.toggleFold();
+          },
+          child: ClipRRect(
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(15),
+              bottomRight: Radius.circular(15),
+            ),
+            child: Container(
+              margin: EdgeInsets.only(bottom: 6),
+              decoration: BoxDecoration(
+                color: Colors.indigo.shade50,
+                borderRadius: BorderRadius.only(
+                  bottomRight: Radius.circular(15),
+                  bottomLeft: Radius.circular(15),
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    blurRadius: 6.0,
+                    color: Colors.grey,
+                    offset: Offset(0.0, 2.0),
+                  ),
+                ],
               ),
-              boxShadow: [
-                BoxShadow(
-                  blurRadius: 6.0,
-                  color: Colors.grey,
-                  offset: Offset(0.0, 2.0),
-                ),
-              ],
-            ),
-            alignment: Alignment.center,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(FontAwesomeIcons.hourglassHalf),
-                    Padding(
-                      padding: EdgeInsets.only(right: 8.0),
-                    ),
-                    TimerBuilder.periodic(Duration(seconds: 1),
-                        builder: (context) {
-                      return Text(
-                        timeLeft(DateTime.parse(timeToDate(startTime))),
-                        style: TextStyle(
-                          fontSize: 18.0,
-                        ),
-                      );
-                    })
-                  ],
-                ),
-                Padding(
-                  padding: EdgeInsets.only(
-                    top: 10.0,
+              alignment: Alignment.center,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(FontAwesomeIcons.hourglassHalf),
+                      Padding(
+                        padding: EdgeInsets.only(right: 8.0),
+                      ),
+                      TimerBuilder.periodic(Duration(seconds: 1),
+                          builder: (context) {
+                        return Text(
+                          timeLeft(DateTime.parse(timeToDate(startTime))),
+                          style: TextStyle(
+                            fontSize: 18.0,
+                          ),
+                        );
+                      })
+                    ],
                   ),
-                ),
-                ButtonTheme(
-                  child: RaisedButton.icon(
-                    onPressed: () => {_launchURL(url)},
-                    icon: Icon(
-                      FontAwesomeIcons.link,
-                      color: Colors.white,
-                      size: 17.0,
+                  Padding(
+                    padding: EdgeInsets.only(
+                      top: 10.0,
                     ),
-                    label: Padding(
-                      padding: EdgeInsets.only(top: 12.0, bottom: 12.0),
-                      child: Text("CONTEST LINK"),
-                    ),
-                    textColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(8.0))),
-                    color: Color(0xFF0018ca),
                   ),
-                  minWidth: 160.0,
-                ),
-              ],
+                  ButtonTheme(
+                    child: RaisedButton.icon(
+                      onPressed: () => {_launchURL(url)},
+                      icon: Icon(
+                        FontAwesomeIcons.link,
+                        color: Colors.white,
+                        size: 17.0,
+                      ),
+                      label: Padding(
+                        padding: EdgeInsets.only(top: 12.0, bottom: 12.0),
+                        child: Text("CONTEST LINK"),
+                      ),
+                      textColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(8.0))),
+                      color: Color(0xFF0018ca),
+                    ),
+                    minWidth: 160.0,
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
-      );
-    });
+        );
+      },
+    );
   }
 }

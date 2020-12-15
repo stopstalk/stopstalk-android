@@ -272,7 +272,7 @@ class _TrendingProblemsScreenState extends State<TrendingProblemsScreen> {
                   child: RaisedButton(
                     elevation: 5,
                     padding: EdgeInsets.symmetric(vertical: 0, horizontal: 8),
-                    color: Color(0xFF0018ca),
+                    color: Theme.of(context).buttonColor,
                     child: Row(
                       children: [
                         Icon(

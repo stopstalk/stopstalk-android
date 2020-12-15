@@ -46,7 +46,7 @@ class MyApp extends StatelessWidget {
         UpcomingContestScreen.routeName: (ctx) => UpcomingContestScreen(),
         SearchProblemsScreen.routeName: (ctx) => SearchProblemsScreen(),
         LeaderBoardScreen.routeName: (ctx) => LeaderBoardScreen(),
-        TrendingProblemsScreen.routeName:(ctx)=>TrendingProblemsScreen(),
+        TrendingProblemsScreen.routeName: (ctx) => TrendingProblemsScreen(),
         RecommendationsScreen.routeName: (ctx) => RecommendationsScreen(),
         SubmissionFiltersScreen.routeName: (ctx) => SubmissionFiltersScreen(),
         TestimonialsScreen.routeName: (ctx) => TestimonialsScreen(),
