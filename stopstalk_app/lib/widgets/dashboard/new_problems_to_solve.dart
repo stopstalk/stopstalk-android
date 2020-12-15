@@ -64,7 +64,7 @@ class NewProblemsToSolve extends StatelessWidget {
             ),
                 onPressed: () {
                   Navigator.of(context)
-                      .pushReplacementNamed(RecommendationsScreen.routeName);}
+                      .pushNamed(RecommendationsScreen.routeName);}
           ),
           Padding(
             padding: EdgeInsets.only(top: 8.0),

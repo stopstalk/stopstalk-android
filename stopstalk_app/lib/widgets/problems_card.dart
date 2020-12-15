@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:expandable/expandable.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import'../fragments/my_flutter_app_icons.dart';
 import'../classes/problems_class.dart';
 
