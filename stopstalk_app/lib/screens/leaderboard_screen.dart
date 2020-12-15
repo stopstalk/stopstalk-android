@@ -25,7 +25,7 @@ class LeaderBoardScreen extends StatelessWidget {
 
   TextStyle get contentTextStyle => TextStyle(
         fontFamily: 'Oswald',
-        fontSize: 20,
+        fontSize: 18,
         height: 1.8,
         letterSpacing: .3,
       );
@@ -222,7 +222,7 @@ class LeaderBoardScreen extends StatelessWidget {
                           topLeft: Radius.circular(15),
                           bottomLeft: Radius.circular(15),
                         ),
-                        color: Colors.lightBlueAccent.shade100,
+                        color: Color(0xFF2542ff),
                         boxShadow: [
                           BoxShadow(
                             blurRadius: 6.0,
@@ -238,6 +238,7 @@ class LeaderBoardScreen extends StatelessWidget {
                             '#${index + 1}',
                             style: TextStyle(
                               fontSize: 18,
+                              color: Colors.white,
                             ),
                           ),
                         ],
@@ -278,10 +279,10 @@ class LeaderBoardScreen extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                               fontFamily: 'Oswald',
-                              fontSize: 25,
+                              fontSize: 20,
                               height: 1.8,
                               letterSpacing: .3,
-                              fontWeight: FontWeight.w400,
+                              fontWeight: FontWeight.w500,
                             ),
                           ),
                           Row(
@@ -300,7 +301,7 @@ class LeaderBoardScreen extends StatelessWidget {
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
-                                    //fontFamily: 'Oswald',
+                                    fontFamily: 'Oswald',
                                     fontSize: 15,
                                     height: 1.8,
                                     letterSpacing: .3,
@@ -345,7 +346,7 @@ class LeaderBoardScreen extends StatelessWidget {
         ),
         child: Container(
           decoration: BoxDecoration(
-            color: Colors.lightBlueAccent.shade100,
+            color: Color(0xFF2542ff),
           ),
           alignment: Alignment.center,
           child: Column(
@@ -359,7 +360,13 @@ class LeaderBoardScreen extends StatelessWidget {
                       name,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: contentTextStyle,
+                      style: TextStyle(
+                        fontFamily: 'Oswald',
+                        fontSize: 18,
+                        height: 1.8,
+                        letterSpacing: .3,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                   SizedBox(
@@ -394,7 +401,7 @@ class LeaderBoardScreen extends StatelessWidget {
                             height: 1,
                             letterSpacing: .2,
                             fontWeight: FontWeight.w300,
-                            color: Colors.black,
+                            color: Colors.white,
                           ),
                         ),
                       ],
@@ -413,7 +420,13 @@ class LeaderBoardScreen extends StatelessWidget {
                         padding: const EdgeInsets.only(bottom: 8.0),
                         child: Text(
                           '@ $handle',
-                          style: contentTextStyle,
+                          style: TextStyle(
+                            fontFamily: 'Oswald',
+                            fontSize: 18,
+                            height: 1.8,
+                            letterSpacing: .3,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                     ],
