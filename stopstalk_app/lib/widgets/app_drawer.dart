@@ -8,10 +8,7 @@ import '../screens/leaderboard_screen.dart';
 import '../screens/profile.dart';
 import '../screens/search_friends_screen.dart';
 import '../screens/search_problems_screen.dart';
-import '../screens/submission_filters_screen.dart';
-import '../screens/testimonials_screen.dart';
 import '../screens/trending_problems_screen.dart';
-import '../screens/recommendations_screen.dart';
 import '../screens/upcoming_contest_screen.dart';
 import '../screens/user_editorials.dart';
 import '../screens/dashboard.dart';
@@ -140,15 +137,6 @@ class _AppDrawerState extends State<AppDrawer> {
               onTap: () {
                 Navigator.of(context)
                     .pushReplacementNamed(TrendingProblemsScreen.routeName);
-              },
-            ),
-            Divider(),
-            ListTile(
-              leading: Icon(Icons.lightbulb_outline),
-              title: Text('Recommendations'),
-              onTap: () {
-                Navigator.of(context)
-                    .pushReplacementNamed(RecommendationsScreen.routeName);
               },
             ),
             Divider(),
