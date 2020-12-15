@@ -42,7 +42,6 @@ class _TrendingProblemsScreenState extends State<TrendingProblemsScreen> {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Color(0xFF2542ff),
           title: Text(
             'Trending Problems',
             textAlign: TextAlign.center,

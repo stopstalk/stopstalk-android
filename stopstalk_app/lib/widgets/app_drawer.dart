@@ -8,8 +8,6 @@ import '../screens/leaderboard_screen.dart';
 import '../screens/profile.dart';
 import '../screens/search_friends_screen.dart';
 import '../screens/search_problems_screen.dart';
-import '../screens/submission_filters_screen.dart';
-import '../screens/testimonials_screen.dart';
 import '../screens/trending_problems_screen.dart';
 import '../screens/recommendations_screen.dart';
 import '../screens/upcoming_contest_screen.dart';
@@ -45,7 +43,6 @@ class _AppDrawerState extends State<AppDrawer> {
         child: Column(
           children: <Widget>[
             AppBar(
-                backgroundColor: Color(0xFF2542ff),
                 title: _userData != null
                     ? Text(_userData.stopstalkHandle)
                     : Text('Hello User')),
