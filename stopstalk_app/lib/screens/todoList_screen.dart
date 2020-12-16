@@ -7,10 +7,12 @@ import '../widgets/preloader.dart';
 import '../classes/todoList_class.dart';
 import '../utils/api.dart';
 import '../utils/platforms.dart' as platforms;
+import '../screens/search_problems_screen.dart';
 
 class ToDoListScreen extends StatefulWidget {
   static const routeName = '/todoList';
   static const platformImgs = platforms.platformImgs;
+
   @override
   _ToDoListScreenState createState() => _ToDoListScreenState();
 }
@@ -110,7 +112,7 @@ class _ToDoListScreenState extends State<ToDoListScreen> {
                       : BouncingScrollPhysics(),
                   child: Column(
                     children: [
-                      Padding(
+                  flag!=true?Padding(
                         padding: const EdgeInsets.only(
                             top: 8.0, bottom: 8.0, right: 0.0, left: 50),
                         child: Row(
@@ -148,7 +150,7 @@ class _ToDoListScreenState extends State<ToDoListScreen> {
                             ),
                           ],
                         ),
-                      ),
+                      ):Container(),
                       Container(
                         height: MediaQuery.of(context).size.height,
                         child: flag != true
@@ -351,6 +353,17 @@ class _ToDoListScreenState extends State<ToDoListScreen> {
                 fontSize: 20,
               ),
             ),
+            RaisedButton(
+              elevation: 4,
+              onPressed: (){
+                Navigator.of(context)
+                    .pushNamed(SearchProblemsScreen.routeName);
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text("Add more Todo problems", style: TextStyle(color: Colors.white),),
+              ),
+            )
           ],
         ),
       ),
