@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:expandable/expandable.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import'../fragments/my_flutter_app_icons.dart';
 import'../classes/problems_class.dart';
 
@@ -10,12 +9,10 @@ class ProblemsCard extends StatelessWidget {
   final Problems recom;
   final BuildContext context;
   final int i;
-  final Animation animation;
   ProblemsCard(
       this.recom,
       this.context,
       this.i,
-      this.animation,
       );
   static const platformImgs = {
     'Codechef': 'assets/platform_logos/codechef_small.png',
@@ -27,20 +24,12 @@ class ProblemsCard extends StatelessWidget {
     'Uva': 'assets/platform_logos/uva_small.png',
     'Timus': 'assets/platform_logos/timus_small.png',
   };
-  Tween<Offset> _offSetTween = Tween(
-    begin: Offset(1, 0),
-    end: Offset.zero,
-  );
   @override
   Widget build(BuildContext context) {
     return ExpandableNotifier(
           child:Column(children:[
             Expandable(
               collapsed: ExpandableButton(
-                child: FadeTransition(
-                  opacity: animation,
-                  child: SlideTransition(
-                    position: _offSetTween.animate(animation),
                     child: Padding(
                       padding: const EdgeInsets.all(3.0),
                       child: Card(
@@ -123,18 +112,13 @@ class ProblemsCard extends StatelessWidget {
                                 )
                               ],
                             ),
-                        ),
-                        ),),//new card
+                        ), //new card
                       ),
                     ),
                   ),
               expanded: Column(
                   children: [
                     ExpandableButton(       // <-- Collapses when tapped on
-                      child: FadeTransition(
-                        opacity: animation,
-                        child: SlideTransition(
-                          position: _offSetTween.animate(animation),
                           child: Container(
                             padding: const EdgeInsets.all(4.0),width: double.infinity,
                             child: Card(
@@ -157,7 +141,7 @@ class ProblemsCard extends StatelessWidget {
                                     );
                                   }),
                                 ),
-                              ),),),),),)
+                              ),),),)
                   ]
               ),)])
       );}

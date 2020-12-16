@@ -192,7 +192,7 @@ class UpcomingContests extends StatelessWidget {
               ),
               onPressed: () {
                 Navigator.of(context)
-                    .pushReplacementNamed(UpcomingContestScreen.routeName);
+                    .pushNamed(UpcomingContestScreen.routeName);
               },
             ),
           ),
