@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:multiselect_formfield/multiselect_formfield.dart';
 
 import '../widgets/app_drawer.dart';
+import'../screens/searched_problems_screen.dart';
 
 class SearchProblemsScreen extends StatefulWidget {
   SearchProblemsScreen({Key key}) : super(key: key);
@@ -524,8 +525,9 @@ class _SearchProblemsScreenState extends State<SearchProblemsScreen> {
                                 ),
                               ),
                             ],
-                          ),
-                          onPressed: () {},
+                          ),onPressed: () {
+                          Navigator.of(context)
+                              .pushNamed(SearchedProblemsScreen.routeName);}
                         ),
                       ),
                     ],

@@ -89,11 +89,11 @@ class ProblemsCard extends StatelessWidget {
                                           Text(recom.accuracy+" Accuracy",style: TextStyle(
                                             fontSize: 15,
                                             color: Colors.grey[800]
-                                          ),),//Icon(FontAwesomeIcons.bullseye),
+                                          ),),
                                           Text(recom.totalSubmissions+" Submissions",style: TextStyle(
                                               fontSize: 15,
                                               color: Colors.grey[800]
-                                          ),),//Icon(Icons.arrow_upward_rounded),
+                                          ),),
                                         ],
                                       ),
                                     ),
