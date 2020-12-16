@@ -6,6 +6,8 @@ class Problems {
   final String totalSubmissions;
   final String accuracy;
   final List<dynamic> tags;
+  final int users;
+  final int id;
 
   Problems({
     this.problemName,
@@ -15,5 +17,7 @@ class Problems {
     this.totalSubmissions,
     this.accuracy,
     this.tags,
+    this.users,
+    this.id,
   });
 }

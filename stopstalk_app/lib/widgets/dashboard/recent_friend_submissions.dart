@@ -1,19 +1,10 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import '../../utils/platforms.dart';
 
 class RecentFriendSubmissions extends StatelessWidget {
-  final images = {
-    'CODECHEF': 'assets/platform_logos/codechef_small.png',
-    'CODEFORCES': 'assets/platform_logos/codeforces_small.png',
-    'OTHER': 'assets/platform_logos/other.jpeg',
-    'SPOJ': 'assets/platform_logos/spoj_small.png',
-    'ATCODER': 'assets/platform_logos/atcoder_small.png',
-    'HACKEREARTH': 'assets/platform_logos/hackerearth_small.png',
-    'HACKERRANK': 'assets/platform_logos/hackerrank_small.png',
-    'UVA': 'assets/platform_logos/uva_small.png',
-    'TIMUS': 'assets/platform_logos/timus_small.png',
-  };
+  final images = platformImgs;
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +68,7 @@ class RecentFriendSubmissions extends StatelessWidget {
                         children: [
                           Image(
                             image: AssetImage(
-                              images["CODEFORCES"],
+                              images["CODEFORCES".toLowerCase()],
                             ),
                             height: 40.0,
                             width: 40.0,
@@ -101,7 +92,7 @@ class RecentFriendSubmissions extends StatelessWidget {
                         children: [
                           Image(
                             image: AssetImage(
-                              images["CODECHEF"],
+                              images["CODECHEF".toLowerCase()],
                             ),
                             height: 40.0,
                             width: 40.0,
@@ -149,7 +140,7 @@ class RecentFriendSubmissions extends StatelessWidget {
                         children: [
                           Image(
                             image: AssetImage(
-                              images["CODEFORCES"],
+                              images["CODEFORCES".toLowerCase()],
                             ),
                             height: 40.0,
                             width: 40.0,
@@ -173,7 +164,7 @@ class RecentFriendSubmissions extends StatelessWidget {
                         children: [
                           Image(
                             image: AssetImage(
-                              images["CODECHEF"],
+                              images["CODECHEF".toLowerCase()],
                             ),
                             height: 40.0,
                             width: 40.0,

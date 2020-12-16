@@ -79,12 +79,12 @@ Future<Map<String, dynamic>> getTodos() async {
   return null;
 }
 
-Future<Map<String, dynamic>> addTodoUsingId(String id) async {
+Future<String> addTodoUsingId(String id) async {
   var url = await getURL('problems/add_todo_problem', {'pid': id});
   var headers = await getAuthHeader();
   var res = await http.get(url, headers: headers);
   if (res.statusCode == 200) {
-    return jsonDecode(res.body);
+    return res.body;
   }
   return null;
 }
