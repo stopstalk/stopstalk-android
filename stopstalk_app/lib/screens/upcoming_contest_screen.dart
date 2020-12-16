@@ -13,6 +13,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import '../widgets/app_drawer.dart';
 import '../widgets/preloader.dart';
 import '../classes/contest_class.dart';
+import '../utils/platforms.dart';
 
 class UpcomingContestScreen extends StatefulWidget {
   static const routeName = '/upcoming-contests';
@@ -36,6 +37,7 @@ class _UpcomingContestState extends State<UpcomingContestScreen> {
           contest["Duration"],
           contest["EndTime"]);
       contests.add(cont);
+      print(cont.platform);
     }
     return contests;
   }
@@ -138,17 +140,7 @@ class _UpcomingContestState extends State<UpcomingContestScreen> {
     }
   }
 
-  final images = {
-    'CODECHEF': 'assets/platform_logos/codechef_small.png',
-    'CODEFORCES': 'assets/platform_logos/codeforces_small.png',
-    'OTHER': 'assets/platform_logos/other.jpeg',
-    'SPOJ': 'assets/platform_logos/spoj_small.png',
-    'ATCODER': 'assets/platform_logos/atcoder_small.png',
-    'HACKEREARTH': 'assets/platform_logos/hackerearth_small.png',
-    'HACKERRANK': 'assets/platform_logos/hackerrank_small.png',
-    'UVA': 'assets/platform_logos/uva_small.png',
-    'TIMUS': 'assets/platform_logos/timus_small.png',
-  };
+  final images = platformImgs;
 
   @override
   void initState() {
@@ -252,9 +244,10 @@ class _UpcomingContestState extends State<UpcomingContestScreen> {
                             maxRadius: 30,
                             backgroundColor: Colors.white,
                             child: ClipRRect(
-                              child: images[image] != null
+                              child: images[image.toLowerCase()] != null
                                   ? Image(
-                                      image: AssetImage(images[image]),
+                                      image: AssetImage(
+                                          images[image.toLowerCase()]),
                                       height: 80.0,
                                       width: 80.0,
                                     )

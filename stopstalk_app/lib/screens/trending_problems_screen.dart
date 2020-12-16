@@ -20,8 +20,12 @@ class TrendingProblemsScreen extends StatefulWidget {
 }
 
 class _TrendingProblemsScreenState extends State<TrendingProblemsScreen> {
-  List<Problems> problems = [];
+  List<Problems> gproblems = [];
+  List<Problems> fproblems = [];
+
   final GlobalKey<AnimatedListState> _animatedListKey =
+      GlobalKey<AnimatedListState>();
+  final GlobalKey<AnimatedListState> _animatedListKey2 =
       GlobalKey<AnimatedListState>();
 
   Future<List<Problems>> _getTrendingProblems() async {
@@ -35,9 +39,25 @@ class _TrendingProblemsScreenState extends State<TrendingProblemsScreen> {
           totalSubmissions: result[i][1]['total_submissions'].toString(),
           users: result[i][1]['users'].length,
           problemUrl: result[i][1]['link']);
-      problems.add(problem);
+      gproblems.add(problem);
     }
-    return problems;
+    return gproblems;
+  }
+
+  Future<List<Problems>> _getTrendingFriendsProblems() async {
+    var probs = await getFriendsTrendingprobs();
+    if (probs == null) return [];
+    List result = probs['problems'];
+    for (int i = 0; i < result.length; i++) {
+      Problems problem = Problems(
+          id: result[i][0],
+          problemName: result[i][1]['name'],
+          totalSubmissions: result[i][1]['total_submissions'].toString(),
+          users: result[i][1]['users'].length,
+          problemUrl: result[i][1]['link']);
+      fproblems.add(problem);
+    }
+    return fproblems;
   }
 
   Future<List<Problems>> myFuture;
@@ -148,7 +168,37 @@ class _TrendingProblemsScreenState extends State<TrendingProblemsScreen> {
                       ),
                     )
                   : Center(
-                      child: Text("loggedin"),
+                      child: FutureBuilder(
+                        future: _getTrendingFriendsProblems(),
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            return SingleChildScrollView(
+                              physics: BouncingScrollPhysics(),
+                              child: Column(
+                                children: [
+                                  Container(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.8,
+                                      child: AnimatedList(
+                                        key: _animatedListKey2,
+                                        primary: true,
+                                        shrinkWrap: true,
+                                        physics: BouncingScrollPhysics(),
+                                        initialItemCount: snapshot.data.length,
+                                        itemBuilder: (context, i, animation) {
+                                          return ProblemsCard(snapshot.data[i],
+                                              context, i, animation);
+                                        },
+                                      )),
+                                ],
+                              ),
+                            );
+                          } else {
+                            return Preloader();
+                          }
+                        },
+                      ),
                     ),
             ),
           ],
