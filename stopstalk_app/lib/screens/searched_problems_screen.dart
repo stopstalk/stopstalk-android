@@ -88,20 +88,6 @@ class _SearchedProblemsScreenState extends State<SearchedProblemsScreen> {
           physics: BouncingScrollPhysics(),
           child: Column(
             children: [
-              RaisedButton.icon(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8.0),
-                ),
-                padding: EdgeInsets.only(top:8.0,bottom: 8.0,left: 17.0,right:17.0),
-                onPressed: (){
-                  Navigator.of(context)
-                      .pop();
-                },
-                color: Color(0xFF2542ff),
-                icon:Icon(Icons.search),
-                label:Text('Search'),
-                textColor: Colors.white,
-              ),
               FutureBuilder(
                 future: myF,
                 builder: (context, snapshot) {
@@ -136,7 +122,16 @@ class _SearchedProblemsScreenState extends State<SearchedProblemsScreen> {
           ),
         ),
       ),
-    );
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      floatingActionButton: FloatingActionButton(
+    // isExtended: true,
+        child: Icon(Icons.search),
+        backgroundColor: Color(0xFF2542ff),
+        onPressed: (){
+          Navigator.of(context)
+              .pop();
+        },
+    ),);
   }
   Widget _showNoProblemsFound() {
     return AnimatedOpacity(
