@@ -67,7 +67,7 @@ class _AppDrawerState extends State<AppDrawer> {
                     onTap: () {
                       deleteAllDataSecureStore();
                       Navigator.of(context)
-                          .pushReplacementNamed(LoginPage.routeName);
+                          .pushNamed(LoginPage.routeName);
                     },
                   ),
             Divider(),
@@ -75,7 +75,7 @@ class _AppDrawerState extends State<AppDrawer> {
               leading: Icon(Icons.dashboard),
               title: Text('Dashboard'),
               onTap: () {
-                Navigator.of(context).pushReplacementNamed(Dashboard.routeName,
+                Navigator.of(context).pushNamed(Dashboard.routeName,
                     arguments: DashboardClass(
                         loggedin: _userData != null ? true : false));
               },
@@ -97,7 +97,7 @@ class _AppDrawerState extends State<AppDrawer> {
               title: Text('User Editorials'),
               onTap: () {
                 Navigator.of(context)
-                    .pushReplacementNamed(UserEditorialScreen.routeName);
+                    .pushNamed(UserEditorialScreen.routeName);
               },
             ),
             Divider(),
@@ -106,7 +106,7 @@ class _AppDrawerState extends State<AppDrawer> {
               title: Text('Search Friends'),
               onTap: () {
                 Navigator.of(context)
-                    .pushReplacementNamed(SearchFriendsScreen.routeName);
+                    .pushNamed(SearchFriendsScreen.routeName);
               },
             ),
             Divider(),
@@ -115,7 +115,7 @@ class _AppDrawerState extends State<AppDrawer> {
               title: Text('Upcoming contests'),
               onTap: () {
                 Navigator.of(context)
-                    .pushReplacementNamed(UpcomingContestScreen.routeName);
+                    .pushNamed(UpcomingContestScreen.routeName);
               },
             ),
             Divider(),
@@ -124,7 +124,7 @@ class _AppDrawerState extends State<AppDrawer> {
               title: Text('Search Problems'),
               onTap: () {
                 Navigator.of(context)
-                    .pushReplacementNamed(SearchProblemsScreen.routeName);
+                    .pushNamed(SearchProblemsScreen.routeName);
               },
             ),
             Divider(),
@@ -132,7 +132,7 @@ class _AppDrawerState extends State<AppDrawer> {
               leading: Icon(Icons.insert_chart),
               title: Text('LeaderBoard'),
               onTap: () {
-                Navigator.of(context).pushReplacementNamed(
+                Navigator.of(context).pushNamed(
                     LeaderBoardScreen.routeName,
                     arguments: LeaderBoard(
                         loggedin: _userData != null ? false : true));
@@ -145,6 +145,7 @@ class _AppDrawerState extends State<AppDrawer> {
               onTap: () {
                 Navigator.of(context)
                     .pushReplacementNamed(TrendingProblemsScreen.routeName,arguments: TrendingProblems(loggedin: _userData != null ? false : true));
+
               },
             ),
             Divider(),
