@@ -86,24 +86,40 @@ class _DashboardState extends State<Dashboard> {
               )
             : Container(
                 height: MediaQuery.of(context).size.height,
-                child: Center(
-                  child: RaisedButton(
-                    elevation: 4,
-                    color: Theme.of(context).buttonColor,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        args.loggedin
-                            ? "You are now logged in"
-                            : "Click here to login \nto see your dashboard.",
-                        style: TextStyle(color: Colors.white),
-                      ),
+                child: Column(
+                  children: [
+                    Image(
+                      image: AssetImage('assets/images/unauthorisedUser.png'),
                     ),
-                    onPressed: () {
-                      Navigator.of(context)
-                          .pushReplacementNamed(LoginPage.routeName);
-                    },
-                  ),
+                    Text(
+                      "Log in to view Dashboard",
+                      style: TextStyle(
+                        color: Color(0xFF2542ff),
+                        fontSize: 16.0
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(top: 12.0),
+                    ),
+                    RaisedButton(
+                      elevation: 4,
+                      color: Theme.of(context).buttonColor,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          args.loggedin
+                              ? "You are now logged in"
+                              : "Sign In to StopStalk",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                      onPressed: () {
+                        Navigator.of(context)
+                            .pushReplacementNamed(LoginPage.routeName);
+                      },
+                    ),
+                  ],
                 ),
               ),
       ),
