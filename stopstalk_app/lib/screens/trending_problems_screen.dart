@@ -6,8 +6,11 @@ import '../widgets/preloader.dart';
 import '../widgets/trending_problems_card.dart';
 
 import '../classes/problems_class.dart';
+import '../classes/trendingProblems_class.dart';
 
 import '../utils/api.dart';
+
+import './login/login_screen.dart';
 
 class TrendingProblemsScreen extends StatefulWidget {
   static const routeName = '/trending-problems';
@@ -47,6 +50,7 @@ class _TrendingProblemsScreenState extends State<TrendingProblemsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final TrendingProblems args = ModalRoute.of(context).settings.arguments;
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -124,7 +128,29 @@ class _TrendingProblemsScreenState extends State<TrendingProblemsScreen> {
                 }
               },
             ),
-            Container(),
+            Container(
+              child: args.loggedin == true
+                  ? Center(
+                      child: RaisedButton(
+                        elevation: 4,
+                        color: Theme.of(context).buttonColor,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            "Click here to login \nto see popular problems amongst friends.",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                        onPressed: () {
+                          Navigator.of(context)
+                              .pushReplacementNamed(LoginPage.routeName);
+                        },
+                      ),
+                    )
+                  : Center(
+                      child: Text("loggedin"),
+                    ),
+            ),
           ],
         ),
       ),
