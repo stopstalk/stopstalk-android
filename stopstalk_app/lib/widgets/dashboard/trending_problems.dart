@@ -2,6 +2,8 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
+import '../../screens/trending_problems_screen.dart';
+
 class TrendingProblems extends StatelessWidget {
 
   @override
@@ -171,14 +173,6 @@ class TrendingProblems extends StatelessWidget {
           Padding(
             padding: EdgeInsets.only(top: 8.0, bottom: 10.0),
           ),
-          // FloatingActionButton.extended(
-          //     heroTag: "btnTrendingProblems",
-          //     label: Text("View All"),
-          //     backgroundColor: Color(0xFF2542ff),
-          //     onPressed: () {
-          //       Navigator.of(context)
-          //           .pushReplacementNamed(UpcomingContestScreen.routeName);
-          //     }),
           RaisedButton(
             elevation: 5,
             padding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
@@ -195,7 +189,9 @@ class TrendingProblems extends StatelessWidget {
                 fontSize: 16,
               ),
             ),
-            onPressed: () {},
+              onPressed: () {
+                Navigator.of(context)
+                    .pushNamed(TrendingProblemsScreen.routeName);}
           ),
           Padding(
             padding: EdgeInsets.only(top: 8.0, bottom: 10.0),

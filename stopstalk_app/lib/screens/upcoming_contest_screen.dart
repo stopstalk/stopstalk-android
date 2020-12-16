@@ -157,16 +157,15 @@ class _UpcomingContestState extends State<UpcomingContestScreen> {
   // }
 
   final images = {
-    "CODEFORCES":
-        "https://1.bp.blogspot.com/-pBimI1ZhYAA/Wnde0nmCz8I/AAAAAAAABPI/5LZ2y9tBOZIV-pm9KNbyNy3WZJkGS54WgCPcBGAYYCw/s1600/codeforce.png",
-    "CODECHEF":
-        "https://i.pinimg.com/originals/c5/d9/fc/c5d9fc1e18bcf039f464c2ab6cfb3eb6.jpg",
-    "HACKEREARTH":
-        "https://upload.wikimedia.org/wikipedia/commons/e/e8/HackerEarth_logo.png",
-    "HACKERRANK":
-        "https://info.hackerrank.com/rs/487-WAY-049/images/Podcast-ChannelCover-Final.jpg",
-    "OTHER":
-        "https://coursereport-s3-production.global.ssl.fastly.net/rich/rich_files/rich_files/3942/s200/asia-developer-academy.png"
+    'CODECHEF': 'assets/platform_logos/codechef_small.png',
+    'CODEFORCES': 'assets/platform_logos/codeforces_small.png',
+    'OTHER': 'assets/platform_logos/other.jpeg',
+    'SPOJ': 'assets/platform_logos/spoj_small.png',
+    'ATCODER': 'assets/platform_logos/atcoder_small.png',
+    'HACKEREARTH': 'assets/platform_logos/hackerearth_small.png',
+    'HACKERRANK': 'assets/platform_logos/hackerrank_small.png',
+    'UVA': 'assets/platform_logos/uva_small.png',
+    'TIMUS': 'assets/platform_logos/timus_small.png',
   };
 
   @override
@@ -255,7 +254,7 @@ class _UpcomingContestState extends State<UpcomingContestScreen> {
                           topLeft: Radius.circular(15),
                           bottomLeft: Radius.circular(15),
                         ),
-                        color: Colors.lightBlueAccent.shade100,
+                        color: Color(0xFF2542ff),
                         boxShadow: [
                           BoxShadow(
                             blurRadius: 6.0,
@@ -267,15 +266,19 @@ class _UpcomingContestState extends State<UpcomingContestScreen> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          ClipRRect(
-                            child: images[image] != null
-                                ? Image(
-                                    image: NetworkImage(images[image]),
-                                    height: 80.0,
-                                    width: 80.0,
-                                  )
-                                : SizedBox(),
-                            borderRadius: BorderRadius.circular(8.0),
+                          CircleAvatar(
+                            maxRadius: 30,
+                            backgroundColor: Colors.white,
+                            child: ClipRRect(
+                              child: images[image] != null
+                                  ? Image(
+                                      image: AssetImage(images[image]),
+                                      height: 80.0,
+                                      width: 80.0,
+                                    )
+                                  : SizedBox(),
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
                           ),
                         ],
                       ),
@@ -402,7 +405,7 @@ class _UpcomingContestState extends State<UpcomingContestScreen> {
         ),
         child: Container(
           decoration: BoxDecoration(
-            color: Colors.lightBlueAccent.shade100,
+            color: Color(0xFF2542ff),
           ),
           alignment: Alignment.center,
           child: Row(
@@ -413,15 +416,19 @@ class _UpcomingContestState extends State<UpcomingContestScreen> {
               ),
               Expanded(
                 flex: 1,
-                child: ClipRRect(
-                  child: images[image] != null
-                      ? Image(
-                          image: NetworkImage(images[image]),
-                          height: 80.0,
-                          width: 80.0,
-                        )
-                      : SizedBox(),
-                  borderRadius: BorderRadius.circular(12.0),
+                child: CircleAvatar(
+                  maxRadius: 30,
+                  backgroundColor: Colors.white,
+                  child: ClipRRect(
+                    child: images[image] != null
+                        ? Image(
+                            image: AssetImage(images[image]),
+                            height: 80.0,
+                            width: 80.0,
+                          )
+                        : SizedBox(),
+                    borderRadius: BorderRadius.circular(12.0),
+                  ),
                 ),
               ),
               Expanded(
@@ -444,6 +451,7 @@ class _UpcomingContestState extends State<UpcomingContestScreen> {
                           fontSize: 17,
                           letterSpacing: .3,
                           fontWeight: FontWeight.w500,
+                          color: Colors.white,
                         ),
                         textAlign: TextAlign.center,
                       ),
@@ -456,6 +464,7 @@ class _UpcomingContestState extends State<UpcomingContestScreen> {
                               top: 8.0, right: 8.0, left: 8.0, bottom: 4.0),
                           child: Icon(
                             Icons.calendar_today,
+                            color: Colors.white,
                             size: 20,
                           ),
                         ),
@@ -467,6 +476,7 @@ class _UpcomingContestState extends State<UpcomingContestScreen> {
                             fontSize: 15,
                             height: 1.8,
                             letterSpacing: .3,
+                            color: Colors.white,
                           ),
                         ),
                       ],
@@ -478,6 +488,7 @@ class _UpcomingContestState extends State<UpcomingContestScreen> {
                           padding: const EdgeInsets.only(right: 8.0, top: 4.0),
                           child: Icon(
                             Icons.access_alarm,
+                            color: Colors.white,
                             size: 20,
                           ),
                         ),
@@ -486,6 +497,7 @@ class _UpcomingContestState extends State<UpcomingContestScreen> {
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
+                            color: Colors.white,
                             fontSize: 15,
                             height: 1.8,
                             letterSpacing: .3,
@@ -574,7 +586,7 @@ class _UpcomingContestState extends State<UpcomingContestScreen> {
                     textColor: Colors.white,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(8.0))),
-                    color: Colors.blue,
+                    color: Color(0xFF0018ca),
                   ),
                   minWidth: 160.0,
                 ),

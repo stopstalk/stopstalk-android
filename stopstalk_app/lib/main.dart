@@ -28,6 +28,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
+        appBarTheme: AppBarTheme(color: Color(0xFF2542ff),),
       ),
       home: LoginPage(),
       routes: {
