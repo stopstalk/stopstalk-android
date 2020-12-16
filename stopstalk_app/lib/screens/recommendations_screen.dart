@@ -106,7 +106,7 @@ class _RecommendationsScreenState extends State<RecommendationsScreen> {
                         initialItemCount: snapshot.data.length,
                         itemBuilder: (context, i, animation) {
                           return ProblemsCard(
-                              snapshot.data[i], context, i, animation);
+                              snapshot.data[i], context, i);
                         },
                       )
                           : _showNoRecommendation(),

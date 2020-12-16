@@ -2,6 +2,8 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
+import '../../screens/recommendations_screen.dart';
+
 class NewProblemsToSolve extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -34,7 +36,7 @@ class NewProblemsToSolve extends StatelessWidget {
             padding: EdgeInsets.only(top: 8.0),
           ),
           Text(
-            "It has been more than a week since you last generated problem recommendations. Generate new ones and keep getting better by solving them.",
+            "It has been some time since you last generated problem recommendations. Generate new ones and keep getting better by solving them.",
             textAlign: TextAlign.center,
             style: TextStyle(
                 fontWeight: FontWeight.w400,
@@ -60,7 +62,9 @@ class NewProblemsToSolve extends StatelessWidget {
                 fontSize: 16,
               ),
             ),
-            onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context)
+                      .pushNamed(RecommendationsScreen.routeName);}
           ),
           Padding(
             padding: EdgeInsets.only(top: 8.0),
