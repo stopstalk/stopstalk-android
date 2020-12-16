@@ -10,10 +10,16 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../widgets/app_drawer.dart';
 import '../classes/leaderboard.dart';
 import '../widgets/preloader.dart';
+import './login/login_screen.dart';
 
-class LeaderBoardScreen extends StatelessWidget {
+class LeaderBoardScreen extends StatefulWidget {
   static const routeName = '/leaderBoard';
 
+  @override
+  _LeaderBoardScreenState createState() => _LeaderBoardScreenState();
+}
+
+class _LeaderBoardScreenState extends State<LeaderBoardScreen> {
   TextStyle get titleTextStyle => TextStyle(
         fontFamily: 'OpenSans',
         fontSize: 12,
@@ -54,6 +60,7 @@ class LeaderBoardScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final LeaderBoard args = ModalRoute.of(context).settings.arguments;
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -170,7 +177,27 @@ class LeaderBoardScreen extends StatelessWidget {
               ),
             ),
             Container(
-              child: Text('this is the friends leaderboard page'),
+              child: args.loggedin==true
+                  ? Center(
+                      child: RaisedButton(
+                        elevation: 4,
+                        color: Theme.of(context).buttonColor,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            "Click here to login \nto see your friends standings.",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                        onPressed: () {
+                          Navigator.of(context)
+                              .pushReplacementNamed(LoginPage.routeName);
+                        },
+                      ),
+                    )
+                  : Center(
+                      child: Text("loggedin"),
+                    ),
             ),
           ],
         ),
@@ -384,8 +411,8 @@ class LeaderBoardScreen extends StatelessWidget {
                             'assets/flags/$countryCode.svg',
                             width: 60,
                             height: 40,
-                            placeholderBuilder: (context) => Container(
-                              child: CircularProgressIndicator()),
+                            placeholderBuilder: (context) =>
+                                Container(child: CircularProgressIndicator()),
                           ),
                         ),
                         SizedBox(

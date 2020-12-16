@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:stopstalkapp/classes/dashboard_class.dart';
 
 import '../dashboard.dart';
 import 'login_form.dart';
@@ -41,11 +42,9 @@ class Login extends StatelessWidget {
             children: [
               FlatButton(
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    PageTransition(
-                        type: PageTransitionType.fade, child: Dashboard()),
-                  );
+                  Navigator.of(context).pushReplacementNamed(
+                      Dashboard.routeName,
+                      arguments: DashboardClass(loggedin: false));
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,

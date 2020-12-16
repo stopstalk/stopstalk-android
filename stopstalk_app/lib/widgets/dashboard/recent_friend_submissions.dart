@@ -2,19 +2,17 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
-
 class RecentFriendSubmissions extends StatelessWidget {
   final images = {
-    "CODEFORCES":
-        "https://1.bp.blogspot.com/-pBimI1ZhYAA/Wnde0nmCz8I/AAAAAAAABPI/5LZ2y9tBOZIV-pm9KNbyNy3WZJkGS54WgCPcBGAYYCw/s1600/codeforce.png",
-    "CODECHEF":
-        "https://i.pinimg.com/originals/c5/d9/fc/c5d9fc1e18bcf039f464c2ab6cfb3eb6.jpg",
-    "HACKEREARTH":
-        "https://upload.wikimedia.org/wikipedia/commons/e/e8/HackerEarth_logo.png",
-    "HACKERRANK":
-        "https://info.hackerrank.com/rs/487-WAY-049/images/Podcast-ChannelCover-Final.jpg",
-    "OTHER":
-        "https://coursereport-s3-production.global.ssl.fastly.net/rich/rich_files/rich_files/3942/s200/asia-developer-academy.png"
+    'CODECHEF': 'assets/platform_logos/codechef_small.png',
+    'CODEFORCES': 'assets/platform_logos/codeforces_small.png',
+    'OTHER': 'assets/platform_logos/other.jpeg',
+    'SPOJ': 'assets/platform_logos/spoj_small.png',
+    'ATCODER': 'assets/platform_logos/atcoder_small.png',
+    'HACKEREARTH': 'assets/platform_logos/hackerearth_small.png',
+    'HACKERRANK': 'assets/platform_logos/hackerrank_small.png',
+    'UVA': 'assets/platform_logos/uva_small.png',
+    'TIMUS': 'assets/platform_logos/timus_small.png',
   };
 
   @override
@@ -78,7 +76,7 @@ class RecentFriendSubmissions extends StatelessWidget {
                       child: Row(
                         children: [
                           Image(
-                            image: NetworkImage(
+                            image: AssetImage(
                               images["CODEFORCES"],
                             ),
                             height: 40.0,
@@ -102,7 +100,7 @@ class RecentFriendSubmissions extends StatelessWidget {
                       child: Row(
                         children: [
                           Image(
-                            image: NetworkImage(
+                            image: AssetImage(
                               images["CODECHEF"],
                             ),
                             height: 40.0,
@@ -150,7 +148,7 @@ class RecentFriendSubmissions extends StatelessWidget {
                       child: Row(
                         children: [
                           Image(
-                            image: NetworkImage(
+                            image: AssetImage(
                               images["CODEFORCES"],
                             ),
                             height: 40.0,
@@ -174,7 +172,7 @@ class RecentFriendSubmissions extends StatelessWidget {
                       child: Row(
                         children: [
                           Image(
-                            image: NetworkImage(
+                            image: AssetImage(
                               images["CODECHEF"],
                             ),
                             height: 40.0,

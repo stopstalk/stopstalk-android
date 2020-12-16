@@ -2,17 +2,9 @@ import 'package:flutter/services.dart';
 import 'dart:convert';
 
 import '../utils/api.dart';
+import '../utils/platforms.dart';
 
-const sites_img = {
-  "AtCoder": 'assets/platform_logos/atcoder_small.png',
-  "HackerRank": 'assets/platform_logos/hackerrank_small.png',
-  "HackerEarth": 'assets/platform_logos/hackerearth_small.png',
-  "CodeForces": 'assets/platform_logos/codeforces_small.png',
-  "Spoj": 'assets/platform_logos/spoj_small.png',
-  "UVa": 'assets/platform_logos/uva_small.png',
-  "Timus": 'assets/platform_logos/timus_small.png',
-  "CodeChef": 'assets/platform_logos/codechef_small.png',
-};
+const sites_img = platformImgs;
 
 class User {
   final firstName;
@@ -143,7 +135,7 @@ class Profile {
           'url': this.handleUrls[key],
           'accuracy': this.accuracy[key],
           'solved': this.solved[key],
-          'img': sites_img[key]
+          'img': sites_img[key.toLowerCase()]
         };
       }
     });

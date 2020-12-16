@@ -5,8 +5,6 @@ import './screens/profile.dart';
 import './screens/leaderboard_screen.dart';
 import './screens/search_friends_screen.dart';
 import './screens/search_problems_screen.dart';
-import './screens/submission_filters_screen.dart';
-import './screens/testimonials_screen.dart';
 import './screens/trending_problems_screen.dart';
 import './screens/recommendations_screen.dart';
 import './screens/upcoming_contest_screen.dart';
@@ -29,7 +27,10 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
-        appBarTheme: AppBarTheme(color: Color(0xFF2542ff),),
+        appBarTheme: AppBarTheme(
+          color: Color(0xFF2542ff),
+        ),
+        buttonColor: Color(0xFF0018ca),
       ),
       home: LoginPage(),
       routes: {
@@ -44,10 +45,8 @@ class MyApp extends StatelessWidget {
         UpcomingContestScreen.routeName: (ctx) => UpcomingContestScreen(),
         SearchProblemsScreen.routeName: (ctx) => SearchProblemsScreen(),
         LeaderBoardScreen.routeName: (ctx) => LeaderBoardScreen(),
-        TrendingProblemsScreen.routeName:(ctx)=>TrendingProblemsScreen(),
+        TrendingProblemsScreen.routeName: (ctx) => TrendingProblemsScreen(),
         RecommendationsScreen.routeName: (ctx) => RecommendationsScreen(),
-        SubmissionFiltersScreen.routeName: (ctx) => SubmissionFiltersScreen(),
-        TestimonialsScreen.routeName: (ctx) => TestimonialsScreen(),
         SearchedProblemsScreen.routeName:(ctx)=>SearchedProblemsScreen(),
       },
     );

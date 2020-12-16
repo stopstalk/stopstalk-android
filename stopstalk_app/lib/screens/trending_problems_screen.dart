@@ -5,6 +5,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import '../widgets/app_drawer.dart';
 import '../widgets/preloader.dart';
 import '../classes/trendingProblems_class.dart';
+import './login/login_screen.dart';
 
 class TrendingProblemsScreen extends StatefulWidget {
   static const routeName = '/trending-problems';
@@ -38,6 +39,7 @@ class _TrendingProblemsScreenState extends State<TrendingProblemsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final TrendingProblems args = ModalRoute.of(context).settings.arguments;
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -134,8 +136,8 @@ class _TrendingProblemsScreenState extends State<TrendingProblemsScreen> {
                                                   child: Center(
                                                     child: AutoSizeText(
                                                       "Problem Name",
-                                                      maxLines:1,
-                                                      minFontSize:12,
+                                                      maxLines: 1,
+                                                      minFontSize: 12,
                                                       style: TextStyle(
                                                         fontWeight:
                                                             FontWeight.bold,
@@ -155,8 +157,8 @@ class _TrendingProblemsScreenState extends State<TrendingProblemsScreen> {
                                                   child: Center(
                                                     child: AutoSizeText(
                                                       "Submission",
-                                                      maxLines:1,
-                                                      minFontSize:12,
+                                                      maxLines: 1,
+                                                      minFontSize: 12,
                                                       style: TextStyle(
                                                         fontWeight:
                                                             FontWeight.bold,
@@ -176,8 +178,8 @@ class _TrendingProblemsScreenState extends State<TrendingProblemsScreen> {
                                                   child: Center(
                                                     child: AutoSizeText(
                                                       "User",
-                                                      maxLines:1,
-                                                      minFontSize:12,
+                                                      maxLines: 1,
+                                                      minFontSize: 12,
                                                       style: TextStyle(
                                                         fontWeight:
                                                             FontWeight.bold,
@@ -207,7 +209,29 @@ class _TrendingProblemsScreenState extends State<TrendingProblemsScreen> {
                 ],
               ),
             ),
-            Container(),
+            Container(
+              child: args.loggedin == true
+                  ? Center(
+                      child: RaisedButton(
+                        elevation: 4,
+                        color: Theme.of(context).buttonColor,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            "Click here to login \nto see popular problems amongst friends.",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                        onPressed: () {
+                          Navigator.of(context)
+                              .pushReplacementNamed(LoginPage.routeName);
+                        },
+                      ),
+                    )
+                  : Center(
+                      child: Text("loggedin"),
+                    ),
+            ),
           ],
         ),
       ),
@@ -272,7 +296,7 @@ class _TrendingProblemsScreenState extends State<TrendingProblemsScreen> {
                   child: RaisedButton(
                     elevation: 5,
                     padding: EdgeInsets.symmetric(vertical: 0, horizontal: 8),
-                    color: Color(0xFF0018ca),
+                    color: Theme.of(context).buttonColor,
                     child: Row(
                       children: [
                         Icon(
