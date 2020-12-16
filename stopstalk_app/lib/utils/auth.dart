@@ -16,3 +16,13 @@ Future<User> getCurrentUser() async {
   getProfileFromHandle(user.stopstalkHandle);
   return user;
 }
+
+Future<bool> isAuthenticated() async {
+  var jwt = await getDataSecureStore("jwt");
+  if (jwt == null) return false;
+  final parts = jwt.split('.');
+  if (parts.length != 3) {
+    throw Exception('invalid token');
+  }
+  return true;
+}
