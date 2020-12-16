@@ -2,6 +2,6 @@ class DashboardClass{
   final bool loggedin;
 
   DashboardClass({
-    this.loggedin=false,
+    this.loggedin,
   });
 }

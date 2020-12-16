@@ -177,25 +177,27 @@ class _LeaderBoardScreenState extends State<LeaderBoardScreen> {
               ),
             ),
             Container(
-              child: Center(
-                child: RaisedButton(
-                  elevation: 4,
-                  color: Theme.of(context).buttonColor,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      args.loggedin
-                          ? "You are now logged in"
-                          : "Click here to login \nto see your friends standings.",
-                      style: TextStyle(color: Colors.white),
+              child: args.loggedin==true
+                  ? Center(
+                      child: RaisedButton(
+                        elevation: 4,
+                        color: Theme.of(context).buttonColor,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            "Click here to login \nto see your friends standings.",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                        onPressed: () {
+                          Navigator.of(context)
+                              .pushReplacementNamed(LoginPage.routeName);
+                        },
+                      ),
+                    )
+                  : Center(
+                      child: Text("loggedin"),
                     ),
-                  ),
-                  onPressed: () {
-                    Navigator.of(context)
-                        .pushReplacementNamed(LoginPage.routeName);
-                  },
-                ),
-              ),
             ),
           ],
         ),

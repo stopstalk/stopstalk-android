@@ -16,6 +16,7 @@ import '../screens/dashboard.dart';
 import '../screens/todoList_screen.dart';
 import '../classes/leaderboard.dart';
 import '../classes/dashboard_class.dart';
+import '../classes/trendingProblems_class.dart';
 
 import '../utils/auth.dart';
 
@@ -135,7 +136,7 @@ class _AppDrawerState extends State<AppDrawer> {
                 Navigator.of(context).pushReplacementNamed(
                     LeaderBoardScreen.routeName,
                     arguments: LeaderBoard(
-                        loggedin: _userData != null ? true : false));
+                        loggedin: _userData != null ? false : true));
               },
             ),
             Divider(),
@@ -144,7 +145,7 @@ class _AppDrawerState extends State<AppDrawer> {
               title: Text('Trending Problems'),
               onTap: () {
                 Navigator.of(context)
-                    .pushReplacementNamed(TrendingProblemsScreen.routeName);
+                    .pushReplacementNamed(TrendingProblemsScreen.routeName,arguments: TrendingProblems(loggedin: _userData != null ? false : true));
               },
             ),
             Divider(),
