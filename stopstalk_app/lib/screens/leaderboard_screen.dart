@@ -180,21 +180,41 @@ class _LeaderBoardScreenState extends State<LeaderBoardScreen> {
             ),
             Container(
               child: args.loggedin == true
-                  ? Center(
-                      child: RaisedButton(
-                        elevation: 4,
-                        color: Theme.of(context).buttonColor,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            "Click here to login \nto see your friends standings.",
-                            style: TextStyle(color: Colors.white),
+                  ? Container(
+                      height: MediaQuery.of(context).size.height,
+                      child: Column(
+                        children: [
+                          Image(
+                            image: AssetImage(
+                                'assets/images/unauthorisedUser.png'),
                           ),
-                        ),
-                        onPressed: () {
-                          Navigator.of(context)
-                              .pushReplacementNamed(LoginPage.routeName);
-                        },
+                          Text(
+                            "Log in to see your Friends' Standings",
+                            style: TextStyle(
+                                color: Color(0xFF2542ff), fontSize: 16.0),
+                            textAlign: TextAlign.center,
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(top: 12.0),
+                          ),
+                          RaisedButton(
+                            elevation: 4,
+                            color: Theme.of(context).buttonColor,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                args.loggedin
+                                    ? "Sign in to StopStalk"
+                                    : "You are now logged in",
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                            onPressed: () {
+                              Navigator.of(context)
+                                  .pushReplacementNamed(LoginPage.routeName);
+                            },
+                          ),
+                        ],
                       ),
                     )
                   : Center(
