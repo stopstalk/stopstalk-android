@@ -123,15 +123,19 @@ class _SearchedProblemsScreenState extends State<SearchedProblemsScreen> {
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      floatingActionButton: FloatingActionButton(
-    // isExtended: true,
-        child: Icon(Icons.search),
-        backgroundColor: Color(0xFF2542ff),
-        onPressed: (){
-          Navigator.of(context)
-              .pop();
-        },
-    ),);
+      floatingActionButton: Container(
+        height: 62.0,
+        width: 62.0,
+        child: FittedBox(
+          child: FloatingActionButton(child: Icon(Icons.search),
+            backgroundColor: Color(0xFF0018ca),
+            onPressed: (){
+              Navigator.of(context)
+                  .pop();
+            },),
+        ),
+      ),
+    );
   }
   Widget _showNoProblemsFound() {
     return AnimatedOpacity(
