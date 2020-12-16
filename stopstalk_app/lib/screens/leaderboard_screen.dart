@@ -12,6 +12,8 @@ import '../classes/leaderboard.dart';
 import '../widgets/preloader.dart';
 import './login/login_screen.dart';
 
+import 'profile.dart';
+
 class LeaderBoardScreen extends StatefulWidget {
   static const routeName = '/leaderBoard';
 
@@ -177,7 +179,7 @@ class _LeaderBoardScreenState extends State<LeaderBoardScreen> {
               ),
             ),
             Container(
-              child: args.loggedin==true
+              child: args.loggedin == true
                   ? Center(
                       child: RaisedButton(
                         elevation: 4,
@@ -445,14 +447,22 @@ class _LeaderBoardScreenState extends State<LeaderBoardScreen> {
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(bottom: 8.0),
-                        child: Text(
-                          '@ $handle',
-                          style: TextStyle(
-                            fontFamily: 'Oswald',
-                            fontSize: 18,
-                            height: 1.8,
-                            letterSpacing: .3,
-                            color: Colors.white,
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) {
+                              return ProfileScreen(handle: handle);
+                            }));
+                          },
+                          child: Text(
+                            '@ $handle',
+                            style: TextStyle(
+                              fontFamily: 'Oswald',
+                              fontSize: 18,
+                              height: 1.8,
+                              letterSpacing: .3,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                       ),
