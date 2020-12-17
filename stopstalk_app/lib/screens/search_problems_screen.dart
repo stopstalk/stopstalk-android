@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:multiselect_formfield/multiselect_formfield.dart';
 
 import '../widgets/app_drawer.dart';
-import'../screens/searched_problems_screen.dart';
+import '../screens/searched_problems_screen.dart';
+
+import '../utils/api.dart';
 
 class SearchProblemsScreen extends StatefulWidget {
   SearchProblemsScreen({Key key}) : super(key: key);
@@ -19,7 +21,6 @@ class _SearchProblemsScreenState extends State<SearchProblemsScreen> {
   final _formKey = GlobalKey<FormState>();
   final List<DropdownMenuItem> sites = new List();
   final List<DropdownMenuItem> sortBy = new List();
-  final List<DropdownMenuItem> problemTags = new List();
 
   String selectedSortBy = "accasc";
   String selectedSite = "CodeChef";
@@ -34,7 +35,6 @@ class _SearchProblemsScreenState extends State<SearchProblemsScreen> {
     super.initState();
     _initSites();
     _initSortBy();
-    _initProblemTags();
   }
 
   void _initSites() {
@@ -82,17 +82,15 @@ class _SearchProblemsScreenState extends State<SearchProblemsScreen> {
     ]);
   }
 
-  void _initProblemTags() {
-    problemTags.addAll([
-      DropdownMenuItem(
-          value: "dummy1", child: Text("dummy"), key: Key("dummy1")),
-      DropdownMenuItem(
-          value: "dummy2", child: Text("dummy"), key: Key("dummy2")),
-      DropdownMenuItem(
-          value: "dummy3", child: Text("dummy"), key: Key("dummy3")),
-      DropdownMenuItem(
-          value: "dummy4", child: Text("dummy"), key: Key("dummy4")),
-    ]);
+  Future<List> _initProblemTags() async {
+    final List<Map<String, dynamic>> problemTags = new List();
+    var tags = await getSearchProblems({});
+    List res = tags['generalized_tags'];
+    res.forEach((tag) => problemTags.add({
+          "display": tag,
+          "value": tag,
+        }));
+    return problemTags;
   }
 
   @override
@@ -107,12 +105,13 @@ class _SearchProblemsScreenState extends State<SearchProblemsScreen> {
       ),
       drawer: AppDrawer(),
       body: Container(
-        padding: EdgeInsets.only(top: 8.0, left: 12.0, right: 12.0, bottom: 8.0),
+        padding:
+            EdgeInsets.only(top: 8.0, left: 12.0, right: 12.0, bottom: 8.0),
         child: Form(
             key: _formKey,
             child: ListView(
-              // mainAxisAlignment: MainAxisAlignment.center,
-              // crossAxisAlignment: CrossAxisAlignment.start,
+                // mainAxisAlignment: MainAxisAlignment.center,
+                // crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   TextFormField(
                     keyboardType: TextInputType.text,
@@ -142,7 +141,8 @@ class _SearchProblemsScreenState extends State<SearchProblemsScreen> {
                     child: Container(
                       decoration: BoxDecoration(
                         color: Color(0xffeeeeee),
-                        borderRadius: BorderRadius.circular(8),),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
                       child: DropdownButton(
                         items: sites,
                         value: selectedSite,
@@ -167,7 +167,8 @@ class _SearchProblemsScreenState extends State<SearchProblemsScreen> {
                     child: Container(
                       decoration: BoxDecoration(
                         color: Color(0xffeeeeee),
-                        borderRadius: BorderRadius.circular(8),),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
                       child: DropdownButton(
                         items: sortBy,
                         value: selectedSortBy,
@@ -213,247 +214,36 @@ class _SearchProblemsScreenState extends State<SearchProblemsScreen> {
                   Text(
                     "or",
                     textAlign: TextAlign.center,
-                    style:
-                    TextStyle(fontSize: 16.0),
+                    style: TextStyle(fontSize: 16.0),
                   ),
-                  MultiSelectFormField(
-                    title: Text(
-                      "Generalised StopStalk Tags",
-                      style: TextStyle(
-                          fontSize: 16.0, fontWeight: FontWeight.w400),
-                    ),
-                    hintWidget: null,
-                    checkBoxActiveColor: Color(0xFF2542ff),
-                    validator: (value) {
-                      if (value == null || value.length == 0) {
-                        return 'Please select one or more options';
-                      }
-                      return '';
-                    },
-                    dataSource: [
-                      {
-                        "display": "Ad-hoc",
-                        "value": "Ad-hoc",
-                      },
-                      {
-                        "display": "Array",
-                        "value": "Array",
-                      },
-                      {
-                        "display": "Artificial Intelligence",
-                        "value": "Artificial Intelligence",
-                      },
-                      {
-                        "display": "Backtracking",
-                        "value": "Backtracking",
-                      },
-                      {
-                        "display": "Binary Indexed Tree",
-                        "value": "Binary Indexed Tree",
-                      },
-                      {
-                        "display": "Binary Search",
-                        "value": "Binary Search",
-                      },
-                      {
-                        "display": "Binary Search Tree",
-                        "value": "Binary Search Tree",
-                      },
-                      {
-                        "display": "Binary Tree",
-                        "value": "Binary Tree",
-                      },
-                      {
-                        "display": "Bit Manipulation",
-                        "value": "Bit Manipulation",
-                      },
-                      {
-                        "display": "Bitmasks",
-                        "value": "Bitmasks",
-                      },
-                      {
-                        "display": "Breadth First Search",
-                        "value": "Breadth First Search",
-                      },
-                      {
-                        "display": "Brute Force",
-                        "value": "Brute Force",
-                      },
-                      {
-                        "display": "Combinatorics",
-                        "value": "Combinatorics",
-                      },
-                      {
-                        "display": "Constructive Algorithms",
-                        "value": "Constructive Algorithms",
-                      },
-                      {
-                        "display": "Convex Hull",
-                        "value": "Convex Hull",
-                      },
-                      {
-                        "display": "Data Structures",
-                        "value": "Data Structures",
-                      },
-                      {
-                        "display": "Depth First Search",
-                        "value": "Depth First Search",
-                      },
-                      {
-                        "display": "Disjoint Set Union",
-                        "value": "Disjoint Set Union",
-                      },
-                      {
-                        "display": "Divide and Conquer",
-                        "value": "Divide and Conquer",
-                      },
-                      {
-                        "display": "Dynamic Programming",
-                        "value": "Dynamic Programming",
-                      },
-                      {
-                        "display": "Easy",
-                        "value": "Easy",
-                      },
-                      {
-                        "display": "Functional Programming",
-                        "value": "Functional Programming",
-                      },
-                      {
-                        "display": "Game Theory",
-                        "value": "Game Theory",
-                      },
-                      {
-                        "display": "Geometry",
-                        "value": "Geometry",
-                      },
-                      {
-                        "display": "Graph",
-                        "value": "Graph",
-                      },
-                      {
-                        "display": "Graph Coloring",
-                        "value": "Graph Coloring",
-                      },
-                      {
-                        "display": "Greedy",
-                        "value": "Greedy",
-                      },
-                      {
-                        "display": "Hard",
-                        "value": "Hard",
-                      },
-                      {
-                        "display": "Hashing",
-                        "value": "Hashing",
-                      },
-                      {
-                        "display": "Heap",
-                        "value": "Heap",
-                      },
-                      {
-                        "display": "Implementation",
-                        "value": "Implementation",
-                      },
-                      {
-                        "display": "Linked List",
-                        "value": "Linked List",
-                      },
-                      {
-                        "display": "Math",
-                        "value": "Math",
-                      },
-                      {
-                        "display": "Matrix Exponentiation",
-                        "value": "Matrix Exponentiation",
-                      },
-                      {
-                        "display": "Medium",
-                        "value": "Medium",
-                      },
-                      {
-                        "display": "Minimum Spanning Tree",
-                        "value": "Minimum Spanning Tree",
-                      },
-                      {
-                        "display": "Number Theory",
-                        "value": "Number Theory",
-                      },
-                      {
-                        "display": "Priority Queue",
-                        "value": "Priority Queue",
-                      },
-                      {
-                        "display": "Probability",
-                        "value": "Probability",
-                      },
-                      {
-                        "display": "Queues",
-                        "value": "Queues",
-                      },
-                      {
-                        "display": "Recursion",
-                        "value": "Recursion",
-                      },
-                      {
-                        "display": "Segment Tree",
-                        "value": "Segment Tree",
-                      },
-                      {
-                        "display": "Shortest Path",
-                        "value": "Shortest Path",
-                      },
-                      {
-                        "display": "Sieve",
-                        "value": "Sieve",
-                      },
-                      {
-                        "display": "Sorting",
-                        "value": "Sorting",
-                      },
-                      {
-                        "display": "Square Root Decomposition",
-                        "value": "Square Root Decomposition",
-                      },
-                      {
-                        "display": "Stacks",
-                        "value": "Stacks",
-                      },
-                      {
-                        "display": "String",
-                        "value": "String",
-                      },
-                      {
-                        "display": "Ternary Search",
-                        "value": "Ternary Search",
-                      },
-                      {
-                        "display": "Topological Sort",
-                        "value": "Topological Sort",
-                      },
-                      {
-                        "display": "Tree",
-                        "value": "Tree",
-                      },
-                      {
-                        "display": "Trie",
-                        "value": "Trie",
-                      },
-                      {
-                        "display": "Two Pointers",
-                        "value": "Two Pointers",
-                      },
-                      {
-                        "display": "Vertex Cover",
-                        "value": "Vertex Cover",
-                      },
-                    ],
-                    textField: 'display',
-                    valueField: 'value',
-                    okButtonLabel: 'OK',
-                    cancelButtonLabel: 'CANCEL',
-                    fillColor: Color(0xffeeeeee),
-                  ),
+                  FutureBuilder(
+                      future: _initProblemTags(),
+                      builder: (context, snapshot) {
+                        if (snapshot.data == null) {
+                          return SizedBox();
+                        }
+                        return MultiSelectFormField(
+                          title: Text(
+                            "Generalised StopStalk Tags",
+                            style: TextStyle(
+                                fontSize: 16.0, fontWeight: FontWeight.w400),
+                          ),
+                          hintWidget: null,
+                          checkBoxActiveColor: Color(0xFF2542ff),
+                          validator: (value) {
+                            if (value == null || value.length == 0) {
+                              return 'Please select one or more options';
+                            }
+                            return '';
+                          },
+                          dataSource: snapshot.data,
+                          textField: 'display',
+                          valueField: 'value',
+                          okButtonLabel: 'OK',
+                          cancelButtonLabel: 'CANCEL',
+                          fillColor: Color(0xffeeeeee),
+                        );
+                      }),
                   Padding(
                     padding: EdgeInsets.only(top: 16.0),
                   ),
@@ -469,7 +259,7 @@ class _SearchProblemsScreenState extends State<SearchProblemsScreen> {
                     title: InkWell(
                         onTap: () {
                           onlyShowProblemsWithEditorials =
-                          !onlyShowProblemsWithEditorials;
+                              !onlyShowProblemsWithEditorials;
                           setState(() {});
                         },
                         child: Text("Only show problems with Editorials")),
@@ -486,8 +276,7 @@ class _SearchProblemsScreenState extends State<SearchProblemsScreen> {
                     // title: Text("Exclude my Solved Problems"),
                     title: InkWell(
                         onTap: () {
-                          excludeMySolvedProblems =
-                          !excludeMySolvedProblems;
+                          excludeMySolvedProblems = !excludeMySolvedProblems;
                           setState(() {});
                         },
                         child: Text("Exclude my Solved Problems")),
@@ -501,34 +290,46 @@ class _SearchProblemsScreenState extends State<SearchProblemsScreen> {
                       Container(
                         width: 120.0,
                         child: RaisedButton(
-                          elevation: 0,
-                          padding: EdgeInsets.symmetric(vertical: 0, horizontal: 8),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8.0),
-                          ),
-                          color: Color(0xFF2542ff),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.search,
-                                color: Colors.white,
-                                size: 20,
-                              ),
-                              AutoSizeText(
-                                ' Search',
-                                maxLines: 1,
-                                minFontSize: 7,
-                                style: TextStyle(
+                            elevation: 0,
+                            padding: EdgeInsets.symmetric(
+                                vertical: 0, horizontal: 8),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                            color: Color(0xFF2542ff),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.search,
                                   color: Colors.white,
-                                  fontSize: 16,
+                                  size: 20,
                                 ),
-                              ),
-                            ],
-                          ),onPressed: () {
-                          Navigator.of(context)
-                              .pushNamed(SearchedProblemsScreen.routeName);}
-                        ),
+                                AutoSizeText(
+                                  ' Search',
+                                  maxLines: 1,
+                                  minFontSize: 7,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            onPressed: () {
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) {
+                                return SearchedProblemsScreen(parameters: {
+                                  'name': "pp",
+                                  'site': "CodeChef",
+                                  'orderby': '',
+                                  'generalized_tags': '',
+                                  'q': '',
+                                  'include_editorials': '',
+                                  'exclude_solved': '',
+                                });
+                              }));
+                            }),
                       ),
                     ],
                   ),

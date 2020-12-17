@@ -7,6 +7,8 @@ import '../fragments/my_flutter_app_icons.dart';
 import '../classes/problems_class.dart';
 
 import '../utils/platforms.dart' as platforms;
+import '../utils/api.dart';
+import '../utils/auth.dart';
 
 class ProblemsCard extends StatelessWidget {
   final Problems recom;
@@ -111,7 +113,10 @@ class ProblemsCard extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(8.0),
                               ),
                               padding: EdgeInsets.only(
-                                  top: 8.0, bottom: 8.0, left: 17.0, right: 17.0),
+                                  top: 8.0,
+                                  bottom: 8.0,
+                                  left: 17.0,
+                                  right: 17.0),
                               onPressed: () => _launchURL(recom.editorialUrl),
                               color: Color(0xFF2542ff),
                               icon: Icon(MyFlutterApp.contract),
@@ -123,8 +128,11 @@ class ProblemsCard extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(8.0),
                               ),
                               padding: EdgeInsets.only(
-                                  top: 8.0, bottom: 8.0, left: 17.0, right: 17.0),
-                              onPressed: () {},
+                                  top: 8.0,
+                                  bottom: 8.0,
+                                  left: 17.0,
+                                  right: 17.0),
+                              onPressed: () => _addToTodo(context, recom),
                               color: Color(0xFF2542ff),
                               icon: Icon(Icons.add),
                               label: Text('TODO'),
@@ -183,3 +191,36 @@ class ProblemsCard extends StatelessWidget {
     }
   }
 }
+
+_addToTodo(BuildContext context, Problems problem) async {
+  bool isLoggedin = await isAuthenticated();
+  if (!isLoggedin)
+    _showToLogin(context);
+  else {
+    var resp = await addTodoUsingId(problem.id.toString());
+    Scaffold.of(context).showSnackBar(
+      SnackBar(
+          content: Text(resp.toString()),
+          elevation: 10,
+          duration: Duration(seconds: 2)),
+    );
+  }
+}
+
+void _showToLogin(context) => showDialog(
+    context: context,
+    builder: (context) => AlertDialog(
+          content: Text("Login to add Todo"),
+          actions: <Widget>[
+            FlatButton(
+              onPressed: () {
+                Navigator.of(context).pushNamed('/login');
+              },
+              child: const Text("LOGIN"),
+            ),
+            FlatButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text("CANCEL"),
+            ),
+          ],
+        ));
