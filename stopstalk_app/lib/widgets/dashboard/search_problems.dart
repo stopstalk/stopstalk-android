@@ -2,11 +2,13 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
-class PickATag extends StatelessWidget {
+import '../../screens/search_problems_screen.dart';
+
+class SearchProblems extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width * 0.9,
+      width: MediaQuery.of(context).size.width*0.9,
       padding: EdgeInsets.all(10.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
@@ -23,7 +25,7 @@ class PickATag extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            "Pick a Tag",
+            "Search Problems",
             style: TextStyle(
               fontSize: 20.0,
               fontWeight: FontWeight.bold,
@@ -33,25 +35,13 @@ class PickATag extends StatelessWidget {
           Padding(
             padding: EdgeInsets.only(top: 8.0),
           ),
-          Container(
-            padding: EdgeInsets.only(left: 10.0, right: 10.0),
-            child: TextFormField(
-                keyboardType: TextInputType.text,
-                style: TextStyle(
-                  fontSize: 15.0,
-                  fontWeight: FontWeight.w400,
-                ),
-                decoration: InputDecoration(
-                  enabledBorder: UnderlineInputBorder(
-                      borderSide: new BorderSide(color: Colors.black)),
-                  focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black)),
-                  hintText: "Type some tag...",
-                  hintStyle: TextStyle(
-                      fontSize: 15.0,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.blueGrey),
-                )),
+          Text(
+            "Search for new problems to solve.",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                fontWeight: FontWeight.w400,
+                fontSize: 15.0
+            ),
           ),
           Padding(
             padding: EdgeInsets.only(top: 8.0),
@@ -84,7 +74,10 @@ class PickATag extends StatelessWidget {
                   ),
                 ],
               ),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context)
+                    .pushNamed(SearchProblemsScreen.routeName);
+              },
             ),
           ),
           Padding(
