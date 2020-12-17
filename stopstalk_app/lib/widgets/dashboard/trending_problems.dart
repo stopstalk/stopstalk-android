@@ -4,8 +4,27 @@ import 'package:flutter/cupertino.dart';
 
 import '../../screens/trending_problems_screen.dart';
 import '../../classes/trendingProblems_class.dart';
+import '../../utils/auth.dart';
 
-class TrendingProblemsDashboard extends StatelessWidget {
+class TrendingProblemsDashboard extends StatefulWidget {
+  @override
+  _TrendingProblemsDashboardState createState() =>
+      _TrendingProblemsDashboardState();
+}
+
+class _TrendingProblemsDashboardState extends State<TrendingProblemsDashboard> {
+  dynamic _userData;
+
+  void setUser() async {
+    var user = await getCurrentUser();
+    setState(() => _userData = user);
+  }
+
+  @override
+  void initState() {
+    setUser();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -211,7 +230,8 @@ class TrendingProblemsDashboard extends StatelessWidget {
               onPressed: () {
                 Navigator.of(context).pushNamed(
                   TrendingProblemsScreen.routeName,
-                  arguments: TrendingProblems(loggedin: null),
+                  arguments: TrendingProblems(
+                      loggedin: _userData != null ? false : true),
                 );
               }),
           Padding(
