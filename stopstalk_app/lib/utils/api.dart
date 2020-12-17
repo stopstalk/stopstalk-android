@@ -98,3 +98,27 @@ Future<void> deleteTodoUsingLink(String link) async {
   }
   return null;
 }
+
+Future<Map<String, dynamic>> getProblemsTags() async {
+  var url = await getURL('problems/search', {});
+  var res = await http.get(url);
+  if (res.statusCode == 200) {
+    return jsonDecode(res.body);
+  }
+  return null;
+}
+
+Future<Map<String, dynamic>> getLeaderboard(bool global) async {
+  var url = await getURL('leaderboard', {});
+  var res;
+  if (global) {
+    res = await http.get(url);
+  } else {
+    var headers = await getAuthHeader();
+    res = await http.get(url, headers: headers);
+  }
+  if (res.statusCode == 200) {
+    return jsonDecode(res.body);
+  }
+  return null;
+}

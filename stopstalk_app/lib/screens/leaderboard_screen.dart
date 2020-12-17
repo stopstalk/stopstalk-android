@@ -1,8 +1,5 @@
-import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:folding_cell/folding_cell.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -13,6 +10,7 @@ import '../widgets/preloader.dart';
 import './login/login_screen.dart';
 
 import 'profile.dart';
+import '../utils/api.dart';
 
 class LeaderBoardScreen extends StatefulWidget {
   static const routeName = '/leaderBoard';
@@ -38,10 +36,8 @@ class _LeaderBoardScreenState extends State<LeaderBoardScreen> {
         letterSpacing: .3,
       );
 
-  Future<List<LeaderBoard>> _getLeaderBoard() async {
-    const url = "https://www.stopstalk.com/leaderboard.json";
-    final response = await http.get(url);
-    final jsonData = jsonDecode(response.body);
+  Future<List<LeaderBoard>> _getLeaderBoard(bool global) async {
+    final jsonData = await getLeaderboard(global);
     List<LeaderBoard> users = [];
     for (var user in jsonData["users"]) {
       LeaderBoard person = LeaderBoard(
@@ -121,7 +117,7 @@ class _LeaderBoardScreenState extends State<LeaderBoardScreen> {
                         vertical: 10,
                       ),
                       child: FutureBuilder(
-                        future: _getLeaderBoard(),
+                        future: _getLeaderBoard(true),
                         builder: (ctx, snapshot) {
                           if (!snapshot.hasData) {
                             return Preloader();
@@ -217,8 +213,79 @@ class _LeaderBoardScreenState extends State<LeaderBoardScreen> {
                         ],
                       ),
                     )
-                  : Center(
-                      child: Text("loggedin"),
+                  : Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        children: [
+                          Expanded(
+                            child: Container(
+                              padding: EdgeInsets.symmetric(
+                                vertical: 10,
+                              ),
+                              child: FutureBuilder(
+                                future: _getLeaderBoard(false),
+                                builder: (ctx, snapshot) {
+                                  if (!snapshot.hasData) {
+                                    return Preloader();
+                                  } else {
+                                    return ListView.builder(
+                                      itemCount: snapshot.data.length,
+                                      itemBuilder: (ctx, i) {
+                                        return Container(
+                                          child: SimpleFoldingCell(
+                                            frontWidget: _buildFrontWidget(
+                                              i,
+                                              snapshot.data[i].name,
+                                              snapshot.data[i].institute,
+                                            ),
+                                            innerTopWidget:
+                                                _buildInnerTopWidget(
+                                              context,
+                                              snapshot.data[i].name,
+                                              snapshot.data[i].stopstalkHandle,
+                                              titleTextStyle,
+                                              contentTextStyle,
+                                              snapshot.data[i].country != null
+                                                  ? snapshot.data[i].country[0]
+                                                      .toLowerCase()
+                                                  : 'NA',
+                                              snapshot.data[i].country != null
+                                                  ? snapshot.data[i].country[1]
+                                                  : 'NA',
+                                            ),
+                                            innerBottomWidget:
+                                                _buildInnerBottomWidget(
+                                              snapshot.data[i].institute,
+                                              snapshot.data[i].stopstalkRating,
+                                              snapshot.data[i].perDayChanges,
+                                              snapshot.data[i].customUsers,
+                                              titleTextStyle,
+                                              contentTextStyle,
+                                            ),
+                                            cellSize: Size(
+                                                MediaQuery.of(context)
+                                                    .size
+                                                    .width,
+                                                125),
+                                            padding: EdgeInsets.all(15),
+                                            animationDuration:
+                                                Duration(milliseconds: 300),
+                                            borderRadius: 10,
+                                            onOpen: () =>
+                                                print('$i cell opened'),
+                                            onClose: () =>
+                                                print('$i cell closed'),
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  }
+                                },
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
             ),
           ],
