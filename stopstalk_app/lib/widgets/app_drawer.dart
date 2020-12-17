@@ -144,7 +144,7 @@ class _AppDrawerState extends State<AppDrawer> {
               title: Text('Trending Problems'),
               onTap: () {
                 Navigator.of(context)
-                    .pushReplacementNamed(TrendingProblemsScreen.routeName,arguments: TrendingProblems(loggedin: _userData != null ? false : true));
+                    .pushNamed(TrendingProblemsScreen.routeName,arguments: TrendingProblems(loggedin: _userData != null ? false : true));
 
               },
             ),
