@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:expandable/expandable.dart';
 
 import '../classes/problems_class.dart';
 
@@ -25,11 +24,7 @@ class ProblemsCard extends StatelessWidget {
   );
   @override
   Widget build(BuildContext context) {
-    return ExpandableNotifier(
-        child: Column(children: [
-      Expandable(
-        collapsed: ExpandableButton(
-          child: FadeTransition(
+    return FadeTransition(
             opacity: animation,
             child: SlideTransition(
               position: _offSetTween.animate(animation),
@@ -89,12 +84,12 @@ class ProblemsCard extends StatelessWidget {
                                     "In " + recom.users.toString() + " Todos",
                                     style: TextStyle(
                                         fontSize: 15, color: Colors.grey[800]),
-                                  ), //Icon(FontAwesomeIcons.bullseye),
+                                  ),
                                   Text(
                                     recom.totalSubmissions + " Submissions",
                                     style: TextStyle(
                                         fontSize: 15, color: Colors.grey[800]),
-                                  ), //Icon(Icons.arrow_upward_rounded),
+                                  ),
                                 ],
                               ),
                             ),
@@ -121,10 +116,7 @@ class ProblemsCard extends StatelessWidget {
                 ),
               ), //new card
             ),
-          ),
-        ),
-      )
-    ]));
+          );
   }
 
   _launchURL(String url) async {
