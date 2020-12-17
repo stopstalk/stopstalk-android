@@ -217,7 +217,7 @@ class _TrendingProblemsDashboardState extends State<TrendingProblemsDashboard> {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8.0),
               ),
-              color: Theme.of(context).buttonColor,
+              color: Color(0xFF2542ff),
               child: AutoSizeText(
                 'View All',
                 maxLines: 1,
