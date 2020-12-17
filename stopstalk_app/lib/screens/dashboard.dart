@@ -4,13 +4,10 @@ import 'package:flutter/material.dart';
 import '../widgets/app_drawer.dart';
 import '../widgets/dashboard/upcoming_contests.dart';
 import '../widgets/dashboard/add_friends.dart';
-import '../widgets/dashboard/link_atcoder.dart';
 import '../widgets/dashboard/recent_friend_submissions.dart';
-import '../widgets/dashboard/looking_for_jobs.dart';
 import '../widgets/dashboard/new_problems_to_solve.dart';
 import '../widgets/dashboard/trending_problems.dart';
-import '../widgets/dashboard/mood.dart';
-import '../widgets/dashboard/pick_a_tag.dart';
+import '../widgets/dashboard/search_problems.dart';
 import '../classes/dashboard_class.dart';
 import './login/login_screen.dart';
 
@@ -52,15 +49,7 @@ class _DashboardState extends State<Dashboard> {
                       Padding(
                         padding: EdgeInsets.only(top: 10.0),
                       ),
-                      LinkAtCoder(),
-                      Padding(
-                        padding: EdgeInsets.only(top: 10.0),
-                      ),
                       RecentFriendSubmissions(),
-                      Padding(
-                        padding: EdgeInsets.only(top: 10.0),
-                      ),
-                      LookingForJobs(),
                       Padding(
                         padding: EdgeInsets.only(top: 10.0),
                       ),
@@ -68,15 +57,11 @@ class _DashboardState extends State<Dashboard> {
                       Padding(
                         padding: EdgeInsets.only(top: 10.0),
                       ),
-                      TrendingProblems(),
+                      TrendingProblemsDashboard(),
                       Padding(
                         padding: EdgeInsets.only(top: 10.0),
                       ),
-                      Mood(),
-                      Padding(
-                        padding: EdgeInsets.only(top: 10.0),
-                      ),
-                      PickATag(),
+                      SearchProblems(),
                       Padding(
                         padding: EdgeInsets.only(top: 10.0),
                       ),
