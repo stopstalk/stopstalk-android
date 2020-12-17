@@ -41,19 +41,21 @@ class ProblemsCard extends StatelessWidget {
                     Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          CircleAvatar(
-                            radius: 30,
-                            backgroundColor: Color(0xFF2542ff),
-                            child: CircleAvatar(
-                              backgroundColor: Color(0XFFeeeeee),
-                              radius: 28,
-                              child: Image.asset(
-                                ProblemsCard
-                                    .platformImgs[recom.platform.toLowerCase()],
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
+                          recom.platform != null
+                              ? CircleAvatar(
+                                  radius: 30,
+                                  backgroundColor: Color(0xFF2542ff),
+                                  child: CircleAvatar(
+                                    backgroundColor: Color(0XFFeeeeee),
+                                    radius: 28,
+                                    child: Image.asset(
+                                      ProblemsCard.platformImgs[
+                                          recom.platform.toLowerCase()],
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                )
+                              : SizedBox(width: 0),
                           //SizedBox(width: 20),
                           Flexible(
                             child: Padding(
