@@ -4,12 +4,9 @@ import 'package:flutter/material.dart';
 import '../widgets/app_drawer.dart';
 import '../widgets/preloader.dart';
 import '../widgets/trending_problems_card.dart';
-
 import '../classes/problems_class.dart';
 import '../classes/trendingProblems_class.dart';
-
 import '../utils/api.dart';
-
 import './login/login_screen.dart';
 
 class TrendingProblemsScreen extends StatefulWidget {
@@ -173,9 +170,7 @@ class _TrendingProblemsScreenState extends State<TrendingProblemsScreen> {
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
-                                args.loggedin
-                                    ? "Sign In to StopStalk"
-                                    : "You are now logged in",
+                                "Sign In to StopStalk",
                                 style: TextStyle(color: Colors.white),
                               ),
                             ),
