@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
+import '../../screens/search_friends_screen.dart';
+
 class AddFriends extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -57,7 +59,10 @@ class AddFriends extends StatelessWidget {
                 fontSize: 16,
               ),
             ),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).pushNamed(
+                  SearchFriendsScreen.routeName,);
+            },
           ),
           Padding(
             padding: EdgeInsets.only(top: 8.0),
