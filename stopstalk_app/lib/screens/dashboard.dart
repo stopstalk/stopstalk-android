@@ -68,7 +68,7 @@ class _DashboardState extends State<Dashboard> {
                       Padding(
                         padding: EdgeInsets.only(top: 10.0),
                       ),
-                      TrendingProblems(),
+                      TrendingProblemsDashboard(),
                       Padding(
                         padding: EdgeInsets.only(top: 10.0),
                       ),
