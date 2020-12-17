@@ -125,7 +125,7 @@ class ProblemsCard extends StatelessWidget {
                               onPressed: () {},
                               color: Color(0xFF2542ff),
                               icon: Icon(Icons.add),
-                              label: Text('Add to To-do'),
+                              label: Text('TODO'),
                               textColor: Colors.white,
                             )
                           ],

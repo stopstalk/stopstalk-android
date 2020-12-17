@@ -4,8 +4,27 @@ import 'package:flutter/cupertino.dart';
 
 import '../../screens/trending_problems_screen.dart';
 
-class TrendingProblems extends StatelessWidget {
+import '../../utils/auth.dart';
 
+class TrendingProblems extends StatefulWidget {
+
+  @override
+  _TrendingProblemsState createState() => _TrendingProblemsState();
+}
+
+class _TrendingProblemsState extends State<TrendingProblems> {
+  dynamic _userData;
+
+  void setUser() async {
+    var user = await getCurrentUser();
+    setState(() => _userData = user);
+  }
+
+  @override
+  void initState() {
+    setUser();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Container(

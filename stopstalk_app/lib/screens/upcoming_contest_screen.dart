@@ -387,7 +387,7 @@ class _UpcomingContestState extends State<UpcomingContestScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               Padding(
-                padding: EdgeInsets.only(left: 10.0),
+                padding: EdgeInsets.only(left: 6.0),
               ),
               Expanded(
                 flex: 1,
@@ -395,14 +395,15 @@ class _UpcomingContestState extends State<UpcomingContestScreen> {
                   maxRadius: 30,
                   backgroundColor: Colors.white,
                   child: ClipRRect(
-                    child: images[image] != null
+                    child: images[image.toLowerCase()] != null
                         ? Image(
-                            image: AssetImage(images[image]),
-                            height: 80.0,
-                            width: 80.0,
-                          )
+                      image: AssetImage(
+                          images[image.toLowerCase()]),
+                      height: 80.0,
+                      width: 80.0,
+                    )
                         : SizedBox(),
-                    borderRadius: BorderRadius.circular(12.0),
+                    borderRadius: BorderRadius.circular(10.0),
                   ),
                 ),
               ),
