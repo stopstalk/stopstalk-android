@@ -101,17 +101,34 @@ class ProblemsCard extends StatelessWidget {
                             ],
                           ),
                         ),
-                        RaisedButton.icon(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8.0),
-                          ),
-                          padding: EdgeInsets.only(
-                              top: 8.0, bottom: 8.0, left: 17.0, right: 17.0),
-                          onPressed: () => _launchURL(recom.editorialUrl),
-                          color: Color(0xFF2542ff),
-                          icon: Icon(MyFlutterApp.contract),
-                          label: Text('Editorials'),
-                          textColor: Colors.white,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            RaisedButton.icon(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                              padding: EdgeInsets.only(
+                                  top: 8.0, bottom: 8.0, left: 17.0, right: 17.0),
+                              onPressed: () => _launchURL(recom.editorialUrl),
+                              color: Color(0xFF2542ff),
+                              icon: Icon(MyFlutterApp.contract),
+                              label: Text('Editorials'),
+                              textColor: Colors.white,
+                            ),
+                            RaisedButton.icon(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                              padding: EdgeInsets.only(
+                                  top: 8.0, bottom: 8.0, left: 17.0, right: 17.0),
+                              onPressed: () {},
+                              color: Color(0xFF2542ff),
+                              icon: Icon(Icons.add),
+                              label: Text('Add to To-do'),
+                              textColor: Colors.white,
+                            )
+                          ],
                         )
                       ],
                     )
