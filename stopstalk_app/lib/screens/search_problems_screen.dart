@@ -19,13 +19,15 @@ class SearchProblemsScreen extends StatefulWidget {
 
 class _SearchProblemsScreenState extends State<SearchProblemsScreen> {
   final _formKey = GlobalKey<FormState>();
-  final List<DropdownMenuItem> sites = new List();
+  final List<Map<String, dynamic>> sites = new List();
   final List<DropdownMenuItem> sortBy = new List();
 
-  String selectedSortBy = "accasc";
-  String selectedSite = "CodeChef";
-  String selectedProblemTagDropdown = "dummy1";
-  String selectedProblemTagTextbox = "";
+  final _namecontroller = new TextEditingController();
+  final _qcontroller = new TextEditingController();
+  String selectedSortBy;
+  List selectedSite;
+  List selectedProblemTagDropdown;
+  String selectedProblemTagTextbox;
 
   bool onlyShowProblemsWithEditorials = false;
   bool excludeMySolvedProblems = false;
@@ -38,47 +40,38 @@ class _SearchProblemsScreenState extends State<SearchProblemsScreen> {
   }
 
   void _initSites() {
-    sites.addAll([
-      DropdownMenuItem(
-          value: "CodeChef", child: Text("CodeChef"), key: Key("CodeChef")),
-      DropdownMenuItem(
-          value: "CodeForces",
-          child: Text("CodeForces"),
-          key: Key("CodeForces")),
-      DropdownMenuItem(value: "SPOJ", child: Text("SPOJ"), key: Key("SPOJ")),
-      DropdownMenuItem(
-          value: "AtCoder", child: Text("AtCoder"), key: Key("AtCoder")),
-      DropdownMenuItem(
-          value: "HackerEarth",
-          child: Text("HackerEarth"),
-          key: Key("HackerEarth")),
-      DropdownMenuItem(
-          value: "HackerRank",
-          child: Text("HackerRank"),
-          key: Key("HackerRank")),
-      DropdownMenuItem(value: "UVa", child: Text("UVa"), key: Key("UVa")),
-      DropdownMenuItem(value: "Timus", child: Text("Timus"), key: Key("Timus")),
-    ]);
+    [
+      "CodeChef",
+      "CodeForces",
+      "AtCoder",
+      "HackerRank",
+      "HackerEarth",
+      "UVa",
+      "Timus"
+    ].forEach((tag) => sites.add({
+          "display": tag,
+          "value": tag,
+        }));
   }
 
   void _initSortBy() {
     sortBy.addAll([
       DropdownMenuItem(
-          value: "accasc",
+          value: "accuracy-asc",
           child: Text("Accuracy (Ascending)"),
-          key: Key("accasc")),
+          key: Key("accuracy-asc")),
       DropdownMenuItem(
-          value: "accdesc",
+          value: "accuracy-desc",
           child: Text("Accuracy (Descending)"),
-          key: Key("accdesc")),
+          key: Key("accuracy-desc")),
       DropdownMenuItem(
-          value: "solcntasc",
+          value: "solved-count-asc",
           child: Text("Solved Count (Ascending)"),
-          key: Key("solcntasc")),
+          key: Key("solved-count-asc")),
       DropdownMenuItem(
-          value: "solcntdesc",
+          value: "solved-count-desc",
           child: Text("Solved Count (Descending)"),
-          key: Key("solcntdesc")),
+          key: Key("solved-count-desc")),
     ]);
   }
 
@@ -115,6 +108,7 @@ class _SearchProblemsScreenState extends State<SearchProblemsScreen> {
                 // crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   TextFormField(
+                    controller: _namecontroller,
                     keyboardType: TextInputType.text,
                     style: TextStyle(
                       fontSize: 15.0,
@@ -137,28 +131,32 @@ class _SearchProblemsScreenState extends State<SearchProblemsScreen> {
                   Padding(
                     padding: EdgeInsets.only(top: 16.0),
                   ),
-                  ButtonTheme(
-                    alignedDropdown: true,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Color(0xffeeeeee),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: DropdownButton(
-                        items: sites,
-                        value: selectedSite,
-                        onChanged: (value) {
-                          selectedSite = value;
-                          setState(() {});
-                        },
-                        hint: Text("Site"),
-                        isExpanded: true,
-                        dropdownColor: Color(0xffeeeeee),
-                        underline: Container(
-                          color: Color(0xffeeeeee),
-                        ),
-                      ),
+                  MultiSelectFormField(
+                    title: Text(
+                      "Sites",
+                      style: TextStyle(
+                          fontSize: 16.0, fontWeight: FontWeight.w400),
                     ),
+                    hintWidget: null,
+                    checkBoxActiveColor: Color(0xFF2542ff),
+                    validator: (value) {
+                      if (value == null || value.length == 0) {
+                        return 'Please select one or more options';
+                      }
+                      return '';
+                    },
+                    dataSource: sites,
+                    textField: 'display',
+                    valueField: 'value',
+                    okButtonLabel: 'OK',
+                    cancelButtonLabel: 'CANCEL',
+                    fillColor: Color(0xffeeeeee),
+                    onSaved: (value) {
+                      if (value == null) return;
+                      setState(() {
+                        selectedSite = value;
+                      });
+                    },
                   ),
                   Padding(
                     padding: EdgeInsets.only(top: 16.0),
@@ -174,8 +172,7 @@ class _SearchProblemsScreenState extends State<SearchProblemsScreen> {
                         items: sortBy,
                         value: selectedSortBy,
                         onChanged: (value) {
-                          selectedSortBy = value;
-                          setState(() {});
+                          setState(() => selectedSortBy = value);
                         },
                         hint: Text("Sort By"),
                         isExpanded: true,
@@ -190,6 +187,7 @@ class _SearchProblemsScreenState extends State<SearchProblemsScreen> {
                     padding: EdgeInsets.only(top: 20.0),
                   ),
                   TextFormField(
+                    controller: _qcontroller,
                     keyboardType: TextInputType.text,
                     style: TextStyle(
                       fontSize: 15.0,
@@ -243,6 +241,12 @@ class _SearchProblemsScreenState extends State<SearchProblemsScreen> {
                           okButtonLabel: 'OK',
                           cancelButtonLabel: 'CANCEL',
                           fillColor: Color(0xffeeeeee),
+                          onSaved: (value) {
+                            if (value == null) return;
+                            setState(() {
+                              selectedProblemTagDropdown = value;
+                            });
+                          },
                         );
                       }),
                   Padding(
@@ -253,15 +257,14 @@ class _SearchProblemsScreenState extends State<SearchProblemsScreen> {
                       value: onlyShowProblemsWithEditorials,
                       onChanged: (value) {
                         onlyShowProblemsWithEditorials = value;
-                        setState(() {});
+                        setState(() => onlyShowProblemsWithEditorials = value);
                       },
                       activeColor: Color(0xFF2542ff),
                     ),
                     title: InkWell(
                         onTap: () {
-                          onlyShowProblemsWithEditorials =
-                              !onlyShowProblemsWithEditorials;
-                          setState(() {});
+                          setState(() => onlyShowProblemsWithEditorials =
+                              !onlyShowProblemsWithEditorials);
                         },
                         child: Text("Only show problems with Editorials")),
                   ),
@@ -270,15 +273,15 @@ class _SearchProblemsScreenState extends State<SearchProblemsScreen> {
                       value: excludeMySolvedProblems,
                       onChanged: (value) {
                         excludeMySolvedProblems = value;
-                        setState(() {});
+                        setState(() => excludeMySolvedProblems = value);
                       },
                       activeColor: Color(0xFF2542ff),
                     ),
                     // title: Text("Exclude my Solved Problems"),
                     title: InkWell(
                         onTap: () {
-                          excludeMySolvedProblems = !excludeMySolvedProblems;
-                          setState(() {});
+                          setState(() => excludeMySolvedProblems =
+                              !excludeMySolvedProblems);
                         },
                         child: Text("Exclude my Solved Problems")),
                   ),
@@ -321,13 +324,24 @@ class _SearchProblemsScreenState extends State<SearchProblemsScreen> {
                               Navigator.push(context,
                                   MaterialPageRoute(builder: (context) {
                                 return SearchedProblemsScreen(parameters: {
-                                  'name': "pp",
-                                  'site': "CodeChef",
-                                  'orderby': '',
-                                  'generalized_tags': '',
-                                  'q': '',
-                                  'include_editorials': '',
-                                  'exclude_solved': '',
+                                  'name': _namecontroller.text,
+                                  'site': selectedSite != null
+                                      ? 'is_list' + selectedSite.toString()
+                                      : '',
+                                  'orderby': selectedSortBy,
+                                  'generalized_tags':
+                                      selectedProblemTagDropdown != null
+                                          ? 'is_list' +
+                                              selectedProblemTagDropdown
+                                                  .toString()
+                                          : '',
+                                  'q': _qcontroller.text,
+                                  'include_editorials':
+                                      onlyShowProblemsWithEditorials
+                                          ? 'on'
+                                          : '',
+                                  'exclude_solved':
+                                      excludeMySolvedProblems ? 'on' : '',
                                 });
                               }));
                             }),
