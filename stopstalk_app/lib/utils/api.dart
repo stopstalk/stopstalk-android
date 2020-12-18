@@ -5,13 +5,14 @@ import 'dart:convert';
 import 'package:stopstalkapp/utils/storage.dart';
 
 Future<String> getURL(String url, Map<String, String> parameters) async {
-  print(parameters);
   var server = DotEnv().env['SERVER'];
   var apiToken = DotEnv().env['API_TOKEN'];
   assert(apiToken != '', "API token must be Present");
   String param = '';
   parameters.forEach((key, value) {
-    param += '&' + key + '=' + value;
+    if (value != null) {
+      param += '&' + key + '=' + value;
+    }
   });
   return '$server/' + url + '?api_token=$apiToken' + param;
 }
@@ -25,6 +26,16 @@ Future<Map<String, String>> getAuthHeader() async {
 Future<String> attemptLogIn(String email, String password) async {
   var url = await getURL('user/login_token', {});
   var res = await http.post(url, body: {'email': email, 'password': password});
+  if (res.statusCode == 200) {
+    var jsonData = jsonDecode(res.body);
+    return jsonData['token'];
+  }
+  return null;
+}
+
+Future<String> resetToken(String token) async {
+  var url = await getURL('user/login_token', {});
+  var res = await http.post(url, body: {'token': token});
   if (res.statusCode == 200) {
     var jsonData = jsonDecode(res.body);
     return jsonData['token'];
@@ -113,6 +124,23 @@ Future<Map<String, dynamic>> getRecommendedProblems() async {
 Future<Map<String, dynamic>> getSearchProblems(
     Map<String, String> filters) async {
   var url = await getURL('problems/search', filters);
+  var jwt = await getDataSecureStore("jwt");
+  var res;
+  if (jwt == null) {
+    res = await http.get(url);
+  } else {
+    var headers = await getAuthHeader();
+    res = await http.get(url, headers: headers);
+  }
+  if (res.statusCode == 200) {
+    return jsonDecode(res.body);
+  }
+  return null;
+}
+
+Future<Map<String, dynamic>> getSearchFriends(
+    Map<String, String> filters) async {
+  var url = await getURL('search', filters);
   var jwt = await getDataSecureStore("jwt");
   var res;
   if (jwt == null) {
