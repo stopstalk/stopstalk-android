@@ -111,12 +111,37 @@ Future<void> deleteTodoUsingLink(String link) async {
   return null;
 }
 
+Future<Map<String, dynamic>> getRecommendedProblems() async {
+  var url = await getURL('problemsrecommendations.json', {});
+  var headers = await getAuthHeader();
+  var res = await http.get(url, headers: headers);
+  if (res.statusCode == 200) {
+    return jsonDecode(res.body);
+  }
+  return null;
+}
+
 Future<Map<String, dynamic>> getSearchProblems(
     Map<String, String> filters) async {
-  var url = await getURL('search', filters);
+  var url = await getURL('problems/search', filters);
   var jwt = await getDataSecureStore("jwt");
   var res;
   if (jwt == null) {
+    res = await http.get(url);
+  } else {
+    var headers = await getAuthHeader();
+    res = await http.get(url, headers: headers);
+  }
+  if (res.statusCode == 200) {
+    return jsonDecode(res.body);
+  }
+  return null;
+}
+
+Future<Map<String, dynamic>> getLeaderboard(bool global) async {
+  var url = await getURL('leaderboard', {});
+  var res;
+  if (global) {
     res = await http.get(url);
   } else {
     var headers = await getAuthHeader();
