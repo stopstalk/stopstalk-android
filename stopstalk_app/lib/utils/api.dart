@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:stopstalkapp/utils/storage.dart';
 
 Future<String> getURL(String url, Map<String, String> parameters) async {
+  print(parameters);
   var server = DotEnv().env['SERVER'];
   var apiToken = DotEnv().env['API_TOKEN'];
   assert(apiToken != '', "API token must be Present");
@@ -95,6 +96,48 @@ Future<void> deleteTodoUsingLink(String link) async {
   var res = await http.get(url, headers: headers);
   if (res.statusCode == 200) {
     print("deleted todo: " + link);
+  }
+  return null;
+}
+
+Future<Map<String, dynamic>> getRecommendedProblems() async {
+  var url = await getURL('problemsrecommendations.json', {});
+  var headers = await getAuthHeader();
+  var res = await http.get(url, headers: headers);
+  if (res.statusCode == 200) {
+    return jsonDecode(res.body);
+  }
+  return null;
+}
+
+Future<Map<String, dynamic>> getSearchProblems(
+    Map<String, String> filters) async {
+  var url = await getURL('problems/search', filters);
+  var jwt = await getDataSecureStore("jwt");
+  var res;
+  if (jwt == null) {
+    res = await http.get(url);
+  } else {
+    var headers = await getAuthHeader();
+    res = await http.get(url, headers: headers);
+  }
+  if (res.statusCode == 200) {
+    return jsonDecode(res.body);
+  }
+  return null;
+}
+
+Future<Map<String, dynamic>> getLeaderboard(bool global) async {
+  var url = await getURL('leaderboard', {});
+  var res;
+  if (global) {
+    res = await http.get(url);
+  } else {
+    var headers = await getAuthHeader();
+    res = await http.get(url, headers: headers);
+  }
+  if (res.statusCode == 200) {
+    return jsonDecode(res.body);
   }
   return null;
 }

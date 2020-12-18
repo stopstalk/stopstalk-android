@@ -5,6 +5,7 @@ import '../widgets/app_drawer.dart';
 import '../widgets/problems_card.dart';
 
 import '../classes/problems_class.dart';
+import '../utils/api.dart';
 
 class RecommendationsScreen extends StatefulWidget {
   static const routeName = '/recommendations';
@@ -21,41 +22,28 @@ class _RecommendationsScreenState extends State<RecommendationsScreen> {
       GlobalKey<AnimatedListState>();
 
   Future<List<Problems>> _getRecommendations() async {
-    for (int i = 1; i < 5; i++) {
-      if (i % 2 == 0) {
-        Problems prob = Problems(
-            problemName: 'Special Permutation ',
-            platform: 'Codechef',
-            problemUrl: 'https://codeforces.com/contest/1454/problem/A',
-            editorialUrl: 'https://codeforces.com/contest/1454/problem/B',
-            totalSubmissions: '500',
-            accuracy: '25%',
-            tags: ['hard', 'easy', 'dp']);
-        recom.add(prob);
-      } else {
-        Problems prob = Problems(
-            problemName: 'Special Permutation Permutation',
-            platform: 'Codeforces',
-            problemUrl: 'https://codeforces.com/contest/1454/problem/A',
-            editorialUrl: 'https://codeforces.com/contest/1454/problem/B',
-            totalSubmissions: '500',
-            accuracy: '25%',
-            tags: [
-              'hard',
-              'easy',
-              'dp',
-              'easy',
-              'dp',
-              'easy',
-              'dp',
-              'easy',
-              'dp',
-              'easy',
-              'dp'
-            ]);
-        recom.add(prob);
-      }
-    }
+    var resp = await getRecommendedProblems();
+    var result = resp["problems"];
+    result.forEach((element) {
+      var tags = element["tags"]
+          .replaceAll(']', '')
+          .replaceAll('[', '')
+          .replaceAll('u', '')
+          .split(',');
+      Problems prob = Problems(
+          id: element["id"],
+          problemName: element["name"],
+          platform: 'Codechef',
+          problemUrl: element["link"],
+          editorialUrl: element["editorial_link"],
+          totalSubmissions: (element["solved_submissions"] *
+                  100.0 /
+                  element["total_submissions"])
+              .toString(),
+          accuracy: element["accuracy"].toString(),
+          tags: tags);
+      recom.add(prob);
+    });
     recom.length == 0 ? flag = true : flag = false;
     return recom;
   }
