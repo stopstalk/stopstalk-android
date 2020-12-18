@@ -138,6 +138,23 @@ Future<Map<String, dynamic>> getSearchProblems(
   return null;
 }
 
+Future<Map<String, dynamic>> getSearchFriends(
+    Map<String, String> filters) async {
+  var url = await getURL('search', filters);
+  var jwt = await getDataSecureStore("jwt");
+  var res;
+  if (jwt == null) {
+    res = await http.get(url);
+  } else {
+    var headers = await getAuthHeader();
+    res = await http.get(url, headers: headers);
+  }
+  if (res.statusCode == 200) {
+    return jsonDecode(res.body);
+  }
+  return null;
+}
+
 Future<Map<String, dynamic>> getLeaderboard(bool global) async {
   var url = await getURL('leaderboard', {});
   var res;

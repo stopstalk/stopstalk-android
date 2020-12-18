@@ -46,13 +46,15 @@ class _SearchFriendsScreenState extends State<SearchFriendsScreen> {
   }
 
   Future<List<List<String>>> _getitems() async {
-    var data = await getSearchProblems({'get_list': 'true'});
+    var data = await getSearchFriends({'get_list': 'true'});
     if (data == null) return [];
     List<String> inis = [];
     var ini = data["all_institutes"];
+    print(inis);
     ini.forEach((e) {
       inis.add(e);
     });
+
     List<String> conts = [];
     var cont = data["country_name_list"];
     cont.forEach((e) {
@@ -63,7 +65,7 @@ class _SearchFriendsScreenState extends State<SearchFriendsScreen> {
 
   _getSearchedFriends() async {
     List<Friends> searched = [];
-    var data = await getSearchProblems({
+    var data = await getSearchFriends({
       'q': searchController.text,
       'institute': selectedInstitute,
       'country': selectedCountry
