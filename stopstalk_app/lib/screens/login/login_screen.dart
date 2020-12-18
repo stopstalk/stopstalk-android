@@ -7,7 +7,6 @@ import '../profile.dart';
 import './background.dart';
 import './login.dart';
 import '../../fragments/animations.dart';
-import '../profile.dart';
 import '../../utils/auth.dart';
 
 class LoginPage extends StatefulWidget {

@@ -10,7 +10,9 @@ Future<String> getURL(String url, Map<String, String> parameters) async {
   assert(apiToken != '', "API token must be Present");
   String param = '';
   parameters.forEach((key, value) {
-    param += '&' + key + '=' + value;
+    if (value != null) {
+      param += '&' + key + '=' + value;
+    }
   });
   return '$server/' + url + '?api_token=$apiToken' + param;
 }
@@ -33,9 +35,7 @@ Future<String> attemptLogIn(String email, String password) async {
 
 Future<String> resetToken(String token) async {
   var url = await getURL('user/login_token', {});
-  print(url);
   var res = await http.post(url, body: {'token': token});
-  print(res.statusCode);
   if (res.statusCode == 200) {
     var jsonData = jsonDecode(res.body);
     return jsonData['token'];
@@ -107,6 +107,23 @@ Future<void> deleteTodoUsingLink(String link) async {
   var res = await http.get(url, headers: headers);
   if (res.statusCode == 200) {
     print("deleted todo: " + link);
+  }
+  return null;
+}
+
+Future<Map<String, dynamic>> getSearchProblems(
+    Map<String, String> filters) async {
+  var url = await getURL('search', filters);
+  var jwt = await getDataSecureStore("jwt");
+  var res;
+  if (jwt == null) {
+    res = await http.get(url);
+  } else {
+    var headers = await getAuthHeader();
+    res = await http.get(url, headers: headers);
+  }
+  if (res.statusCode == 200) {
+    return jsonDecode(res.body);
   }
   return null;
 }
