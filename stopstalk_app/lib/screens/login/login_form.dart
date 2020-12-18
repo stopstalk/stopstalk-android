@@ -155,7 +155,7 @@ class _LoginFormState extends State<LoginForm> {
                         var jwt = await attemptLogIn(email, password);
                         setState(() => _loader = false);
                         if (jwt != null) {
-                          writeDataSecureStore("jwt", jwt);
+                          await writeDataSecureStore("jwt", jwt);
                           var user = await getCurrentUser();
                           Navigator.pushReplacement(
                             context,

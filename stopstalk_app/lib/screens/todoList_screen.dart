@@ -3,21 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../widgets/app_drawer.dart';
+import '../widgets/preloader.dart';
 import '../classes/todoList_class.dart';
+import '../utils/api.dart';
+import '../utils/platforms.dart' as platforms;
+import '../screens/search_problems_screen.dart';
 
 class ToDoListScreen extends StatefulWidget {
   static const routeName = '/todoList';
-
-  static const platformImgs = {
-    'Codechef': 'assets/platform_logos/codechef_small.png',
-    'Codeforces': 'assets/platform_logos/codeforces_small.png',
-    'Spoj': 'assets/platform_logos/spoj_small.png',
-    'Atcoder': 'assets/platform_logos/atcoder_small.png',
-    'Hackerearth': 'assets/platform_logos/hackerearth_small.png',
-    'Hackerrank': 'assets/platform_logos/hackerrank_small.png',
-    'Uva': 'assets/platform_logos/uva_small.png',
-    'Timus': 'assets/platform_logos/timus_small.png',
-  };
+  static const platformImgs = platforms.platformImgs;
 
   @override
   _ToDoListScreenState createState() => _ToDoListScreenState();
@@ -32,30 +26,24 @@ class _ToDoListScreenState extends State<ToDoListScreen> {
     end: Offset.zero,
   );
   final GlobalKey<AnimatedListState> _animatedListKey =
-  GlobalKey<AnimatedListState>();
+      GlobalKey<AnimatedListState>();
 
   Future<List<ToDoList>> _getToDoList() async {
-    for (int i = 1; i < 5; i++) {
-      if (i % 2 == 0) {
-        ToDoList todo = ToDoList(
-          problemName: 'Two Arrays',
-          platform: 'Codechef',
-          totalSubmissions: (i * 500).toString(),
-          totalUsers: (i * 600).toString(),
-          isChecked: false,
-        );
-        todos.add(todo);
-      } else {
-        ToDoList todo = ToDoList(
-          problemName: 'Floor Number',
-          platform: 'Codeforces',
-          totalSubmissions: (i * 100).toString(),
-          totalUsers: (i * 300).toString(),
-          isChecked: false,
-        );
-        todos.add(todo);
-      }
-    }
+    var probs = await getTodos();
+    if (probs == null) return [];
+    List todosFetched = probs['todos'];
+    todosFetched.forEach((element) {
+      ToDoList todo = ToDoList(
+        id: element['id'].toString(),
+        link: element['link'],
+        problemName: element['name'],
+        platform: element['platform'].toLowerCase(),
+        totalSubmissions: element['total_submissions'].toString(),
+        totalUsers: element['user_ids'].split(',').length.toString(),
+        isChecked: false,
+      );
+      todos.add(todo);
+    });
     todos.length == 0 ? flag = true : flag = false;
     return todos;
   }
@@ -80,117 +68,111 @@ class _ToDoListScreenState extends State<ToDoListScreen> {
           IconButton(
             icon: Icon(Icons.delete_forever),
             tooltip: "Delete All",
-            onPressed: () =>
-                showDialog(
-                  context: context,
-                  builder: (context) =>
-                  flag != true ? AlertDialog(
-                    title: const Text("Confirmation"),
-                    content: Text(
-                        "Are you sure you wish to delete all the items"),
-                    actions: <Widget>[
-                      FlatButton(
-                        onPressed: () {
-                          _deleteAll();
-                          Navigator.of(context).pop();
-                        },
-                        child: const Text("DELETE ALL"),
-                      ),
-                      FlatButton(
-                        onPressed: () => Navigator.of(context).pop(),
-                        child: const Text("CANCEL"),
-                      ),
-                    ],
-                  ) : AlertDialog(
-                    title: const Text("Confirmation"),
-                    content: Text("All tasks are completed."),
-                  ),
-                ),
+            onPressed: () => showDialog(
+              context: context,
+              builder: (context) => flag != true
+                  ? AlertDialog(
+                      title: const Text("Confirmation"),
+                      content:
+                          Text("Are you sure you wish to delete all the items"),
+                      actions: <Widget>[
+                        FlatButton(
+                          onPressed: () {
+                            _deleteAll();
+                            Navigator.of(context).pop();
+                          },
+                          child: const Text("DELETE ALL"),
+                        ),
+                        FlatButton(
+                          onPressed: () => Navigator.of(context).pop(),
+                          child: const Text("CANCEL"),
+                        ),
+                      ],
+                    )
+                  : AlertDialog(
+                      title: const Text("Confirmation"),
+                      content: Text("All tasks are completed."),
+                    ),
+            ),
           ),
         ],
       ),
       drawer: AppDrawer(),
-      body: Container(
-        padding: EdgeInsets.all(8),
-        child: SingleChildScrollView(
-          physics: flag == true
-              ? NeverScrollableScrollPhysics()
-              : BouncingScrollPhysics(),
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(
-                    top: 8.0, bottom: 8.0, right: 0.0, left: 50),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Text(
-                      'Problem',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 13,
-                      ),
-                    ),
-                    //Text(''),
-                    Text(
-                      "Platform",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 13,
-                      ),
-                    ),
-                    //SizedBox(),
-                    Text(
-                      'Count',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 13,
-                      ),
-                    ),
-                    Text(
-                      'Total Users',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 13,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              FutureBuilder(
-                future: myFuture,
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    return Container(
-                      height: MediaQuery
-                          .of(context)
-                          .size
-                          .height,
-                      child: flag != true
-                          ? AnimatedList(
-                        key: _animatedListKey,
-                        primary: true,
-                        shrinkWrap: true,
-                        physics: BouncingScrollPhysics(),
-                        initialItemCount: snapshot.data.length,
-                        itemBuilder: (context, i, animation) {
-                          return buildToDoItem(
-                              snapshot.data[i], context, i, animation);
-                        },
+      body: FutureBuilder(
+          future: myFuture,
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) {
+              return PreloaderDualRing();
+            } else {
+              return Container(
+                padding: EdgeInsets.all(8),
+                child: SingleChildScrollView(
+                  physics: flag == true
+                      ? NeverScrollableScrollPhysics()
+                      : BouncingScrollPhysics(),
+                  child: Column(
+                    children: [
+                  flag!=true?Padding(
+                        padding: const EdgeInsets.only(
+                            top: 8.0, bottom: 8.0, right: 0.0, left: 50),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Text(
+                              'Problem',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 13,
+                              ),
+                            ),
+                            //Text(''),
+                            Text(
+                              "Platform",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 13,
+                              ),
+                            ),
+                            //SizedBox(),
+                            Text(
+                              'Count',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 13,
+                              ),
+                            ),
+                            Text(
+                              'Total Users',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 13,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ):Container(),
+                      Container(
+                        height: MediaQuery.of(context).size.height,
+                        child: flag != true
+                            ? AnimatedList(
+                                key: _animatedListKey,
+                                primary: true,
+                                shrinkWrap: true,
+                                physics: BouncingScrollPhysics(),
+                                initialItemCount: snapshot.data.length,
+                                itemBuilder: (context, i, animation) {
+                                  return buildToDoItem(
+                                      snapshot.data[i], context, i, animation);
+                                },
+                              )
+                            : _showAllComplete(),
                       )
-                          : _showAllComplete(),
-                    );
-                  } else if (snapshot.hasError) {
-                    return Text(snapshot.error);
-                  } else {
-                    return Text('no error and no data');
-                  }
-                },
-              ),
-            ],
-          ),
-        ),
-      ),
+                    ],
+                  ),
+                ),
+              );
+            }
+          }),
     );
   }
 
@@ -240,11 +222,15 @@ class _ToDoListScreenState extends State<ToDoListScreen> {
                   Expanded(
                     child: Column(
                       children: [
-                        Image.asset(
-                          ToDoListScreen.platformImgs[todo.platform],
-                          height: 80,
-                          width: 60,
-                        ),
+                        todo.platform != null &&
+                                ToDoListScreen.platformImgs[todo.platform] !=
+                                    null
+                            ? Image.asset(
+                                ToDoListScreen.platformImgs[todo.platform],
+                                height: 80,
+                                width: 60,
+                              )
+                            : SizedBox(height: 80, width: 60),
                       ],
                     ),
                   ),
@@ -275,13 +261,13 @@ class _ToDoListScreenState extends State<ToDoListScreen> {
     deletedToDo = todos[i];
     _animatedListKey.currentState.removeItem(
       i,
-          (BuildContext context, Animation<double> animation) {
+      (BuildContext context, Animation<double> animation) {
         return FadeTransition(
           opacity:
-          CurvedAnimation(parent: animation, curve: Interval(0.5, 1.0)),
+              CurvedAnimation(parent: animation, curve: Interval(0.5, 1.0)),
           child: SizeTransition(
             sizeFactor:
-            CurvedAnimation(parent: animation, curve: Interval(0.0, 1.0)),
+                CurvedAnimation(parent: animation, curve: Interval(0.0, 1.0)),
             axisAlignment: 0.0,
             child: buildToDoItem(deletedToDo, context, i, animation),
           ),
@@ -298,16 +284,22 @@ class _ToDoListScreenState extends State<ToDoListScreen> {
       duration: Duration(seconds: 2),
       action: SnackBarAction(
         label: 'Undo',
-        onPressed: () =>
-            setState(() {
-              todos.insert(i, deletedToDo);
-              _animatedListKey.currentState
-                  .insertItem(i, duration: Duration(milliseconds: 500));
-              deletedToDo.isChecked = false;
-              flag = false;
-            }),
+        onPressed: () => setState(() {
+          todos.insert(i, deletedToDo);
+          if (_animatedListKey.currentState != null) {
+            _animatedListKey.currentState
+                .insertItem(i, duration: Duration(milliseconds: 500));
+          }
+          deletedToDo.isChecked = false;
+          flag = false;
+        }),
       ),
     ));
+    Future.delayed(const Duration(seconds: 3), () {
+      if (deletedToDo.isChecked) {
+        _senddelrequest(deletedToDo.link);
+      }
+    });
     if (todos.length == 0) {
       flag = true;
     }
@@ -316,16 +308,17 @@ class _ToDoListScreenState extends State<ToDoListScreen> {
   _deleteAll() {
     int initialLength = todos.length;
     for (int i = 0; i < initialLength; i++) {
+      _senddelrequest(todos[0].link);
       deletedToDo = todos[0];
       _animatedListKey.currentState.removeItem(
         0,
-            (BuildContext context, Animation<double> animation) {
+        (BuildContext context, Animation<double> animation) {
           return FadeTransition(
             opacity:
-            CurvedAnimation(parent: animation, curve: Interval(0.5, 1.0)),
+                CurvedAnimation(parent: animation, curve: Interval(0.5, 1.0)),
             child: SizeTransition(
               sizeFactor:
-              CurvedAnimation(parent: animation, curve: Interval(0.0, 1.0)),
+                  CurvedAnimation(parent: animation, curve: Interval(0.0, 1.0)),
               axisAlignment: 0.0,
               child: buildToDoItem(deletedToDo, context, 0, animation),
             ),
@@ -345,10 +338,7 @@ class _ToDoListScreenState extends State<ToDoListScreen> {
       opacity: 1,
       duration: Duration(milliseconds: 600),
       child: Container(
-        height: MediaQuery
-            .of(context)
-            .size
-            .height * 0.3,
+        height: MediaQuery.of(context).size.height * 0.3,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -363,6 +353,17 @@ class _ToDoListScreenState extends State<ToDoListScreen> {
                 fontSize: 20,
               ),
             ),
+            RaisedButton(
+              elevation: 4,
+              onPressed: (){
+                Navigator.of(context)
+                    .pushNamed(SearchProblemsScreen.routeName);
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text("Add more Todo problems", style: TextStyle(color: Colors.white),),
+              ),
+            )
           ],
         ),
       ),
@@ -376,5 +377,9 @@ class _ToDoListScreenState extends State<ToDoListScreen> {
     } else {
       throw 'Could not launch $url';
     }
+  }
+
+  _senddelrequest(String link) async {
+    deleteTodoUsingLink(link);
   }
 }

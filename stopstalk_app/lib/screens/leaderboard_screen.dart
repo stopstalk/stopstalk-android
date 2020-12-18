@@ -10,10 +10,18 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../widgets/app_drawer.dart';
 import '../classes/leaderboard.dart';
 import '../widgets/preloader.dart';
+import './login/login_screen.dart';
 
-class LeaderBoardScreen extends StatelessWidget {
+import 'profile.dart';
+
+class LeaderBoardScreen extends StatefulWidget {
   static const routeName = '/leaderBoard';
 
+  @override
+  _LeaderBoardScreenState createState() => _LeaderBoardScreenState();
+}
+
+class _LeaderBoardScreenState extends State<LeaderBoardScreen> {
   TextStyle get titleTextStyle => TextStyle(
         fontFamily: 'OpenSans',
         fontSize: 12,
@@ -25,7 +33,7 @@ class LeaderBoardScreen extends StatelessWidget {
 
   TextStyle get contentTextStyle => TextStyle(
         fontFamily: 'Oswald',
-        fontSize: 20,
+        fontSize: 18,
         height: 1.8,
         letterSpacing: .3,
       );
@@ -54,6 +62,7 @@ class LeaderBoardScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final LeaderBoard args = ModalRoute.of(context).settings.arguments;
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -170,7 +179,47 @@ class LeaderBoardScreen extends StatelessWidget {
               ),
             ),
             Container(
-              child: Text('this is the friends leaderboard page'),
+              child: args.loggedin == true
+                  ? Container(
+                      height: MediaQuery.of(context).size.height,
+                      child: Column(
+                        children: [
+                          Image(
+                            image: AssetImage(
+                                'assets/images/unauthorisedUser.png'),
+                          ),
+                          Text(
+                            "Log in to see your Friends' Standings",
+                            style: TextStyle(
+                                color: Color(0xFF2542ff), fontSize: 16.0),
+                            textAlign: TextAlign.center,
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(top: 12.0),
+                          ),
+                          RaisedButton(
+                            elevation: 4,
+                            color: Theme.of(context).buttonColor,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                args.loggedin
+                                    ? "Sign in to StopStalk"
+                                    : "You are now logged in",
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                            onPressed: () {
+                              Navigator.of(context)
+                                  .pushReplacementNamed(LoginPage.routeName);
+                            },
+                          ),
+                        ],
+                      ),
+                    )
+                  : Center(
+                      child: Text("loggedin"),
+                    ),
             ),
           ],
         ),
@@ -222,7 +271,7 @@ class LeaderBoardScreen extends StatelessWidget {
                           topLeft: Radius.circular(15),
                           bottomLeft: Radius.circular(15),
                         ),
-                        color: Colors.lightBlueAccent.shade100,
+                        color: Color(0xFF2542ff),
                         boxShadow: [
                           BoxShadow(
                             blurRadius: 6.0,
@@ -238,6 +287,7 @@ class LeaderBoardScreen extends StatelessWidget {
                             '#${index + 1}',
                             style: TextStyle(
                               fontSize: 18,
+                              color: Colors.white,
                             ),
                           ),
                         ],
@@ -278,10 +328,10 @@ class LeaderBoardScreen extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                               fontFamily: 'Oswald',
-                              fontSize: 25,
+                              fontSize: 20,
                               height: 1.8,
                               letterSpacing: .3,
-                              fontWeight: FontWeight.w400,
+                              fontWeight: FontWeight.w500,
                             ),
                           ),
                           Row(
@@ -300,7 +350,7 @@ class LeaderBoardScreen extends StatelessWidget {
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
-                                    //fontFamily: 'Oswald',
+                                    fontFamily: 'Oswald',
                                     fontSize: 15,
                                     height: 1.8,
                                     letterSpacing: .3,
@@ -345,7 +395,7 @@ class LeaderBoardScreen extends StatelessWidget {
         ),
         child: Container(
           decoration: BoxDecoration(
-            color: Colors.lightBlueAccent.shade100,
+            color: Color(0xFF2542ff),
           ),
           alignment: Alignment.center,
           child: Column(
@@ -359,7 +409,13 @@ class LeaderBoardScreen extends StatelessWidget {
                       name,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: contentTextStyle,
+                      style: TextStyle(
+                        fontFamily: 'Oswald',
+                        fontSize: 18,
+                        height: 1.8,
+                        letterSpacing: .3,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                   SizedBox(
@@ -377,8 +433,8 @@ class LeaderBoardScreen extends StatelessWidget {
                             'assets/flags/$countryCode.svg',
                             width: 60,
                             height: 40,
-                            placeholderBuilder: (context) => Container(
-                              child: CircularProgressIndicator()),
+                            placeholderBuilder: (context) =>
+                                Container(child: CircularProgressIndicator()),
                           ),
                         ),
                         SizedBox(
@@ -394,7 +450,7 @@ class LeaderBoardScreen extends StatelessWidget {
                             height: 1,
                             letterSpacing: .2,
                             fontWeight: FontWeight.w300,
-                            color: Colors.black,
+                            color: Colors.white,
                           ),
                         ),
                       ],
@@ -411,9 +467,23 @@ class LeaderBoardScreen extends StatelessWidget {
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(bottom: 8.0),
-                        child: Text(
-                          '@ $handle',
-                          style: contentTextStyle,
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) {
+                              return ProfileScreen(handle: handle);
+                            }));
+                          },
+                          child: Text(
+                            '@ $handle',
+                            style: TextStyle(
+                              fontFamily: 'Oswald',
+                              fontSize: 18,
+                              height: 1.8,
+                              letterSpacing: .3,
+                              color: Colors.white,
+                            ),
+                          ),
                         ),
                       ),
                     ],

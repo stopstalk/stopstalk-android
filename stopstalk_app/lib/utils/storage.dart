@@ -18,6 +18,6 @@ void deleteAllDataSecureStore() async {
   await storage.deleteAll();
 }
 
-void writeDataSecureStore(String key, String value) {
-  storage.write(key: key, value: value);
+Future<void> writeDataSecureStore(String key, String value) async {
+  await storage.write(key: key, value: value);
 }

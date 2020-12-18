@@ -170,92 +170,122 @@ class ProfileScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Text(
-                            'Platforms',
-                            style: TextStyle(
-                              fontSize: 17,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                        Container(
-                          height: MediaQuery.of(context).orientation ==
-                                  Orientation.landscape
-                              ? MediaQuery.of(context).size.height * 0.3
-                              : MediaQuery.of(context).size.height * 0.15,
-                          width: MediaQuery.of(context).size.width,
-                          child: ListView(
-                              scrollDirection: Axis.horizontal,
-                              children: listPlatform(
-                                  snapshot.data.getSitesDetails())),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Text(
-                            'Streaks',
-                            style: TextStyle(
-                              fontSize: 17,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                        Container(
-                          height: MediaQuery.of(context).orientation ==
-                                  Orientation.landscape
-                              ? MediaQuery.of(context).size.height * 0.3
-                              : MediaQuery.of(context).size.height * 0.15,
-                          width: MediaQuery.of(context).size.width,
-                          child: ListView(
-                            scrollDirection: Axis.horizontal,
-                            children: <Widget>[
-                              Streaks(
-                                heading: "Days",
-                                subtitle1: "Current",
-                                subtitle2: "Maximum",
-                                value1: snapshot.data.dayCurrent,
-                                value2: snapshot.data.dayMaximum,
-                              ),
-                              Streaks(
-                                heading: "Accepted Solutions",
-                                subtitle1: "Current",
-                                subtitle2: "Maximum",
-                                value1: snapshot.data.acceptedSolnCurrent,
-                                value2: snapshot.data.acceptedSolnMaximum,
-                              ),
-                              Streaks(
-                                heading: "Problems",
-                                subtitle1: "Solved",
-                                subtitle2: "Total",
-                                value1: snapshot.data.problemsSolved,
-                                value2: snapshot.data.problemsTotal,
-                              ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Text(
-                            'Acceptance Graph',
-                            style: TextStyle(
-                              fontSize: 17,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                        AcceptanceGraph(
-                          handle: snapshot.data.user.stopstalkHandle,
-                          graph: snapshot.data.acceptanceGraph != null
-                              ? snapshot.data.acceptanceGraph
-                              : {},
-                        ),
+                        snapshot.data.getSitesDetails() != null &&
+                                snapshot.data.getSitesDetails().isEmpty == false
+                            ? Column(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: Text(
+                                      'Platforms',
+                                      style: TextStyle(
+                                        fontSize: 17,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    height: MediaQuery.of(context)
+                                                .orientation ==
+                                            Orientation.landscape
+                                        ? MediaQuery.of(context).size.height *
+                                            0.3
+                                        : MediaQuery.of(context).size.height *
+                                            0.15,
+                                    width: MediaQuery.of(context).size.width,
+                                    child: ListView(
+                                        scrollDirection: Axis.horizontal,
+                                        children: listPlatform(
+                                            snapshot.data.getSitesDetails())),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: Text(
+                                      'Streaks',
+                                      style: TextStyle(
+                                        fontSize: 17,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    height: MediaQuery.of(context)
+                                                .orientation ==
+                                            Orientation.landscape
+                                        ? MediaQuery.of(context).size.height *
+                                            0.3
+                                        : MediaQuery.of(context).size.height *
+                                            0.15,
+                                    width: MediaQuery.of(context).size.width,
+                                    child: ListView(
+                                      scrollDirection: Axis.horizontal,
+                                      children: <Widget>[
+                                        Streaks(
+                                          heading: "Days",
+                                          subtitle1: "Current",
+                                          subtitle2: "Maximum",
+                                          value1: snapshot.data.dayCurrent,
+                                          value2: snapshot.data.dayMaximum,
+                                        ),
+                                        Streaks(
+                                          heading: "Accepted Solutions",
+                                          subtitle1: "Current",
+                                          subtitle2: "Maximum",
+                                          value1:
+                                              snapshot.data.acceptedSolnCurrent,
+                                          value2:
+                                              snapshot.data.acceptedSolnMaximum,
+                                        ),
+                                        Streaks(
+                                          heading: "Problems",
+                                          subtitle1: "Solved",
+                                          subtitle2: "Total",
+                                          value1: snapshot.data.problemsSolved,
+                                          value2: snapshot.data.problemsTotal,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: Text(
+                                      'Acceptance Graph',
+                                      style: TextStyle(
+                                        fontSize: 17,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                  AcceptanceGraph(
+                                    handle: snapshot.data.user.stopstalkHandle,
+                                    graph: snapshot.data.acceptanceGraph != null
+                                        ? snapshot.data.acceptanceGraph
+                                        : {},
+                                  ),
+                                ],
+                              )
+                            : noHandles(),
                       ],
                     ),
                   ),
                 ],
               );
             }),
+      ),
+    );
+  }
+
+  Widget noHandles() {
+    return Container(
+      width: 300,
+      height: 300,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Center(
+            child: Text(
+          'Please add your competitive coding site handles on the website to view your stats and progress.',
+          style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+        )),
       ),
     );
   }

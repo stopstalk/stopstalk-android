@@ -11,7 +11,7 @@ Future<User> getCurrentUser() async {
   if (parts.length != 3) {
     throw Exception('invalid token');
   }
-  final payload = utf8.decode(base64Url.decode(parts[1]));
+  final payload = utf8.decode(base64Url.decode(base64.normalize(parts[1])));
   Map<String, dynamic> payloadMap = jsonDecode(payload);
   var user = userFromPayloapMap(payloadMap);
   getProfileFromHandle(user.stopstalkHandle);
@@ -21,10 +21,18 @@ Future<User> getCurrentUser() async {
 Future<bool> checkAuthUser() async {
   var jwt = await getDataSecureStore("jwt");
   if (jwt == null) return false;
-  print('ll');
   var userJwt = await resetToken(jwt);
-  print(userJwt);
   if (userJwt == null) return false;
-  writeDataSecureStore("jwt", userJwt);
+  await writeDataSecureStore("jwt", userJwt);
+  return true;
+}
+
+Future<bool> isAuthenticated() async {
+  var jwt = await getDataSecureStore("jwt");
+  if (jwt == null) return false;
+  final parts = jwt.split('.');
+  if (parts.length != 3) {
+    throw Exception('invalid token');
+  }
   return true;
 }

@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
 import 'dart:convert';
+import 'package:timer_builder/timer_builder.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +13,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import '../widgets/app_drawer.dart';
 import '../widgets/preloader.dart';
 import '../classes/contest_class.dart';
+import '../utils/platforms.dart';
 
 class UpcomingContestScreen extends StatefulWidget {
   static const routeName = '/upcoming-contests';
@@ -35,6 +37,7 @@ class _UpcomingContestState extends State<UpcomingContestScreen> {
           contest["Duration"],
           contest["EndTime"]);
       contests.add(cont);
+      print(cont.platform);
     }
     return contests;
   }
@@ -137,34 +140,7 @@ class _UpcomingContestState extends State<UpcomingContestScreen> {
     }
   }
 
-  // List<String> timeLeftStrings(List<String> times) {
-  //   for (int i = 0; i < times.length; i++) {
-  //     times[i] = timeLeft(DateTime.parse(times[i]));
-  //   }
-  // }
-
-  // void _startTimer() {
-  //   if (startTimes.length > 0) {
-  //     Timer.periodic(Duration(seconds: 1), (timer) {
-  //       setState(() {
-  //         startTimes = timeLeftStrings(startTimes);
-  //       });
-  //     });
-  //   } else {
-  //     _getStartTimes();
-  //   }
-  // }
-
-  final images = {
-    "CODEFORCES":
-        "https://1.bp.blogspot.com/-pBimI1ZhYAA/Wnde0nmCz8I/AAAAAAAABPI/5LZ2y9tBOZIV-pm9KNbyNy3WZJkGS54WgCPcBGAYYCw/s1600/codeforce.png",
-    "CODECHEF":
-        "https://i.pinimg.com/originals/c5/d9/fc/c5d9fc1e18bcf039f464c2ab6cfb3eb6.jpg",
-    "HACKEREARTH":
-        "https://upload.wikimedia.org/wikipedia/commons/e/e8/HackerEarth_logo.png",
-    "HACKERRANK":
-        "https://info.hackerrank.com/rs/487-WAY-049/images/Podcast-ChannelCover-Final.jpg"
-  };
+  final images = platformImgs;
 
   @override
   void initState() {
@@ -190,29 +166,29 @@ class _UpcomingContestState extends State<UpcomingContestScreen> {
               return Preloader();
             } else {
               return ListView.builder(
-                  itemCount: snapshot.data.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Container(
-                      child: SimpleFoldingCell(
-                        frontWidget: frontWidget(
-                            snapshot.data[index].name,
-                            snapshot.data[index].platform,
-                            snapshot.data[index].startTime),
-                        innerTopWidget: innerTopWidget(
-                            snapshot.data[index].name,
-                            snapshot.data[index].platform,
-                            snapshot.data[index].startTime),
-                        innerBottomWidget: innerBottomWidget(
-                            snapshot.data[index].startTime,
-                            snapshot.data[index].url),
-                        cellSize:
-                            Size(MediaQuery.of(context).size.width, 125.0),
-                        padding: EdgeInsets.all(10.0),
-                        animationDuration: Duration(milliseconds: 300),
-                        borderRadius: 10.0,
-                      ),
-                    );
-                  });
+                itemCount: snapshot.data.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Container(
+                    child: SimpleFoldingCell(
+                      frontWidget: frontWidget(
+                          snapshot.data[index].name,
+                          snapshot.data[index].platform,
+                          snapshot.data[index].startTime),
+                      innerTopWidget: innerTopWidget(
+                          snapshot.data[index].name,
+                          snapshot.data[index].platform,
+                          snapshot.data[index].startTime),
+                      innerBottomWidget: innerBottomWidget(
+                          snapshot.data[index].startTime,
+                          snapshot.data[index].url),
+                      cellSize: Size(MediaQuery.of(context).size.width, 125.0),
+                      padding: EdgeInsets.all(10.0),
+                      animationDuration: Duration(milliseconds: 300),
+                      borderRadius: 10.0,
+                    ),
+                  );
+                },
+              );
             }
           },
         ),
@@ -252,7 +228,7 @@ class _UpcomingContestState extends State<UpcomingContestScreen> {
                           topLeft: Radius.circular(15),
                           bottomLeft: Radius.circular(15),
                         ),
-                        color: Colors.lightBlueAccent.shade100,
+                        color: Color(0xFF2542ff),
                         boxShadow: [
                           BoxShadow(
                             blurRadius: 6.0,
@@ -264,13 +240,20 @@ class _UpcomingContestState extends State<UpcomingContestScreen> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          ClipRRect(
-                            child: Image(
-                              image: NetworkImage(images[image]),
-                              height: 60.0,
-                              width: 60.0,
+                          CircleAvatar(
+                            maxRadius: 30,
+                            backgroundColor: Colors.white,
+                            child: ClipRRect(
+                              child: images[image.toLowerCase()] != null
+                                  ? Image(
+                                      image: AssetImage(
+                                          images[image.toLowerCase()]),
+                                      height: 80.0,
+                                      width: 80.0,
+                                    )
+                                  : SizedBox(),
+                              borderRadius: BorderRadius.circular(8.0),
                             ),
-                            borderRadius: BorderRadius.circular(8.0),
                           ),
                         ],
                       ),
@@ -397,24 +380,31 @@ class _UpcomingContestState extends State<UpcomingContestScreen> {
         ),
         child: Container(
           decoration: BoxDecoration(
-            color: Colors.lightBlueAccent.shade100,
+            color: Color(0xFF2542ff),
           ),
           alignment: Alignment.center,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               Padding(
-                padding: EdgeInsets.only(left: 10.0),
+                padding: EdgeInsets.only(left: 6.0),
               ),
               Expanded(
                 flex: 1,
-                child: ClipRRect(
-                  child: Image(
-                    image: NetworkImage(images[image]),
-                    height: 80.0,
-                    width: 80.0,
+                child: CircleAvatar(
+                  maxRadius: 30,
+                  backgroundColor: Colors.white,
+                  child: ClipRRect(
+                    child: images[image.toLowerCase()] != null
+                        ? Image(
+                      image: AssetImage(
+                          images[image.toLowerCase()]),
+                      height: 80.0,
+                      width: 80.0,
+                    )
+                        : SizedBox(),
+                    borderRadius: BorderRadius.circular(10.0),
                   ),
-                  borderRadius: BorderRadius.circular(12.0),
                 ),
               ),
               Expanded(
@@ -437,6 +427,7 @@ class _UpcomingContestState extends State<UpcomingContestScreen> {
                           fontSize: 17,
                           letterSpacing: .3,
                           fontWeight: FontWeight.w500,
+                          color: Colors.white,
                         ),
                         textAlign: TextAlign.center,
                       ),
@@ -449,6 +440,7 @@ class _UpcomingContestState extends State<UpcomingContestScreen> {
                               top: 8.0, right: 8.0, left: 8.0, bottom: 4.0),
                           child: Icon(
                             Icons.calendar_today,
+                            color: Colors.white,
                             size: 20,
                           ),
                         ),
@@ -460,6 +452,7 @@ class _UpcomingContestState extends State<UpcomingContestScreen> {
                             fontSize: 15,
                             height: 1.8,
                             letterSpacing: .3,
+                            color: Colors.white,
                           ),
                         ),
                       ],
@@ -471,6 +464,7 @@ class _UpcomingContestState extends State<UpcomingContestScreen> {
                           padding: const EdgeInsets.only(right: 8.0, top: 4.0),
                           child: Icon(
                             Icons.access_alarm,
+                            color: Colors.white,
                             size: 20,
                           ),
                         ),
@@ -479,6 +473,7 @@ class _UpcomingContestState extends State<UpcomingContestScreen> {
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
+                            color: Colors.white,
                             fontSize: 15,
                             height: 1.8,
                             letterSpacing: .3,
@@ -497,82 +492,87 @@ class _UpcomingContestState extends State<UpcomingContestScreen> {
   }
 
   Widget innerBottomWidget(String startTime, String url) {
-    return Builder(builder: (context) {
-      return GestureDetector(
-        onTap: () {
-          final foldingCellState =
-              context.findAncestorStateOfType<SimpleFoldingCellState>();
-          foldingCellState?.toggleFold();
-        },
-        child: ClipRRect(
-          borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(15),
-            bottomRight: Radius.circular(15),
-          ),
-          child: Container(
-            margin: EdgeInsets.only(bottom: 6),
-            decoration: BoxDecoration(
-              color: Colors.indigo.shade50,
-              borderRadius: BorderRadius.only(
-                bottomRight: Radius.circular(15),
-                bottomLeft: Radius.circular(15),
+    return Builder(
+      builder: (context) {
+        return GestureDetector(
+          onTap: () {
+            final foldingCellState =
+                context.findAncestorStateOfType<SimpleFoldingCellState>();
+            foldingCellState?.toggleFold();
+          },
+          child: ClipRRect(
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(15),
+              bottomRight: Radius.circular(15),
+            ),
+            child: Container(
+              margin: EdgeInsets.only(bottom: 6),
+              decoration: BoxDecoration(
+                color: Colors.indigo.shade50,
+                borderRadius: BorderRadius.only(
+                  bottomRight: Radius.circular(15),
+                  bottomLeft: Radius.circular(15),
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    blurRadius: 6.0,
+                    color: Colors.grey,
+                    offset: Offset(0.0, 2.0),
+                  ),
+                ],
               ),
-              boxShadow: [
-                BoxShadow(
-                  blurRadius: 6.0,
-                  color: Colors.grey,
-                  offset: Offset(0.0, 2.0),
-                ),
-              ],
-            ),
-            alignment: Alignment.center,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(FontAwesomeIcons.hourglassHalf),
-                    Padding(
-                      padding: EdgeInsets.only(right: 8.0),
-                    ),
-                    Text(
-                      timeLeft(DateTime.parse(timeToDate(startTime))),
-                      style: TextStyle(
-                        fontSize: 18.0,
+              alignment: Alignment.center,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(FontAwesomeIcons.hourglassHalf),
+                      Padding(
+                        padding: EdgeInsets.only(right: 8.0),
                       ),
-                    )
-                  ],
-                ),
-                Padding(
-                  padding: EdgeInsets.only(
-                    top: 10.0,
+                      TimerBuilder.periodic(Duration(seconds: 1),
+                          builder: (context) {
+                        return Text(
+                          timeLeft(DateTime.parse(timeToDate(startTime))),
+                          style: TextStyle(
+                            fontSize: 18.0,
+                          ),
+                        );
+                      })
+                    ],
                   ),
-                ),
-                ButtonTheme(
-                  child: RaisedButton.icon(
-                    onPressed: () => {_launchURL(url)},
-                    icon: Icon(
-                      FontAwesomeIcons.link,
-                      color: Colors.white,
-                      size: 17.0,
+                  Padding(
+                    padding: EdgeInsets.only(
+                      top: 10.0,
                     ),
-                    label: Padding(
-                      padding: EdgeInsets.only(top: 12.0, bottom: 12.0),
-                      child: Text("CONTEST LINK"),
-                    ),
-                    textColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(8.0))),
-                    color: Colors.blue,
                   ),
-                  minWidth: 160.0,
-                ),
-              ],
+                  ButtonTheme(
+                    child: RaisedButton.icon(
+                      onPressed: () => {_launchURL(url)},
+                      icon: Icon(
+                        FontAwesomeIcons.link,
+                        color: Colors.white,
+                        size: 17.0,
+                      ),
+                      label: Padding(
+                        padding: EdgeInsets.only(top: 12.0, bottom: 12.0),
+                        child: Text("CONTEST LINK"),
+                      ),
+                      textColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(8.0))),
+                      color: Color(0xFF0018ca),
+                    ),
+                    minWidth: 160.0,
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
-      );
-    });
+        );
+      },
+    );
   }
 }
