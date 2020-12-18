@@ -29,6 +29,7 @@ class _SearchedProblemsScreenState extends State<SearchedProblemsScreen> {
 
   Future<List<Problems>> _getSearchedProblems() async {
     var resp = await getSearchProblems(widget.parameters);
+    if (resp == null) return [];
     var result = resp["problems"];
 
     result.forEach((element) {
