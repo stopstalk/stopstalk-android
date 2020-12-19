@@ -9,9 +9,23 @@ Future<String> getURL(String url, Map<String, String> parameters) async {
   var apiToken = DotEnv().env['API_TOKEN'];
   assert(apiToken != '', "API token must be Present");
   String param = '';
+  print(parameters);
   parameters.forEach((key, value) {
-    if (value != null) {
-      param += '&' + key + '=' + value;
+    if (value != null && value != '') {
+      if (value.startsWith('is_list[')) {
+        var list = value
+            .replaceAll('is_list[', '')
+            .replaceAll(']', '')
+            .replaceAll(' ', '')
+            .split(',');
+        list.forEach((e) {
+          if (e != null && e != '') {
+            param += '&' + key + '=' + e;
+          }
+        });
+      } else {
+        param += '&' + key + '=' + value;
+      }
     }
   });
   return '$server/' + url + '?api_token=$apiToken' + param;
