@@ -36,7 +36,7 @@ class AddFriends extends StatelessWidget {
             padding: EdgeInsets.only(top: 8.0),
           ),
           Text(
-            "You have 2 friends on StopStalk. For a better competitive programming learning experience, we recommend you to add more friends.",
+            "For a better competitive programming learning experience, we recommend you to add more friends.",
             textAlign: TextAlign.center,
             style: TextStyle(fontWeight: FontWeight.w400, fontSize: 15.0),
           ),
