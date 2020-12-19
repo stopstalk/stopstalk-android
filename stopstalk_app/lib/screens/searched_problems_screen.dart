@@ -51,6 +51,9 @@ class _SearchedProblemsScreenState extends State<SearchedProblemsScreen> {
       else if(element["link"].contains('hackerearth.com/')){
         platform='Hackerearth';
       }
+      else if(element["link"].contains('hackerrank.com/')){
+        platform='Hackerrank';
+      }
       else if(element["link"].contains('spoj.com/')){
         platform='Spoj';
       }
@@ -61,7 +64,7 @@ class _SearchedProblemsScreenState extends State<SearchedProblemsScreen> {
         platform='Uva';
       }
       else{
-        platform='Others';
+        platform='Other';
       }
       Problems prob = Problems(
           id: element["id"],

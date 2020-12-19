@@ -237,11 +237,14 @@ class _ToDoListScreenState extends State<ToDoListScreen> {
                                   child: CircleAvatar(
                                     backgroundColor: Color(0XFFeeeeee),
                                     radius: 28,
-                                    child: Image.asset(
-                                      ToDoListScreen
-                                          .platformImgs[todo.platform],
-                                      height: 80,
-                                      width: 60,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(3.0),
+                                      child: Image.asset(
+                                        ToDoListScreen
+                                            .platformImgs[todo.platform],
+                                        height: 80,
+                                        width: 60,
+                                      ),
                                     ),
                                   ),
                                 ),

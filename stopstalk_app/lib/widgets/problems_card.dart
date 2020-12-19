@@ -14,12 +14,15 @@ class ProblemsCard extends StatelessWidget {
   final Problems recom;
   final BuildContext context;
   final int i;
+
   ProblemsCard(
     this.recom,
     this.context,
     this.i,
   );
+
   static const platformImgs = platforms.platformImgs;
+
   @override
   Widget build(BuildContext context) {
     return ExpandableNotifier(
@@ -50,10 +53,13 @@ class ProblemsCard extends StatelessWidget {
                                   child: CircleAvatar(
                                     backgroundColor: Color(0XFFeeeeee),
                                     radius: 28,
-                                    child: Image.asset(
-                                      ProblemsCard.platformImgs[
-                                          recom.platform.toLowerCase()],
-                                      fit: BoxFit.cover,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(3.0),
+                                      child: Image.asset(
+                                        ProblemsCard.platformImgs[
+                                            recom.platform.toLowerCase()],
+                                        fit: BoxFit.cover,
+                                      ),
                                     ),
                                   ),
                                 )
