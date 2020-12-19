@@ -47,7 +47,8 @@ class _SearchProblemsScreenState extends State<SearchProblemsScreen> {
       "HackerRank",
       "HackerEarth",
       "UVa",
-      "Timus"
+      "Timus",
+      "Spoj"
     ].forEach((tag) => sites.add({
           "display": tag,
           "value": tag,
