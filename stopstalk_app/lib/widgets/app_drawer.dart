@@ -53,7 +53,7 @@ class _AppDrawerState extends State<AppDrawer> {
                     leading: Icon(Icons.person),
                     title: Text('Profile'),
                     onTap: () {
-                      Navigator.pushReplacement(
+                      Navigator.push(
                           context,
                           PageTransition(
                               type: PageTransitionType.fade,
