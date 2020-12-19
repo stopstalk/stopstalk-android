@@ -161,16 +161,9 @@ class _SearchedProblemsScreenState extends State<SearchedProblemsScreen> {
     return AnimatedOpacity(
       opacity: 1,
       duration: Duration(milliseconds: 600),
-      child: Container(
-        height: MediaQuery.of(context).size.height * 0.3,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Image(
-              image: AssetImage('assets/images/noResult.png'),
-            )
-          ],
+      child: Center(
+        child: Image(
+          image: AssetImage('assets/images/noResult.png'),
         ),
       ),
     );
