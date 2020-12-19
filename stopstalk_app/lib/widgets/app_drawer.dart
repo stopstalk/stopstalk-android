@@ -45,6 +45,15 @@ class _AppDrawerState extends State<AppDrawer> {
         child: Column(
           children: <Widget>[
             AppBar(
+                leading: IconButton(
+                  icon: Icon(
+                    Icons.chevron_left,
+                    size: 35,
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
                 title: _userData != null
                     ? Text(_userData.stopstalkHandle)
                     : Text('Hello User')),
