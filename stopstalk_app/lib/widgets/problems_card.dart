@@ -58,6 +58,8 @@ class ProblemsCard extends StatelessWidget {
                                       child: Image.asset(
                                         ProblemsCard.platformImgs[
                                             recom.platform.toLowerCase()],
+                                        height: 40,
+                                        width: 40,
                                         fit: BoxFit.cover,
                                       ),
                                     ),

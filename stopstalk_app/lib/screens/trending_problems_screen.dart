@@ -25,17 +25,43 @@ class _TrendingProblemsScreenState extends State<TrendingProblemsScreen> {
   final GlobalKey<AnimatedListState> _animatedListKey2 =
       GlobalKey<AnimatedListState>();
 
+  String getPlatform(String url) {
+    if (url.contains('kenkoooo.com/') || url.contains('atcoder.jp/')) {
+      return 'Atcoder';
+    } else if (url.contains('codechef.com/')) {
+      return 'Codechef';
+    } else if (url.contains('codeforces.com/')) {
+      return 'Codeforces';
+    } else if (url.contains('hackerearth.com/')) {
+      return 'Hackerearth';
+    } else if (url.contains('hackerrank.com/')) {
+      return 'Hackerrank';
+    } else if (url.contains('spoj.com/')) {
+      return 'Spoj';
+    } else if (url.contains('acm.timus.ru/')) {
+      return 'Timus';
+    } else if (url.contains('uva.onlinejudge.org') ||
+        url.contains('uhunt.felix-halim.net')) {
+      return 'Uva';
+    } else {
+      return 'Other';
+    }
+  }
+
   Future<List<Problems>> _getTrendingProblems() async {
     var probs = await getGlobalTrendingprobs();
     if (probs == null) return [];
     List result = probs['problems'];
     for (int i = 0; i < result.length; i++) {
       Problems problem = Problems(
-          id: result[i][0],
-          problemName: result[i][1]['name'],
-          totalSubmissions: result[i][1]['total_submissions'].toString(),
-          users: result[i][1]['users'].length,
-          problemUrl: result[i][1]['link']);
+        id: result[i][0],
+        problemName: result[i][1]['name'],
+        totalSubmissions: result[i][1]['total_submissions'].toString(),
+        users: result[i][1]['users'].length,
+        problemUrl: result[i][1]['link'],
+        platform: getPlatform(result[i][1]['link']),
+      );
+
       gproblems.add(problem);
     }
     return gproblems;
@@ -47,11 +73,14 @@ class _TrendingProblemsScreenState extends State<TrendingProblemsScreen> {
     List result = probs['problems'];
     for (int i = 0; i < result.length; i++) {
       Problems problem = Problems(
-          id: result[i][0],
-          problemName: result[i][1]['name'],
-          totalSubmissions: result[i][1]['total_submissions'].toString(),
-          users: result[i][1]['users'].length,
-          problemUrl: result[i][1]['link']);
+        id: result[i][0],
+        problemName: result[i][1]['name'],
+        totalSubmissions: result[i][1]['total_submissions'].toString(),
+        users: result[i][1]['users'].length,
+        problemUrl: result[i][1]['link'],
+        platform: getPlatform(result[i][1]['link']),
+      );
+
       fproblems.add(problem);
     }
     return fproblems;
