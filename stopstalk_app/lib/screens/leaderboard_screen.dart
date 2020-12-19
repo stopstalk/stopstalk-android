@@ -8,6 +8,7 @@ import '../widgets/app_drawer.dart';
 import '../classes/leaderboard.dart';
 import '../widgets/preloader.dart';
 import './login/login_screen.dart';
+import'../screens/profile.dart';
 
 import 'profile.dart';
 import '../utils/api.dart';
@@ -455,7 +456,12 @@ class _LeaderBoardScreenState extends State<LeaderBoardScreen> {
     String countryName,
   ) {
     return GestureDetector(
-      onTap: null,
+      onTap: (){
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) {
+              return ProfileScreen(handle: handle);
+            }));
+      },
       child: ClipRRect(
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(15),
@@ -535,22 +541,14 @@ class _LeaderBoardScreenState extends State<LeaderBoardScreen> {
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(bottom: 8.0),
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (context) {
-                              return ProfileScreen(handle: handle);
-                            }));
-                          },
-                          child: Text(
-                            '@ $handle',
-                            style: TextStyle(
-                              fontFamily: 'Oswald',
-                              fontSize: 18,
-                              height: 1.8,
-                              letterSpacing: .3,
-                              color: Colors.white,
-                            ),
+                        child: Text(
+                          '@ $handle',
+                          style: TextStyle(
+                            fontFamily: 'Oswald',
+                            fontSize: 18,
+                            height: 1.8,
+                            letterSpacing: .3,
+                            color: Colors.white,
                           ),
                         ),
                       ),
