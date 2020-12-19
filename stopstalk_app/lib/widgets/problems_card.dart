@@ -193,7 +193,12 @@ class ProblemsCard extends StatelessWidget {
     if (await canLaunch(url)) {
       await launch(url);
     } else {
-      throw 'Could not launch $url';
+      Scaffold.of(context).showSnackBar(
+        SnackBar(
+            content: Text('No editorial is available'),
+            elevation: 10,
+            duration: Duration(seconds: 2)),
+      );
     }
   }
 }
