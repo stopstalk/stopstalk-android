@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:page_transition/page_transition.dart';
+
+import'../screens/profile.dart';
 
 import '../classes/searched_friends_class.dart';
 
@@ -54,7 +57,14 @@ class FriendCard extends StatelessWidget {
                                   style: TextStyle(
                                       fontSize: 18, color: Colors.black),
                                 ),
-                                onTap: () => _launchURL(friend.stopStalkHandle),
+                                onTap: (){
+                                  Navigator.push(
+                                      context,
+                                      PageTransition(
+                                          type: PageTransitionType.fade,
+                                          child: ProfileScreen(
+                                              handle: friend.stopStalkHandle)));
+                                }
                               )),
                         ),
                       ]),
@@ -86,7 +96,7 @@ class FriendCard extends StatelessWidget {
                                   ),
                                 ),
                                 label: Text(friend.handles[index][1]),
-                                elevation: 24,
+                                elevation:6,
                                 onPressed: () {
                                   print('Handle got clicked');
                                 },
