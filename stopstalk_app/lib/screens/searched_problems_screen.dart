@@ -25,7 +25,7 @@ class _SearchedProblemsScreenState extends State<SearchedProblemsScreen> {
   bool flag = false;
 
   final GlobalKey<AnimatedListState> _animatedListKey =
-      GlobalKey<AnimatedListState>();
+  GlobalKey<AnimatedListState>();
 
   Future<List<Problems>> _getSearchedProblems() async {
     var resp = await getSearchProblems(widget.parameters);
@@ -38,17 +38,45 @@ class _SearchedProblemsScreenState extends State<SearchedProblemsScreen> {
           .replaceAll('[', '')
           .replaceAll('u', '')
           .split(',');
+      var platform;
+      if(element["link"].contains('kenkoooo.com/') || element["link"].contains('atcoder.jp/')){
+        platform='Atcoder';
+      }
+      else if(element["link"].contains('codechef.com/')){
+        platform='Codechef';
+      }
+      else if(element["link"].contains('codeforces.com/')){
+        platform='Codeforces';
+      }
+      else if(element["link"].contains('hackerearth.com/')){
+        platform='Hackerearth';
+      }
+      else if(element["link"].contains('hackerrank.com/')){
+        platform='Hackerrank';
+      }
+      else if(element["link"].contains('spoj.com/')){
+        platform='Spoj';
+      }
+      else if(element["link"].contains('acm.timus.ru/')){
+        platform='Timus';
+      }
+      else if(element["link"].contains('uva.onlinejudge.org') || element["link"].contains('uhunt.felix-halim.net')){
+        platform='Uva';
+      }
+      else{
+        platform='Other';
+      }
       Problems prob = Problems(
           id: element["id"],
           problemName: element["name"],
-          platform: 'Codechef',
+          platform: platform,
           problemUrl: element["link"],
           editorialUrl: element["editorial_link"],
           totalSubmissions: element["total_submissions"].toString(),
           accuracy: (element["solved_submissions"] *
-                      100.0 /
-                      element["total_submissions"])
-                  .toStringAsFixed(2) +
+              100.0 /
+              element["total_submissions"])
+              .toStringAsFixed(2) +
               "%",
           tags: tags);
       searched.add(prob);
@@ -89,16 +117,16 @@ class _SearchedProblemsScreenState extends State<SearchedProblemsScreen> {
                       height: MediaQuery.of(context).size.height,
                       child: flag != true
                           ? AnimatedList(
-                              key: _animatedListKey,
-                              primary: true,
-                              shrinkWrap: true,
-                              physics: BouncingScrollPhysics(),
-                              initialItemCount: snapshot.data.length,
-                              itemBuilder: (context, i, animation) {
-                                return ProblemsCard(
-                                    snapshot.data[i], context, i);
-                              },
-                            )
+                        key: _animatedListKey,
+                        primary: true,
+                        shrinkWrap: true,
+                        physics: BouncingScrollPhysics(),
+                        initialItemCount: snapshot.data.length,
+                        itemBuilder: (context, i, animation) {
+                          return ProblemsCard(
+                              snapshot.data[i], context, i);
+                        },
+                      )
                           : _showNoProblemsFound(),
                     ),
                   ],

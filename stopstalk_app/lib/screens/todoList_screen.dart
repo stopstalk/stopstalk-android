@@ -112,45 +112,48 @@ class _ToDoListScreenState extends State<ToDoListScreen> {
                       : BouncingScrollPhysics(),
                   child: Column(
                     children: [
-                  flag!=true?Padding(
-                        padding: const EdgeInsets.only(
-                            top: 8.0, bottom: 8.0, right: 0.0, left: 50),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Text(
-                              'Problem',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 13,
+                      flag != true
+                          ? Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 8.0, bottom: 8.0, right: 0.0, left: 50),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Text(
+                                    'Problem',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 13,
+                                    ),
+                                  ),
+                                  //Text(''),
+                                  Text(
+                                    "Platform",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 13,
+                                    ),
+                                  ),
+                                  //SizedBox(),
+                                  Text(
+                                    'Count',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 13,
+                                    ),
+                                  ),
+                                  Text(
+                                    'Total Users',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 13,
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ),
-                            //Text(''),
-                            Text(
-                              "Platform",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 13,
-                              ),
-                            ),
-                            //SizedBox(),
-                            Text(
-                              'Count',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 13,
-                              ),
-                            ),
-                            Text(
-                              'Total Users',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 13,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ):Container(),
+                            )
+                          : Container(),
                       Container(
                         height: MediaQuery.of(context).size.height,
                         child: flag != true
@@ -225,10 +228,26 @@ class _ToDoListScreenState extends State<ToDoListScreen> {
                         todo.platform != null &&
                                 ToDoListScreen.platformImgs[todo.platform] !=
                                     null
-                            ? Image.asset(
-                                ToDoListScreen.platformImgs[todo.platform],
-                                height: 80,
-                                width: 60,
+                            ? Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 8),
+                                child: CircleAvatar(
+                                  radius: 30,
+                                  backgroundColor: Color(0xFF2542ff),
+                                  child: CircleAvatar(
+                                    backgroundColor: Color(0XFFeeeeee),
+                                    radius: 28,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(3.0),
+                                      child: Image.asset(
+                                        ToDoListScreen
+                                            .platformImgs[todo.platform],
+                                        height: 80,
+                                        width: 60,
+                                      ),
+                                    ),
+                                  ),
+                                ),
                               )
                             : SizedBox(height: 80, width: 60),
                       ],
@@ -355,13 +374,15 @@ class _ToDoListScreenState extends State<ToDoListScreen> {
             ),
             RaisedButton(
               elevation: 4,
-              onPressed: (){
-                Navigator.of(context)
-                    .pushNamed(SearchProblemsScreen.routeName);
+              onPressed: () {
+                Navigator.of(context).pushNamed(SearchProblemsScreen.routeName);
               },
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text("Add more Todo problems", style: TextStyle(color: Colors.white),),
+                child: Text(
+                  "Add more Todo problems",
+                  style: TextStyle(color: Colors.white),
+                ),
               ),
             )
           ],
