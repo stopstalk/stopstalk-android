@@ -102,7 +102,7 @@ class _ToDoListScreenState extends State<ToDoListScreen> {
           future: myFuture,
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
-              return PreloaderDualRing();
+              return Preloader();
             } else {
               return Container(
                 padding: EdgeInsets.all(8),

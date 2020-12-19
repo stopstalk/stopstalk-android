@@ -111,9 +111,10 @@ class _SearchFriendsScreenState extends State<SearchFriendsScreen> {
           Column(
             children: [
               Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-                    width: MediaQuery.of(context).size.width * 0.87,
+                    width: MediaQuery.of(context).size.width * 0.85,
                     child: Padding(
                         padding: const EdgeInsets.all(18.0),
                         child: TextField(
@@ -230,7 +231,7 @@ class _SearchFriendsScreenState extends State<SearchFriendsScreen> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8.0),
                         ),
-                        color: Color(0xFF2542ff),
+                        color: Theme.of(context).buttonColor,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [

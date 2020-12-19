@@ -6,7 +6,7 @@ class Preloader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: SpinKitPouringHourglass(
-        color: Colors.blue,
+        color: Color(0xFF2542ff),
       ),
     );
   }
@@ -17,7 +17,7 @@ class PreloaderDualRing extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: SpinKitDualRing(
-        color: Colors.blue,
+        color: Color(0xFF2542ff),
       ),
     );
   }

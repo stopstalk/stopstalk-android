@@ -49,7 +49,7 @@ class AddFriends extends StatelessWidget {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8.0),
             ),
-            color: Color(0xFF2542ff),
+            color: Theme.of(context).buttonColor,
             child: AutoSizeText(
               'Show Me',
               maxLines: 1,
