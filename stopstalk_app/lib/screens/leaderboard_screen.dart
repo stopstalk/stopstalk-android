@@ -157,7 +157,7 @@ class _LeaderBoardScreenState extends State<LeaderBoardScreen> {
                                     ),
                                     cellSize: Size(
                                         MediaQuery.of(context).size.width, 125),
-                                    padding: EdgeInsets.all(15),
+                                    padding: EdgeInsets.only(left: 10.0, right: 10.0, top: 5.0, bottom: 5.0),
                                     animationDuration:
                                         Duration(milliseconds: 300),
                                     borderRadius: 10,
@@ -268,7 +268,7 @@ class _LeaderBoardScreenState extends State<LeaderBoardScreen> {
                                                     .size
                                                     .width,
                                                 125),
-                                            padding: EdgeInsets.all(15),
+                                            padding: EdgeInsets.only(left: 10.0, right: 10.0, top: 5.0, bottom: 5.0),
                                             animationDuration:
                                                 Duration(milliseconds: 300),
                                             borderRadius: 10,
