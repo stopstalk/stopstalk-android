@@ -66,7 +66,11 @@ class _AppDrawerState extends State<AppDrawer> {
                     title: Text('Login/Register'),
                     onTap: () {
                       deleteAllDataSecureStore();
-                      Navigator.of(context).pushNamed(LoginPage.routeName);
+                      Navigator.push(
+                          context,
+                          PageTransition(
+                              type: PageTransitionType.fade,
+                              child: LoginPage()));
                     },
                   ),
             Divider(),
@@ -85,8 +89,11 @@ class _AppDrawerState extends State<AppDrawer> {
                     leading: Icon(Icons.list),
                     title: Text('ToDo List'),
                     onTap: () {
-                      Navigator.of(context)
-                          .pushReplacementNamed(ToDoListScreen.routeName);
+                      Navigator.push(
+                          context,
+                          PageTransition(
+                              type: PageTransitionType.fade,
+                              child: ToDoListScreen()));
                     },
                   )
                 : Container(),
@@ -95,7 +102,11 @@ class _AppDrawerState extends State<AppDrawer> {
               leading: Icon(FontAwesomeIcons.solidEdit),
               title: Text('User Editorials'),
               onTap: () {
-                Navigator.of(context).pushNamed(UserEditorialScreen.routeName);
+                Navigator.push(
+                    context,
+                    PageTransition(
+                        type: PageTransitionType.fade,
+                        child: UserEditorialScreen()));
               },
             ),
             Divider(),
@@ -103,16 +114,22 @@ class _AppDrawerState extends State<AppDrawer> {
               leading: Icon(Icons.search),
               title: Text('Search Friends'),
               onTap: () {
-                Navigator.of(context).pushNamed(SearchFriendsScreen.routeName);
-              },
+                Navigator.push(
+                    context,
+                    PageTransition(
+                        type: PageTransitionType.fade,
+                        child: SearchFriendsScreen()));              },
             ),
             Divider(),
             ListTile(
               leading: Icon(Icons.calendar_today),
               title: Text('Upcoming contests'),
               onTap: () {
-                Navigator.of(context)
-                    .pushNamed(UpcomingContestScreen.routeName);
+                Navigator.push(
+                    context,
+                    PageTransition(
+                        type: PageTransitionType.fade,
+                        child: UpcomingContestScreen()));
               },
             ),
             Divider(),
@@ -120,7 +137,11 @@ class _AppDrawerState extends State<AppDrawer> {
               leading: Icon(Icons.find_in_page),
               title: Text('Search Problems'),
               onTap: () {
-                Navigator.of(context).pushNamed(SearchProblemsScreen.routeName);
+                Navigator.push(
+                    context,
+                    PageTransition(
+                        type: PageTransitionType.fade,
+                        child: SearchProblemsScreen()));
               },
             ),
             Divider(),
@@ -138,7 +159,7 @@ class _AppDrawerState extends State<AppDrawer> {
               leading: Icon(Icons.show_chart),
               title: Text('Trending Problems'),
               onTap: () {
-                Navigator.of(context).pushReplacementNamed(
+                Navigator.of(context).pushNamed(
                   TrendingProblemsScreen.routeName,
                   arguments: TrendingProblems(
                       loggedin: _userData != null ? false : true),
