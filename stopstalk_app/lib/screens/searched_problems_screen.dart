@@ -136,7 +136,7 @@ class _SearchedProblemsScreenState extends State<SearchedProblemsScreen> {
           } else if (snapshot.hasError) {
             return Text(snapshot.error);
           } else {
-            return Center(child: PreloaderDualRing());
+            return Center(child: Preloader());
           }
         },
       ),
@@ -165,13 +165,11 @@ class _SearchedProblemsScreenState extends State<SearchedProblemsScreen> {
         height: MediaQuery.of(context).size.height * 0.3,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(
-              'No relevant problems found!',
-              style: TextStyle(
-                fontSize: 20,
-              ),
-            ),
+            Image(
+              image: AssetImage('assets/images/noResult.png'),
+            )
           ],
         ),
       ),

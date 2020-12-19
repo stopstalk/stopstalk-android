@@ -270,7 +270,9 @@ class _SearchFriendsScreenState extends State<SearchFriendsScreen> {
 
                   if (snapshot.data == null) {
                     return Center(
-                      child: Text("No result"),
+                      child: Image(
+                        image: AssetImage('assets/images/noResult.png'),
+                      ),
                     );
                   }
 
