@@ -136,7 +136,7 @@ class _SearchedProblemsScreenState extends State<SearchedProblemsScreen> {
           } else if (snapshot.hasError) {
             return Text(snapshot.error);
           } else {
-            return Center(child: PreloaderDualRing());
+            return Center(child: Preloader());
           }
         },
       ),
@@ -161,18 +161,9 @@ class _SearchedProblemsScreenState extends State<SearchedProblemsScreen> {
     return AnimatedOpacity(
       opacity: 1,
       duration: Duration(milliseconds: 600),
-      child: Container(
-        height: MediaQuery.of(context).size.height * 0.3,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'No relevant problems found!',
-              style: TextStyle(
-                fontSize: 20,
-              ),
-            ),
-          ],
+      child: Center(
+        child: Image(
+          image: AssetImage('assets/images/noResult.png'),
         ),
       ),
     );
