@@ -11,21 +11,22 @@ Future<String> getURL(String url, Map<String, String> parameters) async {
   String param = '';
   print(parameters);
   parameters.forEach((key, value) {
-    if (value != null && value != '') {
-      if (value.startsWith('is_list[')) {
-        var list = value
-            .replaceAll('is_list[', '')
-            .replaceAll(']', '')
-            .replaceAll(' ', '')
-            .split(',');
-        list.forEach((e) {
-          if (e != null && e != '') {
-            param += '&' + key + '=' + e;
-          }
-        });
-      } else {
-        param += '&' + key + '=' + value;
-      }
+    if (value == null) {
+      value = '';
+    }
+    if (value.startsWith('is_list[')) {
+      var list = value
+          .replaceAll('is_list[', '')
+          .replaceAll(']', '')
+          .replaceAll(' ', '')
+          .split(',');
+      list.forEach((e) {
+        if (e != null && e != '') {
+          param += '&' + key + '=' + e;
+        }
+      });
+    } else {
+      param += '&' + key + '=' + value;
     }
   });
   return '$server/' + url + '?api_token=$apiToken' + param;
@@ -155,6 +156,7 @@ Future<Map<String, dynamic>> getSearchProblems(
 Future<Map<String, dynamic>> getSearchFriends(
     Map<String, String> filters) async {
   var url = await getURL('search', filters);
+  print(url);
   var jwt = await getDataSecureStore("jwt");
   var res;
   if (jwt == null) {
@@ -163,6 +165,7 @@ Future<Map<String, dynamic>> getSearchFriends(
     var headers = await getAuthHeader();
     res = await http.get(url, headers: headers);
   }
+  print(res.statusCode);
   if (res.statusCode == 200) {
     return jsonDecode(res.body);
   }
