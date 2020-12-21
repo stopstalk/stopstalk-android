@@ -65,6 +65,11 @@ class _SearchFriendsScreenState extends State<SearchFriendsScreen> {
 
   _getSearchedFriends() async {
     List<Friends> searched = [];
+    if ((searchController.text == null || searchController.text == '') &&
+        (selectedInstitute == null || selectedInstitute == '') &&
+        (selectedCountry == null || selectedCountry == '')) {
+      _streamController.add("empty");
+    }
     var data = await getSearchFriends({
       'q': searchController.text,
       'institute': selectedInstitute,
@@ -266,6 +271,9 @@ class _SearchFriendsScreenState extends State<SearchFriendsScreen> {
                 builder: (ctx, snapshot) {
                   if (snapshot.data == "waiting") {
                     return Center(child: CircularProgressIndicator());
+                  }
+                  if (snapshot.data == "empty") {
+                    return Center(child: Text("Select at least one filter"));
                   }
 
                   if (snapshot.data == null) {
