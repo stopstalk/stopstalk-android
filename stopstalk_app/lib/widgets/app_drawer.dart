@@ -67,7 +67,7 @@ class _AppDrawerState extends State<AppDrawer> {
                           PageTransition(
                               type: PageTransitionType.fade,
                               child: ProfileScreen(
-                                  handle: _userData.stopstalkHandle)));
+                                  handle: _userData.stopstalkHandle,isUserItself: true,)));
                     },
                   )
                 : ListTile(

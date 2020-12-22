@@ -15,12 +15,15 @@ class ProfileScreen extends StatelessWidget {
   static const routeName = '/profile';
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final String handle;
+  final bool isUserItself;
 
   TextStyle get titleTextStyle => TextStyle(
         color: Colors.black,
         fontWeight: FontWeight.bold,
       );
-  ProfileScreen({Key key, @required this.handle});
+
+  ProfileScreen({Key key, @required this.handle, this.isUserItself});
+
 
   @override
   Widget build(BuildContext context) {
@@ -272,6 +275,23 @@ class ProfileScreen extends StatelessWidget {
               );
             }),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      floatingActionButton: !isUserItself
+          ? Container(
+              height: 55.0,
+              width: 55.0,
+              child: FutureBuilder( //to delay showing the floating button
+                future: getProfileFromHandle(this.handle),
+                builder: (context,snapshot) {
+                  if(snapshot.data==null) return Container();
+                  return FloatingActionButton(
+                    child: Icon(Icons.person_add),
+                    backgroundColor: Color(0xFF0018ca),
+                    onPressed: () {},
+                  );
+                }),
+            )
+          : Container(),
     );
   }
 
