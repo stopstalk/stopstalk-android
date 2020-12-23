@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:expandable/expandable.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../fragments/my_flutter_app_icons.dart';
 import '../classes/problems_class.dart';
@@ -47,27 +48,32 @@ class ProblemsCard extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           recom.platform != null
-                              ? CircleAvatar(
-                                  radius: 30,
-                                  backgroundColor: Color(0xFF2542ff),
+                              ? GestureDetector(
+                                  onTap: () {
+                                    _launchURL(recom.problemUrl);
+                                  },
                                   child: CircleAvatar(
-                                    backgroundColor: Color(0XFFeeeeee),
-                                    radius: 28,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(3.0),
-                                      child: Image.asset(
-                                        ProblemsCard.platformImgs[
-                                            recom.platform.toLowerCase()],
-                                        height: 40,
-                                        width: 40,
-                                        fit: BoxFit.cover,
+                                    radius: 30,
+                                    backgroundColor: Color(0xFF2542ff),
+                                    child: CircleAvatar(
+                                      backgroundColor: Color(0XFFeeeeee),
+                                      radius: 28,
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(3.0),
+                                        child: Image.asset(
+                                          ProblemsCard.platformImgs[
+                                              recom.platform.toLowerCase()],
+                                          height: 40,
+                                          width: 40,
+                                          fit: BoxFit.cover,
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                )
+                                  ))
                               : SizedBox(width: 0),
                           //SizedBox(width: 20),
                           Flexible(
+                            flex: 2,
                             child: Padding(
                                 padding: new EdgeInsets.only(
                                     left: 0.0,
@@ -82,8 +88,20 @@ class ProblemsCard extends StatelessWidget {
                                     style: TextStyle(
                                         fontSize: 18, color: Colors.black),
                                   ),
-                                  onTap: () => _launchURL(recom.problemUrl),
+                                  onTap: () => _launchURL(
+                                      "https://www.stopstalk.com/problems?problem_id=${recom.id}"),
                                 )),
+                          ),
+                          Flexible(
+                            flex: 1,
+                            child: IconButton(
+                              icon: Icon(
+                                FontAwesomeIcons.externalLinkAlt,
+                                size: 15,
+                              ),
+                              onPressed: () => _launchURL(
+                                  "https://www.stopstalk.com/problems?problem_id=${recom.id}"),
+                            ),
                           ),
                         ]),
                     Divider(

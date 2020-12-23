@@ -4,7 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
 import '../classes/user.dart';
-
+import '../utils/auth.dart';
 import '../widgets/app_drawer.dart';
 import '../widgets/streaks_profile.dart';
 import '../widgets/platform_data_profile.dart';
@@ -23,7 +23,6 @@ class ProfileScreen extends StatelessWidget {
       );
 
   ProfileScreen({Key key, @required this.handle, this.isUserItself});
-
 
   @override
   Widget build(BuildContext context) {
@@ -280,16 +279,36 @@ class ProfileScreen extends StatelessWidget {
           ? Container(
               height: 55.0,
               width: 55.0,
-              child: FutureBuilder( //to delay showing the floating button
-                future: getProfileFromHandle(this.handle),
-                builder: (context,snapshot) {
-                  if(snapshot.data==null) return Container();
-                  return FloatingActionButton(
-                    child: Icon(Icons.person_add),
-                    backgroundColor: Color(0xFF0018ca),
-                    onPressed: () {},
-                  );
-                }),
+              child: FutureBuilder(
+                  //to delay showing the floating button
+                  future: getProfileFromHandle(this.handle),
+                  builder: (context, snapshot) {
+                    if (snapshot.data == null) return Container();
+                    return FloatingActionButton(
+                      child: Icon(Icons.person_add),
+                      backgroundColor: Theme.of(context).buttonColor,
+                      onPressed: () async {
+                        bool isLoggedin = await isAuthenticated();
+                        if (!isLoggedin) {
+                          Scaffold.of(context).showSnackBar(
+                            SnackBar(
+                                content: Text("Please login to add friends"),
+                                elevation: 10,
+                                duration: Duration(seconds: 2),
+                              action: SnackBarAction(
+                                label: 'LOGIN',
+                                onPressed: () {
+                                  Navigator.of(context).pushNamed('/login');
+                                },
+                              ),
+                            ),
+                          );
+                        } else {
+                          //write code to add friends
+                        }
+                      },
+                    );
+                  }),
             )
           : Container(),
     );
