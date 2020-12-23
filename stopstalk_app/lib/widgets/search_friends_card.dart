@@ -63,7 +63,7 @@ class FriendCard extends StatelessWidget {
                                       PageTransition(
                                           type: PageTransitionType.fade,
                                           child: ProfileScreen(
-                                              handle: friend.stopStalkHandle)));
+                                              handle: friend.stopStalkHandle, isUserItself: false,)));
                                 }
                               )),
                         ),
