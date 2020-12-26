@@ -89,11 +89,13 @@ class FriendCard extends StatelessWidget {
                               return InputChip(
                                 avatar: CircleAvatar(
                                   backgroundColor: Colors.white,
-                                  child: Image.asset(
+                                  child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(15),
+                              child: Image.asset(
                                     FriendCard.platformImgs[
                                         friend.handles[index][0].toLowerCase()],
                                     fit: BoxFit.cover,
-                                  ),
+                              )),
                                 ),
                                 label: Text(friend.handles[index][1]),
                                 elevation:6,

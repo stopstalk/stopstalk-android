@@ -64,7 +64,9 @@ class ProblemsCard extends StatelessWidget {
                                 radius: 28,
                                 child: Padding(
                                   padding: const EdgeInsets.all(3.0),
-                                  child: Image.asset(
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(15),
+                                    child:Image.asset(
                                     ProblemsCard.platformImgs[
                                         recom.platform.toLowerCase()],
                                     height: 40,
@@ -73,7 +75,7 @@ class ProblemsCard extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                            ))
+                            )))
                           : SizedBox(width: 0),
                       Flexible(
                         flex: 2,
