@@ -10,10 +10,11 @@ import './screens/trending_problems_screen.dart';
 import './screens/recommendations_screen.dart';
 import './screens/upcoming_contest_screen.dart';
 import './screens/login/login_screen.dart';
+
 // import './screens/user_editorials.dart';
 import './screens/dashboard.dart';
 import './screens/todoList_screen.dart';
-import'./screens/searched_problems_screen.dart';
+import './screens/searched_problems_screen.dart';
 
 void main() async {
   await DotEnv().load('.env');
@@ -43,6 +44,7 @@ class MyApp extends StatelessWidget {
         Dashboard.routeName: (ctx) => Dashboard(),
         ProfileScreen.routeName: (ctx) => ProfileScreen(
               handle: null,
+              isUserItself: null,
             ),
         ToDoListScreen.routeName: (ctx) => ToDoListScreen(),
         // UserEditorialScreen.routeName: (ctx) => UserEditorialScreen(),
@@ -52,7 +54,7 @@ class MyApp extends StatelessWidget {
         LeaderBoardScreen.routeName: (ctx) => LeaderBoardScreen(),
         TrendingProblemsScreen.routeName: (ctx) => TrendingProblemsScreen(),
         RecommendationsScreen.routeName: (ctx) => RecommendationsScreen(),
-        SearchedProblemsScreen.routeName:(ctx)=>SearchedProblemsScreen(),
+        SearchedProblemsScreen.routeName: (ctx) => SearchedProblemsScreen(),
       },
     );
   }

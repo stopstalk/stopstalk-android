@@ -180,57 +180,60 @@ class _ToDoListScreenState extends State<ToDoListScreen> {
   }
 
   Widget buildToDoItem(ToDoList todo, BuildContext context, int i, animation) {
-    return GestureDetector(
-      onLongPress: _launchURL,
-      child: FadeTransition(
-        opacity: animation,
-        child: SlideTransition(
-          position: _offSetTween.animate(animation),
-          child: Padding(
-            padding: const EdgeInsets.all(4.0),
-            child: Card(
-              elevation: 3,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(15),
-                ),
+    return FadeTransition(
+      opacity: animation,
+      child: SlideTransition(
+        position: _offSetTween.animate(animation),
+        child: Padding(
+          padding: const EdgeInsets.all(4.0),
+          child: Card(
+            elevation: 3,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(
+                Radius.circular(15),
               ),
-              color: Color(0XFFeeeeee),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Checkbox(
-                      value: todo.isChecked,
-                      onChanged: (newValue) {
-                        setState(() {
-                          todo.isChecked = newValue;
-                          _deleteTodo(i, context);
-                        });
-                      }),
-                  Expanded(
-                    flex: 1,
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(6.0),
-                          child: Text(
-                            todo.problemName,
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                      ],
-                    ),
+            ),
+            color: Color(0XFFeeeeee),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Checkbox(
+                    value: todo.isChecked,
+                    onChanged: (newValue) {
+                      setState(() {
+                        todo.isChecked = newValue;
+                        _deleteTodo(i, context);
+                      });
+                    }),
+                Expanded(
+                  flex: 1,
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(6.0),
+                        child: InkWell(
+                            child: Text(
+                              todo.problemName,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            onTap: () => _launchURL(
+                                "https://www.stopstalk.com/problems?problem_id=${todo.id}")),
+                      ),
+                    ],
                   ),
-                  Expanded(
-                    child: Column(
-                      children: [
-                        todo.platform != null &&
-                                ToDoListScreen.platformImgs[todo.platform] !=
-                                    null
-                            ? Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 8),
+                ),
+                Expanded(
+                  child: Column(
+                    children: [
+                      todo.platform != null &&
+                              ToDoListScreen.platformImgs[todo.platform] != null
+                          ? Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 8),
+                              child: GestureDetector(
+                                onTap: () {
+                                  _launchURL(todo.link);
+                                },
                                 child: CircleAvatar(
                                   radius: 30,
                                   backgroundColor: Color(0xFF2542ff),
@@ -239,36 +242,38 @@ class _ToDoListScreenState extends State<ToDoListScreen> {
                                     radius: 28,
                                     child: Padding(
                                       padding: const EdgeInsets.all(3.0),
-                                      child: Image.asset(
-                                        ToDoListScreen
-                                            .platformImgs[todo.platform],
-                                        height: 80,
-                                        width: 60,
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(22),
+                                        child: Image.asset(
+                                          ToDoListScreen
+                                              .platformImgs[todo.platform],
+                                          height: 80,
+                                          width: 60,
+                                        ),
                                       ),
                                     ),
                                   ),
                                 ),
-                              )
-                            : SizedBox(height: 80, width: 60),
-                      ],
-                    ),
+                              ))
+                          : SizedBox(height: 80, width: 60),
+                    ],
                   ),
-                  Expanded(
-                    child: Column(
-                      children: [
-                        Text(todo.totalSubmissions),
-                      ],
-                    ),
+                ),
+                Expanded(
+                  child: Column(
+                    children: [
+                      Text(todo.totalSubmissions),
+                    ],
                   ),
-                  Expanded(
-                    child: Column(
-                      children: [
-                        Text(todo.totalUsers),
-                      ],
-                    ),
+                ),
+                Expanded(
+                  child: Column(
+                    children: [
+                      Text(todo.totalUsers),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),
@@ -391,16 +396,15 @@ class _ToDoListScreenState extends State<ToDoListScreen> {
     );
   }
 
-  _launchURL() async {
-    const url = 'https://www.stopstalk.com/problems?problem_id=70';
+  _launchURL(String url) async {
     if (await canLaunch(url)) {
       await launch(url);
     } else {
       throw 'Could not launch $url';
     }
   }
+}
 
-  _senddelrequest(String link) async {
-    deleteTodoUsingLink(link);
-  }
+_senddelrequest(String link) async {
+  deleteTodoUsingLink(link);
 }
