@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:stopstalkapp/screens/login/login_screen.dart';
 import 'package:stopstalkapp/utils/storage.dart';
@@ -10,9 +9,10 @@ import '../screens/search_friends_screen.dart';
 import '../screens/search_problems_screen.dart';
 import '../screens/trending_problems_screen.dart';
 import '../screens/upcoming_contest_screen.dart';
-import '../screens/user_editorials.dart';
+// import '../screens/user_editorials.dart';
 import '../screens/dashboard.dart';
 import '../screens/todoList_screen.dart';
+import '../screens/developers_info.dart';
 import '../classes/leaderboard.dart';
 import '../classes/dashboard_class.dart';
 import '../classes/trendingProblems_class.dart';
@@ -123,7 +123,8 @@ class _AppDrawerState extends State<AppDrawer> {
                     context,
                     PageTransition(
                         type: PageTransitionType.fade,
-                        child: SearchFriendsScreen()));              },
+                        child: SearchFriendsScreen()));
+              },
             ),
             Divider(),
             ListTile(
@@ -183,6 +184,37 @@ class _AppDrawerState extends State<AppDrawer> {
                     },
                   )
                 : SizedBox(),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    PageTransition(
+                        type: PageTransitionType.fade,
+                        child: DevelopersInfo()));
+              },
+              child: Container(
+                height: 80.0,
+                decoration: BoxDecoration(
+                  color: Color(0xFF2542ff),
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(20.0),
+                      topRight: Radius.circular(20.0)),
+                ),
+                child: Center(
+                  child: ListTile(
+                    title: Text(
+                      "Developer's Info",
+                      style: TextStyle(color: Colors.white, fontSize: 16.0),
+                    ),
+                    leading: Icon(
+                      Icons.info,
+                      color: Colors.white,
+                      size: 30.0,
+                    ),
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),
