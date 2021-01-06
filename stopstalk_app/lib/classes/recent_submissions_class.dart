@@ -1,5 +1,7 @@
 class Recent {
   final String name;
+  final String id;
+  final String platform;
   final String stopStalkUrl;
   final String problemName;
   final String problemNameStopStalkUrl;
@@ -8,6 +10,8 @@ class Recent {
 
   Recent({
     this.name,
+    this.id,
+    this.platform,
     this.stopStalkUrl,
     this.problemName,
     this.problemNameStopStalkUrl,

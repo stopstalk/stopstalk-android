@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/app_drawer.dart';
-import '../widgets/recent.dart';
+import '../widgets/recentCard.dart';
 import '../classes/recent_submissions_class.dart';
 
 import '../utils/api.dart';
@@ -10,81 +10,68 @@ import '../utils/platforms.dart' as platforms;
 
 import '../widgets/preloader.dart';
 
-class RecentSubmissionsScreen extends StatelessWidget {
+class RecentSubmissionsScreen extends StatefulWidget {
   static const routeName = '/recentsubmissions';
-  final Map<String, String> parameters;
-  static const platformImgs = platforms.platformImgs;
-  //const RecentSubmissionsScreen({Key key, this.parameters}) : super(key: key);
+  static const platformImgs = {
+    'Codechef': 'assets/platform_logos/codechef_small.png',
+    'Codeforces': 'assets/platform_logos/codeforces_small.png',
+    'Spoj': 'assets/platform_logos/spoj_small.png',
+    'Atcoder': 'assets/platform_logos/atcoder_small.png',
+    'Hackerearth': 'assets/platform_logos/hackerearth_small.png',
+    'Hackerrank': 'assets/platform_logos/hackerrank_small.png',
+    'Uva': 'assets/platform_logos/uva_small.png',
+    'Timus': 'assets/platform_logos/timus_small.png',
+  };
 
+  @override
+  _RecentSubmissionsScreenState createState() => _RecentSubmissionsScreenState();
+}
+
+class _RecentSubmissionsScreenState extends State<RecentSubmissionsScreen> {
   List<Recent> recents = [];
+
   bool flag = false;
 
   final GlobalKey<AnimatedListState> _animatedListKey =
   GlobalKey<AnimatedListState>();
 
-  Future<List<Recent>> _getSearchedProblems() async {
-    var resp = await getSearchProblems(widget.parameters);
-    if (resp == null) return [];
-    var result = resp["problems"];
-
-    result.forEach((element) {
-      var tags = element["tags"]
-          .replaceAll(']', '')
-          .replaceAll('[', '')
-          .replaceAll('u', '')
-          .split(',');
-      var platform;
-      if(element["link"].contains('kenkoooo.com/') || element["link"].contains('atcoder.jp/')){
-        platform='Atcoder';
+  Future<List<Recent>> _getRecentSubmissions() async {
+    for (int i = 1; i < 5; i++) {
+      if (i % 2 == 0) {
+        Recent rec = Recent(
+            problemName: 'Special Permutation ',
+            platform: 'Codechef',
+            stopStalkUrl: 'https://codeforces.com/contest/1454/problem/A',
+            name: 'Sandesh Singh',
+            problemNameStopStalkUrl: 'https://codeforces.com/contest/1454/problem/B',
+            date: DateTime.now(),
+            id:'123',
+            status: true
+        );
+        recents.add(rec);
+      } else {
+        Recent rec = Recent(
+            problemName: 'Special Permutation ',
+            platform: 'Codeforces',
+            stopStalkUrl: 'https://codeforces.com/contest/1454/problem/A',
+            name: 'Sandesh',
+            problemNameStopStalkUrl: 'https://codeforces.com/contest/1454/problem/B',
+            date: DateTime.now(),
+            id:'123',
+            status: false
+        );
+        recents.add(rec);
       }
-      else if(element["link"].contains('codechef.com/')){
-        platform='Codechef';
-      }
-      else if(element["link"].contains('codeforces.com/')){
-        platform='Codeforces';
-      }
-      else if(element["link"].contains('hackerearth.com/')){
-        platform='Hackerearth';
-      }
-      else if(element["link"].contains('hackerrank.com/')){
-        platform='Hackerrank';
-      }
-      else if(element["link"].contains('spoj.com/')){
-        platform='Spoj';
-      }
-      else if(element["link"].contains('acm.timus.ru/')){
-        platform='Timus';
-      }
-      else if(element["link"].contains('uva.onlinejudge.org') || element["link"].contains('uhunt.felix-halim.net')){
-        platform='Uva';
-      }
-      else{
-        platform='Other';
-      }
-      Recent prob = Recent(
-          id: element["id"],
-          problemName: element["name"],
-          platform: platform,
-          problemUrl: element["link"],
-          editorialUrl: element["editorial_link"],
-          totalSubmissions: element["total_submissions"].toString(),
-          accuracy: (element["solved_submissions"] *
-              100.0 /
-              element["total_submissions"])
-              .toStringAsFixed(2) +
-              "%",
-          tags: tags);
-      searched.add(prob);
-    });
-    searched.length == 0 ? flag = true : flag = false;
-    return searched;
+    }
+    recents.length == 0 ? flag = true : flag = false;
+    return recents;
   }
 
-  Future<List<Problems>> myF;
+  Future<List<Recent>> myF;
 
   @override
   void initState() {
-    myF = _getSearchedProblems();
+    myF = _getRecentSubmissions();
     super.initState();
   }
 
@@ -94,7 +81,7 @@ class RecentSubmissionsScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Color(0xFF2542ff),
         title: Text(
-          'Searched Problems',
+          'Recent Friend Submissions',
           textAlign: TextAlign.center,
         ),
       ),
@@ -118,7 +105,7 @@ class RecentSubmissionsScreen extends StatelessWidget {
                         physics: BouncingScrollPhysics(),
                         initialItemCount: snapshot.data.length,
                         itemBuilder: (context, i, animation) {
-                          return ProblemsCard(
+                          return RecentCard(
                               snapshot.data[i], context, i);
                         },
                       )
