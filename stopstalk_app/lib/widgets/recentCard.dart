@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import'../screens/profile.dart';
 
@@ -53,13 +54,22 @@ class RecentCard extends StatelessWidget {
                           padding: new EdgeInsets.only(
                               left: 0.0, right: 6.0, top: 6.0, bottom: 6.0),
                           child: InkWell(
-                              child: Text(
-                                rec.name,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                    fontSize: 18, color: Colors.black),
-                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                Text(
+                                  rec.name,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                      fontSize: 20, color: Colors.black),
+                                ),
+                                  SizedBox(width:5),
+                                  Icon(
+                                    FontAwesomeIcons.externalLinkAlt,
+                                    size: 15,
+                                  ),
+                              ]),
                               onTap: (){
                                 Navigator.push(
                                     context,
@@ -77,24 +87,31 @@ class RecentCard extends StatelessWidget {
                 indent: 20,
                 endIndent: 20,
               ),
+              SizedBox(
+                height: 5,
+              ),
               Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     CircleAvatar(
-                      radius: 20,
+                      radius: 16,
                       backgroundColor: Color(0xFF2542ff),
                       child: CircleAvatar(
                         backgroundColor: Color(0XFFeeeeee),
-                        radius: 19,
+                        radius: 15,
                         child: Image.asset(RecentCard.platformImgs[rec.platform],
                           fit: BoxFit.cover,),
                       ),
                     ),
                     //SizedBox(width: 20),
-                    Flexible(
+                    Container(
                       child: Padding(
                           padding: new EdgeInsets.only(left: 0.0,right:6.0,top: 6.0,bottom: 6.0),
-                          child:InkWell(child: Text(
+                          child:InkWell(
+                            child:Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children:[
+                            Text(
                             rec.problemName,
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
@@ -103,21 +120,24 @@ class RecentCard extends StatelessWidget {
                                 color: Colors.black
                             ),
                           ),
+                                SizedBox(width:5),
+                                Icon(
+                                  FontAwesomeIcons.externalLinkAlt,
+                                  size: 15,
+                                ),
+                              ]),
                             onTap: ()=>_launchURL(rec.problemNameStopStalkUrl),)
                       ),
                     ),
                   ]),
-              Divider(
-                color: Colors.grey,
-                thickness: 2,
-                indent: 20,
-                endIndent: 20,
+              SizedBox(
+                height: 10,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
                   Text(
-                    '$rec.date',
+                    rec.date,
                     style: TextStyle(
                         fontSize: 15, color: Colors.grey[800]),
                   ),
@@ -130,8 +150,8 @@ class RecentCard extends StatelessWidget {
                         ),
                         WidgetSpan(
                           child: rec.status==true?
-                          Icon(Icons.check, size: 14)
-                              : Icon(Icons.close, size: 14)
+                          Icon(Icons.check, size: 20,color: Colors.green,)
+                              : Icon(Icons.close, size: 20,color:Colors.red)
                         )
                       ],
                     ),

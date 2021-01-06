@@ -10,7 +10,7 @@ import './screens/trending_problems_screen.dart';
 import './screens/recommendations_screen.dart';
 import './screens/upcoming_contest_screen.dart';
 import './screens/login/login_screen.dart';
-// import './screens/user_editorials.dart';
+import './screens/recentSubmissions_screen.dart';
 import './screens/dashboard.dart';
 import './screens/todoList_screen.dart';
 import'./screens/searched_problems_screen.dart';
@@ -53,6 +53,7 @@ class MyApp extends StatelessWidget {
         TrendingProblemsScreen.routeName: (ctx) => TrendingProblemsScreen(),
         RecommendationsScreen.routeName: (ctx) => RecommendationsScreen(),
         SearchedProblemsScreen.routeName:(ctx)=>SearchedProblemsScreen(),
+        RecentSubmissionsScreen.routeName:(ctx)=>RecentSubmissionsScreen(),
       },
     );
   }

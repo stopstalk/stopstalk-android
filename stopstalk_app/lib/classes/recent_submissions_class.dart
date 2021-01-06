@@ -5,7 +5,7 @@ class Recent {
   final String stopStalkUrl;
   final String problemName;
   final String problemNameStopStalkUrl;
-  final DateTime date;
+  final String date;
   final bool status;
 
   Recent({

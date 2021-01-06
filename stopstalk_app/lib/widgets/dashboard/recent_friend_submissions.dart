@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import'../../screens/recentSubmissions_screen.dart';
 import '../../utils/platforms.dart';
 
 class RecentFriendSubmissions extends StatelessWidget {
@@ -206,8 +207,10 @@ class RecentFriendSubmissions extends StatelessWidget {
                 fontSize: 16,
               ),
             ),
-            onPressed: () {},
-          ),
+            onPressed: () {
+              Navigator.of(context)
+                  .pushNamed(RecentSubmissionsScreen.routeName);
+            },          ),
           Padding(
             padding: EdgeInsets.only(top: 8.0, bottom: 10.0),
           ),

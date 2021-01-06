@@ -44,7 +44,7 @@ class _RecentSubmissionsScreenState extends State<RecentSubmissionsScreen> {
             stopStalkUrl: 'https://codeforces.com/contest/1454/problem/A',
             name: 'Sandesh Singh',
             problemNameStopStalkUrl: 'https://codeforces.com/contest/1454/problem/B',
-            date: DateTime.now(),
+            date: '06/01/2021',
             id:'123',
             status: true
         );
@@ -56,7 +56,7 @@ class _RecentSubmissionsScreenState extends State<RecentSubmissionsScreen> {
             stopStalkUrl: 'https://codeforces.com/contest/1454/problem/A',
             name: 'Sandesh',
             problemNameStopStalkUrl: 'https://codeforces.com/contest/1454/problem/B',
-            date: DateTime.now(),
+            date: '06/01/2021',
             id:'123',
             status: false
         );
