@@ -34,7 +34,7 @@ class _LoginPageState extends State<LoginPage> {
     var user = await getCurrentUser();
     if (user != null) {
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
-        return ProfileScreen(handle: user.stopstalkHandle);
+        return ProfileScreen(handle: user.stopstalkHandle,isUserItself: true,);
       }));
     }
   }

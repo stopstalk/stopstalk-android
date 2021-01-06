@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../classes/problems_class.dart';
 
@@ -51,7 +52,11 @@ class ProblemsCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       recom.platform != null
-                          ? CircleAvatar(
+                          ? GestureDetector(
+                          onTap: () {
+                            _launchURL(recom.problemUrl);
+                          },
+                          child: CircleAvatar(
                               radius: 30,
                               backgroundColor: Color(0xFF2542ff),
                               child: CircleAvatar(
@@ -59,7 +64,9 @@ class ProblemsCard extends StatelessWidget {
                                 radius: 28,
                                 child: Padding(
                                   padding: const EdgeInsets.all(3.0),
-                                  child: Image.asset(
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(15),
+                                    child:Image.asset(
                                     ProblemsCard.platformImgs[
                                         recom.platform.toLowerCase()],
                                     height: 40,
@@ -68,9 +75,10 @@ class ProblemsCard extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                            )
+                            )))
                           : SizedBox(width: 0),
                       Flexible(
+                        flex: 2,
                         child: Padding(
                             padding: new EdgeInsets.only(
                                 left: 0.0, right: 6.0, top: 6.0, bottom: 6.0),
@@ -82,8 +90,19 @@ class ProblemsCard extends StatelessWidget {
                                 style: TextStyle(
                                     fontSize: 18, color: Colors.black),
                               ),
-                              onTap: () => _launchURL(recom.problemUrl),
+                              onTap: () => _launchURL(
+                                  "https://www.stopstalk.com/problems?problem_id=${recom.id}"),
                             )),
+                      ),
+                      Flexible(
+                        child: IconButton(
+                          icon: Icon(
+                            FontAwesomeIcons.externalLinkAlt,
+                            size: 15,
+                          ),
+                          onPressed: () => _launchURL(
+                              "https://www.stopstalk.com/problems?problem_id=${recom.id}"),
+                        ),
                       ),
                     ],
                   ),

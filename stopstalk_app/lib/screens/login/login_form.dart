@@ -162,7 +162,9 @@ class _LoginFormState extends State<LoginForm> {
                             PageTransition(
                                 type: PageTransitionType.fade,
                                 child: ProfileScreen(
-                                    handle: user.stopstalkHandle)),
+                                  handle: user.stopstalkHandle,
+                                  isUserItself: true,
+                                )),
                           );
                         } else {
                           displayDialog(context, "An Error Occurred",
