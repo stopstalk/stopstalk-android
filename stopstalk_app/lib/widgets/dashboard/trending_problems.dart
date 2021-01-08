@@ -94,9 +94,9 @@ class _TrendingProblemsDashboardState extends State<TrendingProblemsDashboard> {
                       padding: EdgeInsets.only(left: 5.0),
                     ),
                     Expanded(
-                      flex: 2,
+                      flex: 3,
                       child: Text(
-                        "Problem",
+                        "Problem Name",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 17.0,
@@ -106,15 +106,17 @@ class _TrendingProblemsDashboardState extends State<TrendingProblemsDashboard> {
                       ),
                     ),
                     Expanded(
-                      flex: 4,
-                      child: Text(
-                        "Recent Submissions",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 17.0,
+                      flex: 3,
+                      child: Center(
+                        child: Text(
+                          "Recent",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 17.0,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
                         ),
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
                       ),
                     ),
                     Expanded(
@@ -131,6 +133,35 @@ class _TrendingProblemsDashboardState extends State<TrendingProblemsDashboard> {
                     ),
                   ],
                 ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(left: 5.0),
+                  ),
+                  Expanded(
+                    flex: 3,
+                    child: Container(),
+                  ),
+                  Expanded(
+                    flex: 2,
+                    child: Text(
+                      "Submissions",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 17.0,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                    ),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: Container(),
+                  ),
+                ],
               ),
               Container(
                 padding: EdgeInsets.all(5.0),
@@ -170,30 +201,29 @@ class _TrendingProblemsDashboardState extends State<TrendingProblemsDashboard> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 120),
                 child: RaisedButton(
-                      elevation: 5,
-                      padding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8.0),
+                    elevation: 5,
+                    padding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    color: Theme.of(context).buttonColor,
+                    child: AutoSizeText(
+                      'View All',
+                      maxLines: 1,
+                      minFontSize: 7,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
                       ),
-                      color: Theme.of(context).buttonColor,
-                      child: AutoSizeText(
-                        'View All',
-                        maxLines: 1,
-                        minFontSize: 7,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                        ),
-                      ),
-                      onPressed: () {
-                        Navigator.of(context).pushNamed(
-                          TrendingProblemsScreen.routeName,
-                          arguments: TrendingProblems(
-                              loggedin: _userData != null ? false : true),
-                        );
-                      }),
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pushNamed(
+                        TrendingProblemsScreen.routeName,
+                        arguments: TrendingProblems(
+                            loggedin: _userData != null ? false : true),
+                      );
+                    }),
               ),
-
               Padding(
                 padding: EdgeInsets.only(top: 8.0, bottom: 10.0),
               ),
@@ -228,6 +258,9 @@ class _TrendingProblemsDashboardState extends State<TrendingProblemsDashboard> {
                 maxLines: 1,
               ),
             ),
+          ),
+          SizedBox(
+            width: MediaQuery.of(context).size.width * 0.03,
           ),
           Expanded(
             flex: 2,

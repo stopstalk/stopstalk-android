@@ -7,7 +7,7 @@ import 'package:url_launcher/url_launcher.dart';
 class AcceptanceGraph extends StatelessWidget {
   final String handle;
   final graph;
-  final List<int> colorNum = [1, 5, 10, 15, 20, 25, 30, 35, 4, 18];
+  final List<int> colorNum = [1, 5, 10, 15, 20, 18, 30, 35, 4, 18];
 
   AcceptanceGraph({@required this.handle, @required this.graph});
   @override
@@ -33,7 +33,7 @@ class AcceptanceGraph extends StatelessWidget {
           },
           colorThresholds: {
             1: Color(0xff776fff),
-            10: Color(0xff2542ff),
+            10: Color(0xff1842ff),
             30: Color(0xff0018ca),
           },
           weekDaysLabels: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
@@ -52,7 +52,7 @@ class AcceptanceGraph extends StatelessWidget {
             "Nov",
             "Dec",
           ],
-          squareSize: 25.0,
+          squareSize: 20.0,
           textOpacity: 0.3,
           labelTextColor: Colors.blueGrey,
           dayTextColor: Colors.white,
@@ -60,7 +60,7 @@ class AcceptanceGraph extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(bottom: 8.0),
           child: Container(
-            height: 25,
+            height: 18,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -69,53 +69,53 @@ class AcceptanceGraph extends StatelessWidget {
                   child: Text('Less'),
                 ),
                 Container(
-                  height: 25,
-                  width: 25,
+                  height: 18,
+                  width: 18,
                   color: Colors.grey[300],
                 ),
                 SizedBox(
-                  height: 25,
+                  height: 18,
                   child: new Center(
                     child: new Container(
                       width: 4,
-                      height: 25,
+                      height: 18,
                       color: Colors.white,
                     ),
                   ),
                 ),
                 Container(
-                  height: 25,
-                  width: 25,
+                  height: 18,
+                  width: 18,
                   color: Color(0xff776fff),
                 ),
                 SizedBox(
-                  height: 25,
+                  height: 18,
                   child: new Center(
                     child: new Container(
                       width: 4,
-                      height: 25,
+                      height: 18,
                       color: Colors.white,
                     ),
                   ),
                 ),
                 Container(
-                  height: 25,
-                  width: 25,
-                  color: Color(0xff2542ff),
+                  height: 18,
+                  width: 18,
+                  color: Color(0xff1842ff),
                 ),
                 SizedBox(
-                  height: 25,
+                  height: 18,
                   child: new Center(
                     child: new Container(
                       width: 4,
-                      height: 25,
+                      height: 18,
                       color: Colors.white,
                     ),
                   ),
                 ),
                 Container(
-                  height: 25,
-                  width: 25,
+                  height: 18,
+                  width: 18,
                   color: Color(0xff0018ca),
                 ),
                 Padding(

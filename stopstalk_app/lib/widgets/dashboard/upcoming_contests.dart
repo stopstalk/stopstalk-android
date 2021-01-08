@@ -15,21 +15,24 @@ class UpcomingContests extends StatelessWidget {
   final images = platformImgs;
 
   Future<List<Contest>> _getContests() async {
-    String url = "https://www.stopstalk.com/contests.json";
+    String url = "https://kontests.net/api/v1/all";
     var data = await http.get(url);
-    var jsonData = jsonDecode(data.body);
+    var jsonData = List<Map<String, dynamic>>.from(jsonDecode(data.body));
     List<Contest> contests = [];
-    for (var contest in jsonData["upcoming"]) {
-      Contest cont = Contest(
-          contest["Name"].replaceAll("\n", ""),
-          contest["url"],
-          contest["Platform"],
-          contest["StartTime"],
-          contest["Duration"],
-          contest["EndTime"]);
-      contests.add(cont);
+    for (var contest in jsonData) {
+      Contest cont = Contest(contest["name"], contest["url"], contest["site"],
+          contest["start_time"], contest["duration"], contest["end_time"]);
+      if (contest["site"] == 'HackerRank' ||
+          contest["site"] == 'CodeChef' ||
+          contest["site"] == 'HackerEarth' ||
+          contest["site"] == 'Codeforces' ||
+          contest["site"] == 'AtCoder' ||
+          contest["site"] == 'Spoj' ||
+          contest["site"] == 'Timus' ||
+          contest["site"] == 'Uva')
+        contests.add(cont);
     }
-    return contests;
+    return contests.reversed.toList();
   }
 
   _launchURL(String url) async {
@@ -113,13 +116,20 @@ class UpcomingContests extends StatelessWidget {
                             ),
                             Expanded(
                               flex: 2,
-                              child: Image(
-                                image: AssetImage(
-                                  images[snapshot.data[index].platform
-                                      .toLowerCase()],
+                              child: CircleAvatar(
+                                maxRadius: 20,
+                                backgroundColor: Colors.white,
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(18),
+                                  child: Image(
+                                    image: AssetImage(
+                                      images[snapshot.data[index].platform
+                                          .toLowerCase()],
+                                    ),
+                                    height: 40.0,
+                                    width: 40.0,
+                                  ),
                                 ),
-                                height: 40.0,
-                                width: 40.0,
                               ),
                             ),
                             Expanded(
@@ -133,7 +143,8 @@ class UpcomingContests extends StatelessWidget {
                                     FontAwesomeIcons.link,
                                     size: 17.0,
                                   ),
-                                  backgroundColor: Theme.of(context).buttonColor,
+                                  backgroundColor:
+                                      Theme.of(context).buttonColor,
                                   onPressed: () {
                                     _launchURL(snapshot.data[index].url);
                                   },

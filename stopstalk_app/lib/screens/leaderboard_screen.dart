@@ -459,7 +459,7 @@ class _LeaderBoardScreenState extends State<LeaderBoardScreen> {
       onTap: (){
         Navigator.push(context,
             MaterialPageRoute(builder: (context) {
-              return ProfileScreen(handle: handle);
+              return ProfileScreen(handle: handle,isUserItself: false,);
             }));
       },
       child: ClipRRect(

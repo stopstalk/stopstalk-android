@@ -24,22 +24,24 @@ class UpcomingContestScreen extends StatefulWidget {
 
 class _UpcomingContestState extends State<UpcomingContestScreen> {
   Future<List<Contest>> _getContests() async {
-    String url = "https://www.stopstalk.com/contests.json";
+    String url = "https://kontests.net/api/v1/all";
     var data = await http.get(url);
-    var jsonData = jsonDecode(data.body);
+    var jsonData = List<Map<String, dynamic>>.from(jsonDecode(data.body));
     List<Contest> contests = [];
-    for (var contest in jsonData["upcoming"]) {
-      Contest cont = Contest(
-          contest["Name"].replaceAll("\n", ""),
-          contest["url"],
-          contest["Platform"],
-          contest["StartTime"],
-          contest["Duration"],
-          contest["EndTime"]);
-      contests.add(cont);
-      print(cont.platform);
+    for (var contest in jsonData) {
+      Contest cont = Contest(contest["name"], contest["url"], contest["site"],
+          contest["start_time"], contest["duration"], contest["end_time"]);
+      if (contest["site"] == 'HackerRank' ||
+          contest["site"] == 'CodeChef' ||
+          contest["site"] == 'HackerEarth' ||
+          contest["site"] == 'Codeforces' ||
+          contest["site"] == 'AtCoder' ||
+          contest["site"] == 'Spoj' ||
+          contest["site"] == 'Timus' ||
+          contest["site"] == 'Uva')
+        contests.add(cont);
     }
-    return contests;
+    return contests.reversed.toList();
   }
 
   List<String> startTimes = ["Loading"];
@@ -55,31 +57,8 @@ class _UpcomingContestState extends State<UpcomingContestScreen> {
   // }
 
   String timeToDate(String startTime) {
-    final List<String> months = [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec"
-    ];
-    startTime = startTime.substring(5);
-    String month = startTime.substring(3, 6);
-    int ind = months.indexOf(month) + 1;
-    String date = startTime.substring(7, 11) + "-";
-    if (ind < 10) {
-      date = date + "0" + ind.toString() + "-";
-    } else {
-      date = date + ind.toString() + "-";
-    }
-    date = date + startTime.substring(0, 2) + " ";
-    date = date + startTime.substring(12, 17);
+    String date =
+        startTime.substring(0, 10) + " " + startTime.substring(11, 19) + 'Z';
     return date;
   }
 
@@ -183,7 +162,8 @@ class _UpcomingContestState extends State<UpcomingContestScreen> {
                           snapshot.data[index].startTime,
                           snapshot.data[index].url),
                       cellSize: Size(MediaQuery.of(context).size.width, 125.0),
-                      padding: EdgeInsets.only(left: 15.0, right: 15.0, top: 5.0, bottom: 5.0),
+                      padding: EdgeInsets.only(
+                          left: 15.0, right: 15.0, top: 5.0, bottom: 5.0),
                       animationDuration: Duration(milliseconds: 300),
                       borderRadius: 10.0,
                     ),
@@ -198,8 +178,8 @@ class _UpcomingContestState extends State<UpcomingContestScreen> {
   }
 
   Widget frontWidget(String name, String image, String startTime) {
-    String date = startTime.substring(0, 16);
-    String time = startTime.substring(17);
+    String date = startTime.substring(0, 10);
+    String time = startTime.substring(11, 19);
     return Builder(
       builder: (BuildContext context) {
         return GestureDetector(
@@ -245,6 +225,7 @@ class _UpcomingContestState extends State<UpcomingContestScreen> {
                             maxRadius: 30,
                             backgroundColor: Colors.white,
                             child: ClipRRect(
+                              borderRadius: BorderRadius.circular(28),
                               child: images[image.toLowerCase()] != null
                                   ? Image(
                                       image: AssetImage(
@@ -253,7 +234,6 @@ class _UpcomingContestState extends State<UpcomingContestScreen> {
                                       width: 80.0,
                                     )
                                   : SizedBox(),
-                              borderRadius: BorderRadius.circular(8.0),
                             ),
                           ),
                         ],
@@ -370,8 +350,8 @@ class _UpcomingContestState extends State<UpcomingContestScreen> {
   }
 
   Widget innerTopWidget(String name, String image, String startTime) {
-    String date = startTime.substring(0, 16);
-    String time = startTime.substring(17);
+    String date = startTime.substring(0, 10);
+    String time = startTime.substring(11, 19);
     return GestureDetector(
       onTap: null,
       child: ClipRRect(
@@ -396,15 +376,14 @@ class _UpcomingContestState extends State<UpcomingContestScreen> {
                   maxRadius: 30,
                   backgroundColor: Colors.white,
                   child: ClipRRect(
+                    borderRadius: BorderRadius.circular(28),
                     child: images[image.toLowerCase()] != null
                         ? Image(
-                      image: AssetImage(
-                          images[image.toLowerCase()]),
-                      height: 80.0,
-                      width: 80.0,
-                    )
+                            image: AssetImage(images[image.toLowerCase()]),
+                            height: 80.0,
+                            width: 80.0,
+                          )
                         : SizedBox(),
-                    borderRadius: BorderRadius.circular(10.0),
                   ),
                 ),
               ),
