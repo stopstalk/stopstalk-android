@@ -50,7 +50,7 @@ class _SearchFriendsScreenState extends State<SearchFriendsScreen> {
     if (data == null) return [];
     List<String> inis = [];
     var ini = data["all_institutes"];
-    print(inis);
+    //print(inis);
     ini.forEach((e) {
       inis.add(e);
     });
@@ -82,6 +82,7 @@ class _SearchFriendsScreenState extends State<SearchFriendsScreen> {
       return [];
     }
     res.forEach((e) {
+      //print(e);
       List handles = [];
       e.forEach((key, value) {
         var ks = key.split('_');
@@ -95,6 +96,7 @@ class _SearchFriendsScreenState extends State<SearchFriendsScreen> {
           firstName: e["first_name"],
           lastName: e["last_name"],
           stopStalkHandle: e["stopstalk_handle"],
+          isFriend: e["is_friend"] != null ? e["is_friend"] : false,
           handles: handles);
       searched.add(prob);
     });
@@ -125,7 +127,19 @@ class _SearchFriendsScreenState extends State<SearchFriendsScreen> {
                         child: TextField(
                           controller: searchController,
                           decoration: InputDecoration(
+                              enabledBorder: UnderlineInputBorder(
+                                  borderSide:
+                                      new BorderSide(color: Color(0xffeeeeee))),
+                              focusedBorder: UnderlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: Color(0xffeeeeee))),
                               border: InputBorder.none,
+                              fillColor: Color(0xffeeeeee),
+                              filled: true,
+                              hintStyle: TextStyle(
+                                  fontSize: 16.0,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.black54),
                               hintText: "Search your friends",
                               icon: Icon(Icons.search)),
                         )),
@@ -295,18 +309,18 @@ class _SearchFriendsScreenState extends State<SearchFriendsScreen> {
                     child: Column(
                       children: [
                         Container(
-                            height: MediaQuery.of(context).size.height,
+                            //height: MediaQuery.of(context).size.height,
                             child: AnimatedList(
-                              key: _animatedListKey,
-                              primary: true,
-                              shrinkWrap: true,
-                              physics: BouncingScrollPhysics(),
-                              initialItemCount: snapshot.data.length,
-                              itemBuilder: (context, i, animation) {
-                                return FriendCard(
-                                    snapshot.data[i], context, i, animation);
-                              },
-                            )),
+                          key: _animatedListKey,
+                          primary: true,
+                          shrinkWrap: true,
+                          physics: BouncingScrollPhysics(),
+                          initialItemCount: snapshot.data.length,
+                          itemBuilder: (context, i, animation) {
+                            return FriendCard(
+                                snapshot.data[i], context, i, animation);
+                          },
+                        )),
                       ],
                     ),
                   );
