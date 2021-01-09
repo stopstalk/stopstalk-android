@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../widgets/app_drawer.dart';
 import '../widgets/problems_card.dart';
+import '../widgets/preloader.dart';
 
 import '../classes/problems_class.dart';
 import '../utils/api.dart';
@@ -23,6 +24,11 @@ class _RecommendationsScreenState extends State<RecommendationsScreen> {
 
   Future<List<Problems>> _getRecommendations() async {
     var resp = await getRecommendedProblems();
+    if (resp["recommendations_length"] == 0) {
+      flag = true;
+      return [];
+    }
+    print(resp);
     var result = resp["problems"];
     result.forEach((element) {
       var tags = element["tags"]
@@ -36,11 +42,12 @@ class _RecommendationsScreenState extends State<RecommendationsScreen> {
           platform: 'Codechef',
           problemUrl: element["link"],
           editorialUrl: element["editorial_link"],
-          totalSubmissions: (element["solved_submissions"] *
-                  100.0 /
-                  element["total_submissions"])
-              .toString(),
-          accuracy: element["accuracy"].toString(),
+          accuracy: (element["solved_submissions"] *
+                      100.0 /
+                      element["total_submissions"])
+                  .toStringAsFixed(2) +
+              "%",
+          totalSubmissions: element["total_submissions"].toString(),
           tags: tags);
       recom.add(prob);
     });
@@ -96,7 +103,10 @@ class _RecommendationsScreenState extends State<RecommendationsScreen> {
                   } else if (snapshot.hasError) {
                     return Text(snapshot.error);
                   } else {
-                    return Text('no error and no data');
+                    return Padding(
+                      padding: const EdgeInsets.only(top: 20.0),
+                      child: Center(child: Preloader()),
+                    );
                   }
                 },
               ),
@@ -111,18 +121,9 @@ class _RecommendationsScreenState extends State<RecommendationsScreen> {
     return AnimatedOpacity(
       opacity: 1,
       duration: Duration(milliseconds: 600),
-      child: Container(
-        height: MediaQuery.of(context).size.height * 0.3,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'No recommendations at the moment!',
-              style: TextStyle(
-                fontSize: 20,
-              ),
-            ),
-          ],
+      child: Center(
+        child: Image(
+          image: AssetImage('assets/images/noResult.png'),
         ),
       ),
     );

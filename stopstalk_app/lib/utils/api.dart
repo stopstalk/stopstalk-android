@@ -127,7 +127,7 @@ Future<void> deleteTodoUsingLink(String link) async {
 }
 
 Future<Map<String, dynamic>> getRecommendedProblems() async {
-  var url = await getURL('problemsrecommendations.json', {});
+  var url = await getURL('problems/recommendations.json', {});
   var headers = await getAuthHeader();
   var res = await http.get(url, headers: headers);
   if (res.statusCode == 200) {
