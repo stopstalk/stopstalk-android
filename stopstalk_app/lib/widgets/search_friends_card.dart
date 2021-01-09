@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:url_launcher/url_launcher.dart';
+/* import 'package:url_launcher/url_launcher.dart'; */
 import 'package:page_transition/page_transition.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import'../screens/profile.dart';
+import '../screens/profile.dart';
 
 import '../classes/searched_friends_class.dart';
 
 import '../utils/platforms.dart' as platforms;
 
-class FriendCard extends StatelessWidget {
+class FriendCard extends StatefulWidget {
   final Friends friend;
   final BuildContext context;
   final int i;
@@ -17,16 +18,29 @@ class FriendCard extends StatelessWidget {
   FriendCard(this.friend, this.context, this.i, this.animation);
   static const platformImgs = platforms.platformImgs;
 
+  @override
+  _FriendCardState createState() => _FriendCardState();
+}
+
+class _FriendCardState extends State<FriendCard> {
+  bool isFriend = false;
+
   final Tween<Offset> _offSetTween = Tween(
     begin: Offset(1, 0),
     end: Offset.zero,
   );
   @override
+  void initState() {
+    isFriend = widget.friend.isFriend;
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return FadeTransition(
-      opacity: animation,
+      opacity: widget.animation,
       child: SlideTransition(
-        position: _offSetTween.animate(animation),
+        position: _offSetTween.animate(widget.animation),
         child: Padding(
           padding: const EdgeInsets.all(3.0),
           child: Card(
@@ -49,22 +63,77 @@ class FriendCard extends StatelessWidget {
                           child: Padding(
                               padding: new EdgeInsets.only(
                                   left: 0.0, right: 6.0, top: 6.0, bottom: 6.0),
-                              child: InkWell(
-                                child: Text(
-                                  friend.firstName + " " + friend.lastName,
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                      fontSize: 18, color: Colors.black),
-                                ),
-                                onTap: (){
-                                  Navigator.push(
-                                      context,
-                                      PageTransition(
-                                          type: PageTransitionType.fade,
-                                          child: ProfileScreen(
-                                              handle: friend.stopStalkHandle, isUserItself: false,)));
-                                }
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      SizedBox(width: 20),
+                                      SizedBox(
+                                        width:
+                                            MediaQuery.of(context).size.width /
+                                                2,
+                                        child: InkWell(
+                                            child: Text(
+                                              widget.friend.firstName +
+                                                  " " +
+                                                  widget.friend.lastName,
+                                              maxLines: 2,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: TextStyle(
+                                                  fontSize: 18,
+                                                  color: Colors.black),
+                                            ),
+                                            onTap: () {
+                                              Navigator.push(
+                                                  context,
+                                                  PageTransition(
+                                                      type: PageTransitionType
+                                                          .fade,
+                                                      child: ProfileScreen(
+                                                          handle: widget.friend
+                                                              .stopStalkHandle,
+                                                          isUserItself:
+                                                              false)));
+                                            }),
+                                      ),
+                                    ],
+                                  ),
+                                  MaterialButton(
+                                    onPressed: () {
+                                      if (!isFriend) {
+                                        var handle =
+                                            widget.friend.stopStalkHandle;
+                                        Scaffold.of(context).showSnackBar(
+                                          SnackBar(
+                                              content: Text(
+                                                  'Added $handle to friend list'),
+                                              elevation: 10,
+                                              duration: Duration(seconds: 2)),
+                                        );
+                                        setState(() => isFriend = true);
+                                      }
+                                    },
+                                    color: isFriend
+                                        ? Colors.green[300]
+                                        : Theme.of(context).buttonColor,
+                                    textColor: Colors.white,
+                                    child: Icon(
+                                      isFriend
+                                          ? FontAwesomeIcons.user
+                                          : FontAwesomeIcons.userPlus,
+                                      size: 18,
+                                    ),
+                                    padding: EdgeInsets.only(
+                                        top: 12,
+                                        bottom: 16,
+                                        left: 14,
+                                        right: 14),
+                                    shape: CircleBorder(),
+                                  )
+                                ],
                               )),
                         ),
                       ]),
@@ -85,20 +154,21 @@ class FriendCard extends StatelessWidget {
                             spacing: 6.0,
                             runSpacing: 6.0,
                             children: List<Widget>.generate(
-                                friend.handles.length, (int index) {
+                                widget.friend.handles.length, (int index) {
                               return InputChip(
                                 avatar: CircleAvatar(
                                   backgroundColor: Colors.white,
                                   child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(15),
-                              child: Image.asset(
-                                    FriendCard.platformImgs[
-                                        friend.handles[index][0].toLowerCase()],
-                                    fit: BoxFit.cover,
-                              )),
+                                      borderRadius: BorderRadius.circular(15),
+                                      child: Image.asset(
+                                        FriendCard.platformImgs[widget
+                                            .friend.handles[index][0]
+                                            .toLowerCase()],
+                                        fit: BoxFit.cover,
+                                      )),
                                 ),
-                                label: Text(friend.handles[index][1]),
-                                elevation:6,
+                                label: Text(widget.friend.handles[index][1]),
+                                elevation: 6,
                                 onPressed: () {
                                   print('Handle got clicked');
                                 },
@@ -107,7 +177,7 @@ class FriendCard extends StatelessWidget {
                           ),
                         ),
                       ),
-                      RaisedButton.icon(
+                      /* RaisedButton.icon(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8.0),
                         ),
@@ -118,7 +188,7 @@ class FriendCard extends StatelessWidget {
                         icon: Icon(Icons.add),
                         label: Text('Add to Friends'),
                         textColor: Colors.white,
-                      )
+                      ) */
                     ],
                   )
                 ],
@@ -130,11 +200,11 @@ class FriendCard extends StatelessWidget {
     );
   }
 
-  _launchURL(String url) async {
+  /* _launchURL(String url) async {
     if (await canLaunch(url)) {
       await launch(url);
     } else {
       throw 'Could not launch $url';
     }
-  }
+  }*/
 }
