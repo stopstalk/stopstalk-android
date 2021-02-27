@@ -63,17 +63,6 @@ class DevelopersInfo extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
             Padding(
-              padding: EdgeInsets.only(top: 50.0),
-            ),
-            Text(
-              "Contact Us",
-              style: TextStyle(
-                fontSize: 22.0,
-                color: Color(0xFF2542ff),
-              ),
-              textAlign: TextAlign.center,
-            ),
-            Padding(
               padding: EdgeInsets.only(top: 8.0),
             ),
             Row(
@@ -128,6 +117,77 @@ class DevelopersInfo extends StatelessWidget {
                     ),
                     onPressed:(){
                       _launchURL("https://www.linkedin.com/company/devlup-labs/");
+                    }
+                ),
+              ],
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: 20.0),
+            ),
+            Text(
+              "In collaboration with ",
+              style: TextStyle(fontSize: 22.0, color: Color(0xFF2542ff),),
+            ),
+            Padding(padding: EdgeInsets.only(top: 8.0),),
+            Image(
+              image: AssetImage('assets/images/stopstalklogo.png'),
+              height: 100.0,
+              width: 100.0,
+            ),
+            Padding(padding: EdgeInsets.only(top: 8.0),),
+            Text(
+              "Founder: Raj Patel",
+              style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 16.0
+              ),
+              textAlign: TextAlign.center,
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: 8.0),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                IconButton(
+                    icon: Icon(
+                      Icons.mail,
+                      color: Color(0xFF2542ff),
+                      size: 32.0,
+                    ),
+                    onPressed:(){
+                      _launchURL("mailto:raj454raj@gmail.com");
+                    }
+                ),
+                IconButton(
+                    icon: Icon(
+                      FontAwesomeIcons.facebookSquare,
+                      color: Color(0xFF2542ff),
+                      size: 28.0,
+                    ),
+                    onPressed:(){
+                      _launchURL("https://www.facebook.com/stopstalkcommunity/community/");
+                    }
+                ),
+                IconButton(
+                    icon: Icon(
+                      FontAwesomeIcons.github,
+                      color: Color(0xFF2542ff),
+                      size: 28.0,
+                    ),
+                    onPressed:(){
+                      _launchURL("https://github.com/raj454raj");
+                    }
+                ),
+                IconButton(
+                    icon: Icon(
+                      FontAwesomeIcons.linkedin,
+                      color: Color(0xFF2542ff),
+                      size: 28.0,
+                    ),
+                    onPressed:(){
+                      _launchURL("https://www.linkedin.com/in/raj454raj");
                     }
                 ),
               ],
