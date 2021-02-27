@@ -2,6 +2,8 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 
 import '../../screens/trending_problems_screen.dart';
 import '../../classes/trendingProblems_class.dart';
@@ -181,7 +183,7 @@ class _TrendingProblemsDashboardState extends State<TrendingProblemsDashboard> {
                                 physics: BouncingScrollPhysics(),
                                 itemCount: 3,
                                 itemBuilder: (context, i) {
-                                  return TrendingProbDashboardCard(
+                                  return TrendingprobDashboardCard(
                                       snapshot.data[i], context);
                                 },
                               ),
@@ -234,7 +236,7 @@ class _TrendingProblemsDashboardState extends State<TrendingProblemsDashboard> {
     );
   }
 
-  Widget TrendingProbDashboardCard(Problems prob, BuildContext context) {
+  Widget TrendingprobDashboardCard(Problems prob, BuildContext context) {
     return Container(
       padding: EdgeInsets.all(5.0),
       child: Row(
@@ -247,16 +249,28 @@ class _TrendingProblemsDashboardState extends State<TrendingProblemsDashboard> {
           Expanded(
             flex: 4,
             child: GestureDetector(
-              onTap: () => _launchURL(prob.problemUrl),
-              child: Text(
-                prob.problemName,
-                style: TextStyle(
-                  fontWeight: FontWeight.w400,
-                  fontSize: 17.0,
-                ),
-                overflow: TextOverflow.ellipsis,
-                maxLines: 1,
-              ),
+                onTap: () => _launchURL(prob.problemUrl),
+                child: Row(
+                    children:[Text(
+                      prob.problemName,
+                      style: TextStyle(
+                        fontWeight: FontWeight.w400,
+                        fontSize: 17.0,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                    ),
+                      Flexible(
+                        child: IconButton(
+                          icon: Icon(
+                            FontAwesomeIcons.externalLinkAlt,
+                            size: 15,
+                          ),
+                          onPressed: () => _launchURL(
+                              prob.problemUrl),
+                        ),
+                      ),
+                    ])
             ),
           ),
           SizedBox(
