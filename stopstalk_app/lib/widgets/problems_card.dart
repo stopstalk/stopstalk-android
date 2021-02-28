@@ -145,7 +145,7 @@ class ProblemsCard extends StatelessWidget {
                                   bottom: 8.0,
                                   left: 17.0,
                                   right: 17.0),
-                              onPressed: () => _launchURL(recom.editorialUrl),
+                              onPressed: () => _launchURL("https://www.stopstalk.com/problems/editorials/${recom.id}"),
                               color: Color(0xFF2542ff),
                               icon: Icon(MyFlutterApp.contract),
                               label: Text('Editorials'),
