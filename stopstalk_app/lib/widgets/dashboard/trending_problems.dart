@@ -249,7 +249,7 @@ class _TrendingProblemsDashboardState extends State<TrendingProblemsDashboard> {
           Expanded(
             flex: 4,
             child: GestureDetector(
-                onTap: () => _launchURL(prob.problemUrl),
+                onTap: () => _launchURL("https://www.stopstalk.com/problems?problem_id=${prob.id}"),
                 child: Row(
                     children:[Text(
                       prob.problemName,
@@ -266,8 +266,7 @@ class _TrendingProblemsDashboardState extends State<TrendingProblemsDashboard> {
                             FontAwesomeIcons.externalLinkAlt,
                             size: 15,
                           ),
-                          onPressed: () => _launchURL(
-                              prob.problemUrl),
+                          onPressed: () => _launchURL("https://www.stopstalk.com/problems?problem_id=${prob.id}"),
                         ),
                       ),
                     ])
