@@ -96,7 +96,8 @@ class _FriendCardState extends State<FriendCard> {
                                                           handle: widget.friend
                                                               .stopStalkHandle,
                                                           isUserItself:
-                                                              false)));
+                                                              false,
+                                                          friend: widget.friend,)));
                                             }),
                                       ),
                                     ],

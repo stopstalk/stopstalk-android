@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:stopstalkapp/classes/searched_friends_class.dart';
 
 import '../classes/user.dart';
 import '../utils/auth.dart';
@@ -11,27 +13,47 @@ import '../widgets/platform_data_profile.dart';
 import '../widgets/acceptance_graph.dart';
 import '../widgets/preloader.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget{
   static const routeName = '/profile';
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final Friends friend;
   final String handle;
   final bool isUserItself;
+
+  ProfileScreen({Key key, this.handle, this.isUserItself, this.friend}) : super(key: key);
+
+  @override
+  _ProfileState createState() => _ProfileState();
+}
+
+class _ProfileState extends State<ProfileScreen> {
+
+  bool isFriend = false;
+
+  @override
+  void initState() {
+    if(widget.isUserItself){
+      isFriend = false;
+    }
+    else{
+      isFriend = widget.friend.isFriend;
+    }
+    super.initState();
+  }
 
   TextStyle get titleTextStyle => TextStyle(
         color: Colors.black,
         fontWeight: FontWeight.bold,
       );
 
-  ProfileScreen({Key key, @required this.handle, this.isUserItself});
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: scaffoldKey,
+      key: widget.scaffoldKey,
       drawer: AppDrawer(),
       body: Container(
         child: FutureBuilder(
-            future: getProfileFromHandle(this.handle),
+            future: getProfileFromHandle(widget.handle),
             builder: (context, snapshot) {
               if (snapshot.data == null) return Preloader();
               return Stack(
@@ -79,7 +101,7 @@ class ProfileScreen extends StatelessWidget {
                                 ),
                                 onPressed: () {
                                   AppDrawer();
-                                  scaffoldKey.currentState.openDrawer();
+                                  widget.scaffoldKey.currentState.openDrawer();
                                 },
                               ),
                             ),
@@ -275,18 +297,18 @@ class ProfileScreen extends StatelessWidget {
             }),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      floatingActionButton: !isUserItself
+      floatingActionButton: !widget.isUserItself
           ? Container(
               height: 55.0,
               width: 55.0,
               child: FutureBuilder(
                   //to delay showing the floating button
-                  future: getProfileFromHandle(this.handle),
+                  future: getProfileFromHandle(widget.handle),
                   builder: (context, snapshot) {
                     if (snapshot.data == null) return Container();
                     return FloatingActionButton(
-                      child: Icon(Icons.person_add),
-                      backgroundColor: Theme.of(context).buttonColor,
+                      child: Icon(isFriend? FontAwesomeIcons.user : FontAwesomeIcons.userPlus,),
+                      backgroundColor: isFriend ? Colors.green : Theme.of(context).buttonColor,
                       onPressed: () async {
                         bool isLoggedin = await isAuthenticated();
                         if (!isLoggedin) {
@@ -304,7 +326,18 @@ class ProfileScreen extends StatelessWidget {
                             ),
                           );
                         } else {
-                          //write code to add friends
+                          if (!isFriend) {
+                            var handle =
+                                widget.friend.stopStalkHandle;
+                            Scaffold.of(context).showSnackBar(
+                              SnackBar(
+                                  content: Text(
+                                      'Added $handle to friend list'),
+                                  elevation: 10,
+                                  duration: Duration(seconds: 2)),
+                            );
+                            setState(() => isFriend = true);
+                          }
                         }
                       },
                     );

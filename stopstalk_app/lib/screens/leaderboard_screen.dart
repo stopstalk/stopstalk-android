@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:folding_cell/folding_cell.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:stopstalkapp/classes/searched_friends_class.dart';
 
 import '../widgets/app_drawer.dart';
 import '../classes/leaderboard.dart';
@@ -147,6 +148,7 @@ class _LeaderBoardScreenState extends State<LeaderBoardScreen> {
                                       snapshot.data[i].country != null
                                           ? snapshot.data[i].country[1]
                                           : 'NA',
+                                      false
                                     ),
                                     innerBottomWidget: _buildInnerBottomWidget(
                                       snapshot.data[i].institute,
@@ -254,6 +256,7 @@ class _LeaderBoardScreenState extends State<LeaderBoardScreen> {
                                               snapshot.data[i].country != null
                                                   ? snapshot.data[i].country[1]
                                                   : 'NA',
+                                              true
                                             ),
                                             innerBottomWidget:
                                                 _buildInnerBottomWidget(
@@ -454,12 +457,13 @@ class _LeaderBoardScreenState extends State<LeaderBoardScreen> {
     TextStyle contentTextStyle,
     String countryCode,
     String countryName,
+    bool isFriend
   ) {
     return GestureDetector(
       onTap: (){
         Navigator.push(context,
             MaterialPageRoute(builder: (context) {
-              return ProfileScreen(handle: handle,isUserItself: false,);
+              return ProfileScreen(handle: handle, isUserItself: false, friend: Friends(isFriend: isFriend),);
             }));
       },
       child: ClipRRect(
