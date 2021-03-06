@@ -86,6 +86,16 @@ Future<Map<String, dynamic>> getGlobalTrendingprobs() async {
   return null;
 }
 
+Future<Map<String, dynamic>> getFriendsSubmissions() async {
+  var url = await getURL('submissions', {});
+  var headers = await getAuthHeader();
+  var res = await http.get(url, headers: headers);
+  if (res.statusCode == 200) {
+    return jsonDecode(res.body);
+  }
+  return null;
+}
+
 Future<Map<String, dynamic>> getFriendsTrendingprobs() async {
   var url = await getURL('problems/friends_trending', {});
   var headers = await getAuthHeader();

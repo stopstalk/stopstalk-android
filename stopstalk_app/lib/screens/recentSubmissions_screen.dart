@@ -6,7 +6,6 @@ import '../widgets/recentCard.dart';
 import '../classes/recent_submissions_class.dart';
 
 import '../utils/api.dart';
-import '../utils/platforms.dart' as platforms;
 
 import '../widgets/preloader.dart';
 
@@ -24,7 +23,8 @@ class RecentSubmissionsScreen extends StatefulWidget {
   };
 
   @override
-  _RecentSubmissionsScreenState createState() => _RecentSubmissionsScreenState();
+  _RecentSubmissionsScreenState createState() =>
+      _RecentSubmissionsScreenState();
 }
 
 class _RecentSubmissionsScreenState extends State<RecentSubmissionsScreen> {
@@ -33,36 +33,25 @@ class _RecentSubmissionsScreenState extends State<RecentSubmissionsScreen> {
   bool flag = false;
 
   final GlobalKey<AnimatedListState> _animatedListKey =
-  GlobalKey<AnimatedListState>();
+      GlobalKey<AnimatedListState>();
 
   Future<List<Recent>> _getRecentSubmissions() async {
-    for (int i = 1; i < 5; i++) {
-      if (i % 2 == 0) {
-        Recent rec = Recent(
-            problemName: 'Special Permutation ',
-            platform: 'Codechef',
-            stopStalkUrl: 'https://codeforces.com/contest/1454/problem/A',
-            name: 'Sandesh Singh',
-            problemNameStopStalkUrl: 'https://codeforces.com/contest/1454/problem/B',
-            date: '06/01/2021',
-            id:'123',
-            status: true
-        );
-        recents.add(rec);
-      } else {
-        Recent rec = Recent(
-            problemName: 'Special Permutation ',
-            platform: 'Codeforces',
-            stopStalkUrl: 'https://codeforces.com/contest/1454/problem/A',
-            name: 'Sandesh',
-            problemNameStopStalkUrl: 'https://codeforces.com/contest/1454/problem/B',
-            date: '06/01/2021',
-            id:'123',
-            status: false
-        );
-        recents.add(rec);
-      }
-    }
+    var resp = await getFriendsSubmissions();
+    print("sun");
+    print(resp);
+    var result = resp["submissions"];
+    result.forEach((element) {
+      Recent rec = Recent(
+          problemName: element["problem_details"]["name"],
+          platform: element["site"],
+          stopStalkUrl: element["view_link"],
+          name: element["stopstalk_handle"],
+          problemNameStopStalkUrl: element["problem_details"]["link"],
+          date: element["time_stamp"],
+          id: element["id"].toString(),
+          status: element["status"] == 'AC');
+      recents.add(rec);
+    });
     recents.length == 0 ? flag = true : flag = false;
     return recents;
   }
@@ -99,16 +88,15 @@ class _RecentSubmissionsScreenState extends State<RecentSubmissionsScreen> {
                       height: MediaQuery.of(context).size.height,
                       child: flag != true
                           ? AnimatedList(
-                        key: _animatedListKey,
-                        primary: true,
-                        shrinkWrap: true,
-                        physics: BouncingScrollPhysics(),
-                        initialItemCount: snapshot.data.length,
-                        itemBuilder: (context, i, animation) {
-                          return RecentCard(
-                              snapshot.data[i], context, i);
-                        },
-                      )
+                              key: _animatedListKey,
+                              primary: true,
+                              shrinkWrap: true,
+                              physics: BouncingScrollPhysics(),
+                              initialItemCount: snapshot.data.length,
+                              itemBuilder: (context, i, animation) {
+                                return RecentCard(snapshot.data[i], context, i);
+                              },
+                            )
                           : _showNoSubmissionsFound(),
                     ),
                   ],

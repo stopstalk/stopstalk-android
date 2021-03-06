@@ -4,7 +4,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import'../screens/profile.dart';
+import '../screens/profile.dart';
 
 import '../classes/recent_submissions_class.dart';
 
@@ -15,20 +15,11 @@ class RecentCard extends StatelessWidget {
   final BuildContext context;
   final int i;
   RecentCard(
-      this.rec,
-      this.context,
-      this.i,
-      );
-  static const platformImgs = {
-    'Codechef': 'assets/platform_logos/codechef_small.png',
-    'Codeforces': 'assets/platform_logos/codeforces_small.png',
-    'Spoj': 'assets/platform_logos/spoj_small.png',
-    'Atcoder': 'assets/platform_logos/atcoder_small.png',
-    'Hackerearth': 'assets/platform_logos/hackerearth_small.png',
-    'Hackerrank': 'assets/platform_logos/hackerrank_small.png',
-    'Uva': 'assets/platform_logos/uva_small.png',
-    'Timus': 'assets/platform_logos/timus_small.png',
-  };
+    this.rec,
+    this.context,
+    this.i,
+  );
+  static const platformImgs = platforms.platformImgs;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -45,18 +36,16 @@ class RecentCard extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
-              Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    //SizedBox(width: 20),
-                    Flexible(
-                      child: Padding(
-                          padding: new EdgeInsets.only(
-                              left: 0.0, right: 6.0, top: 6.0, bottom: 6.0),
-                          child: InkWell(
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
+              Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
+                //SizedBox(width: 20),
+                Flexible(
+                  child: Padding(
+                      padding: new EdgeInsets.only(
+                          left: 0.0, right: 6.0, top: 6.0, bottom: 6.0),
+                      child: InkWell(
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
                                 Text(
                                   rec.name,
                                   maxLines: 1,
@@ -64,23 +53,24 @@ class RecentCard extends StatelessWidget {
                                   style: TextStyle(
                                       fontSize: 20, color: Colors.black),
                                 ),
-                                  SizedBox(width:5),
-                                  Icon(
-                                    FontAwesomeIcons.externalLinkAlt,
-                                    size: 15,
-                                  ),
+                                SizedBox(width: 5),
+                                Icon(
+                                  FontAwesomeIcons.externalLinkAlt,
+                                  size: 15,
+                                ),
                               ]),
-                              onTap: (){
-                                Navigator.push(
-                                    context,
-                                    PageTransition(
-                                        type: PageTransitionType.fade,
-                                        child: ProfileScreen(
-                                            handle: rec.id)));
-                              }
-                          )),
-                    ),
-                  ]),
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                PageTransition(
+                                    type: PageTransitionType.fade,
+                                    child: ProfileScreen(
+                                      handle: rec.name,
+                                      isUserItself: false,
+                                    )));
+                          })),
+                ),
+              ]),
               Divider(
                 color: Colors.grey,
                 thickness: 2,
@@ -90,46 +80,45 @@ class RecentCard extends StatelessWidget {
               SizedBox(
                 height: 5,
               ),
-              Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    CircleAvatar(
-                      radius: 16,
-                      backgroundColor: Color(0xFF2542ff),
-                      child: CircleAvatar(
-                        backgroundColor: Color(0XFFeeeeee),
-                        radius: 15,
-                        child: Image.asset(RecentCard.platformImgs[rec.platform],
-                          fit: BoxFit.cover,),
-                      ),
+              Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+                CircleAvatar(
+                  radius: 16,
+                  backgroundColor: Color(0xFF2542ff),
+                  child: CircleAvatar(
+                    backgroundColor: Color(0XFFeeeeee),
+                    radius: 15,
+                    child: Image.asset(
+                      RecentCard.platformImgs[rec.platform.toLowerCase()],
+                      fit: BoxFit.cover,
                     ),
-                    //SizedBox(width: 20),
-                    Container(
-                      child: Padding(
-                          padding: new EdgeInsets.only(left: 0.0,right:6.0,top: 6.0,bottom: 6.0),
-                          child:InkWell(
-                            child:Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children:[
-                            Text(
-                            rec.problemName,
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                                fontSize: 18,
-                                color: Colors.black
-                            ),
-                          ),
-                                SizedBox(width:5),
-                                Icon(
-                                  FontAwesomeIcons.externalLinkAlt,
-                                  size: 15,
-                                ),
-                              ]),
-                            onTap: ()=>_launchURL(rec.problemNameStopStalkUrl),)
-                      ),
-                    ),
-                  ]),
+                  ),
+                ),
+                //SizedBox(width: 20),
+                Container(
+                  child: Padding(
+                      padding: new EdgeInsets.only(
+                          left: 0.0, right: 6.0, top: 6.0, bottom: 6.0),
+                      child: InkWell(
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                rec.problemName,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                    fontSize: 18, color: Colors.black),
+                              ),
+                              SizedBox(width: 5),
+                              Icon(
+                                FontAwesomeIcons.externalLinkAlt,
+                                size: 15,
+                              ),
+                            ]),
+                        onTap: () => _launchURL(rec.problemNameStopStalkUrl),
+                      )),
+                ),
+              ]),
               SizedBox(
                 height: 10,
               ),
@@ -138,21 +127,25 @@ class RecentCard extends StatelessWidget {
                 children: <Widget>[
                   Text(
                     rec.date,
-                    style: TextStyle(
-                        fontSize: 15, color: Colors.grey[800]),
+                    style: TextStyle(fontSize: 15, color: Colors.grey[800]),
                   ),
                   RichText(
                     text: TextSpan(
                       children: [
                         TextSpan(
-                          text: "Status: ",style: TextStyle(
-                            fontSize: 15, color: Colors.grey[800]),
+                          text: "Status: ",
+                          style:
+                              TextStyle(fontSize: 15, color: Colors.grey[800]),
                         ),
                         WidgetSpan(
-                          child: rec.status==true?
-                          Icon(Icons.check, size: 20,color: Colors.green,)
-                              : Icon(Icons.close, size: 20,color:Colors.red)
-                        )
+                            child: rec.status == true
+                                ? Icon(
+                                    Icons.check,
+                                    size: 20,
+                                    color: Colors.green,
+                                  )
+                                : Icon(Icons.close,
+                                    size: 20, color: Colors.red))
                       ],
                     ),
                   )
