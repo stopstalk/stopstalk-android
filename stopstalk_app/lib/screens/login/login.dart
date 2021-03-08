@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stopstalkapp/classes/dashboard_class.dart';
+import 'package:stopstalkapp/utils/googleLogin.dart';
 
 import '../dashboard.dart';
 import 'login_form.dart';
@@ -33,7 +34,9 @@ class Login extends StatelessWidget {
               'assets/images/google.png',
               width: width / 2,
             ),
-            onPressed: () {},
+            onPressed: () {
+              loginWithGoogle(context);
+            },
           ),
           SizedBox(height: 30),
           Row(

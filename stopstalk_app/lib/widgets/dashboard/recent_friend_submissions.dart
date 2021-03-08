@@ -25,11 +25,8 @@ class RecentFriendSubmissions extends StatelessWidget {
       ),
       child: Column(
         children: [
-          Padding(
-            padding: EdgeInsets.only(top: 8.0),
-          ),
           Text(
-            "Recent Friend Submissions",
+            "Add More Friends",
             style: TextStyle(
               fontSize: 20.0,
               fontWeight: FontWeight.bold,
@@ -39,167 +36,23 @@ class RecentFriendSubmissions extends StatelessWidget {
           Padding(
             padding: EdgeInsets.only(top: 8.0),
           ),
-          ListView(
-            shrinkWrap: true,
-            children: [
-              Container(
-                padding: EdgeInsets.all(5.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(left: 5.0),
-                    ),
-                    Expanded(
-                      flex: 2,
-                      child: Text(
-                        "Aditi Goyal",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w400,
-                          fontSize: 15.0,
-                        ),
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
-                      ),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: Row(
-                        children: [
-                          Image(
-                            image: AssetImage(
-                              images["CODEFORCES".toLowerCase()],
-                            ),
-                            height: 40.0,
-                            width: 40.0,
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(right: 2.0),
-                          ),
-                          Text(
-                            "10",
-                            style: TextStyle(
-                              fontWeight: FontWeight.w400,
-                              fontSize: 15.0,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: Row(
-                        children: [
-                          Image(
-                            image: AssetImage(
-                              images["CODECHEF".toLowerCase()],
-                            ),
-                            height: 40.0,
-                            width: 40.0,
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(right: 2.0),
-                          ),
-                          Text(
-                            "4",
-                            style: TextStyle(
-                              fontWeight: FontWeight.w400,
-                              fontSize: 15.0,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                padding: EdgeInsets.all(5.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(left: 5.0),
-                    ),
-                    Expanded(
-                      flex: 2,
-                      child: Text(
-                        "Abhijeet Verma",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w400,
-                          fontSize: 15.0,
-                        ),
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
-                      ),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: Row(
-                        children: [
-                          Image(
-                            image: AssetImage(
-                              images["CODEFORCES".toLowerCase()],
-                            ),
-                            height: 40.0,
-                            width: 40.0,
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(right: 2.0),
-                          ),
-                          Text(
-                            "6",
-                            style: TextStyle(
-                              fontWeight: FontWeight.w400,
-                              fontSize: 15.0,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: Row(
-                        children: [
-                          Image(
-                            image: AssetImage(
-                              images["CODECHEF".toLowerCase()],
-                            ),
-                            height: 40.0,
-                            width: 40.0,
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(right: 2.0),
-                          ),
-                          Text(
-                            "3",
-                            style: TextStyle(
-                              fontWeight: FontWeight.w400,
-                              fontSize: 15.0,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
+          Text(
+            "Check out and compare what questions your friends are coding out!",
+            textAlign: TextAlign.center,
+            style: TextStyle(fontWeight: FontWeight.w400, fontSize: 15.0),
           ),
           Padding(
-            padding: EdgeInsets.only(top: 8.0, bottom: 10.0),
+            padding: EdgeInsets.only(top: 8.0),
           ),
           RaisedButton(
             elevation: 5,
-            padding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+            padding: EdgeInsets.symmetric(vertical: 0, horizontal: 14),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8.0),
             ),
             color: Theme.of(context).buttonColor,
             child: AutoSizeText(
-              'View All',
+              'Check Out',
               maxLines: 1,
               minFontSize: 7,
               style: TextStyle(
@@ -208,11 +61,12 @@ class RecentFriendSubmissions extends StatelessWidget {
               ),
             ),
             onPressed: () {
-              Navigator.of(context)
-                  .pushNamed(RecentSubmissionsScreen.routeName);
-            },          ),
+              Navigator.of(context).pushNamed(
+                RecentSubmissionsScreen.routeName,);
+            },
+          ),
           Padding(
-            padding: EdgeInsets.only(top: 8.0, bottom: 10.0),
+            padding: EdgeInsets.only(top: 8.0),
           ),
         ],
       ),
