@@ -48,6 +48,17 @@ Future<String> attemptLogIn(String email, String password) async {
   return null;
 }
 
+Future<String> attemptGoogleLogIn(String token) async {
+  var url = await getURL('user/app_google_login_token', {'gauth_token': token});
+  var res = await http.post(url);
+  print(res.statusCode);
+  if (res.statusCode == 200) {
+    var jsonData = jsonDecode(res.body);
+    return jsonData['token'];
+  }
+  return null;
+}
+
 Future<String> resetToken(String token) async {
   var url = await getURL('user/login_token', {});
   var res = await http.post(url, body: {'token': token});

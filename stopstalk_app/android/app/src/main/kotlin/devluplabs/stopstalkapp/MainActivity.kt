@@ -1,4 +1,4 @@
-package devluplabs.stopstalkapp
+package com.stopstalk.android
 
 import io.flutter.embedding.android.FlutterActivity
 
