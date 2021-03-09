@@ -7,5 +7,6 @@ const platformImgs = {
   'hackerrank': 'assets/platform_logos/hackerrank_small.png',
   'uva': 'assets/platform_logos/uva_small.png',
   'timus': 'assets/platform_logos/timus_small.png',
+  'leetcode':'assets/platform_logos/leetcode_small.png',
   'other': 'assets/platform_logos/other.jpeg',
 };
