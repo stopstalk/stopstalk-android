@@ -3,9 +3,11 @@ import 'package:flutter/cupertino.dart';
 /* import 'package:url_launcher/url_launcher.dart'; */
 import 'package:page_transition/page_transition.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:stopstalkapp/classes/user.dart';
 
 import '../screens/profile.dart';
-
+import '../utils/api.dart';
+import '../classes/user.dart';
 import '../classes/searched_friends_class.dart';
 
 import '../utils/platforms.dart' as platforms;
@@ -15,7 +17,9 @@ class FriendCard extends StatefulWidget {
   final BuildContext context;
   final int i;
   final Animation animation;
+
   FriendCard(this.friend, this.context, this.i, this.animation);
+
   static const platformImgs = platforms.platformImgs;
 
   @override
@@ -29,6 +33,7 @@ class _FriendCardState extends State<FriendCard> {
     begin: Offset(1, 0),
     end: Offset.zero,
   );
+
   @override
   void initState() {
     isFriend = widget.friend.isFriend;
@@ -65,7 +70,7 @@ class _FriendCardState extends State<FriendCard> {
                                   left: 0.0, right: 6.0, top: 6.0, bottom: 6.0),
                               child: Row(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                MainAxisAlignment.spaceBetween,
                                 children: [
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -73,8 +78,8 @@ class _FriendCardState extends State<FriendCard> {
                                       SizedBox(width: 20),
                                       SizedBox(
                                         width:
-                                            MediaQuery.of(context).size.width /
-                                                2,
+                                        MediaQuery.of(context).size.width /
+                                            2,
                                         child: InkWell(
                                             child: Text(
                                               widget.friend.firstName +
@@ -93,20 +98,23 @@ class _FriendCardState extends State<FriendCard> {
                                                       type: PageTransitionType
                                                           .fade,
                                                       child: ProfileScreen(
-                                                          handle: widget.friend
-                                                              .stopStalkHandle,
-                                                          isUserItself:
-                                                              false,
-                                                          friend: widget.friend,)));
+                                                        handle: widget.friend
+                                                            .stopStalkHandle,
+                                                        isUserItself: false,
+                                                        friend: widget.friend,
+                                                      )));
                                             }),
                                       ),
                                     ],
                                   ),
                                   MaterialButton(
-                                    onPressed: () {
+                                    onPressed: () async{
+                                      final friendProfile =await getProfileFromHandle(
+                                          widget.friend.stopStalkHandle);
+                                      bool checkres=await markFriend(friendProfile.user.id.toString());
+                                      var handle =
+                                          widget.friend.stopStalkHandle;
                                       if (!isFriend) {
-                                        var handle =
-                                            widget.friend.stopStalkHandle;
                                         Scaffold.of(context).showSnackBar(
                                           SnackBar(
                                               content: Text(
@@ -114,7 +122,33 @@ class _FriendCardState extends State<FriendCard> {
                                               elevation: 10,
                                               duration: Duration(seconds: 2)),
                                         );
-                                        setState(() => isFriend = true);
+                                        setState(() {
+                                          isFriend = true;
+                                        });
+                                      }
+                                      else{
+                                        bool checkres = await unFriend(friendProfile.user.id.toString());
+                                        if(checkres) {
+                                          Scaffold.of(context).showSnackBar(
+                                            SnackBar(
+                                                content: Text(
+                                                    'Removed $handle from friend list'),
+                                                elevation: 10,
+                                                duration: Duration(seconds: 2)),
+                                          );
+                                          setState(() {
+                                            isFriend = false;
+                                          });
+                                        }
+                                        else{
+                                          Scaffold.of(context).showSnackBar(
+                                            SnackBar(
+                                                content: Text(
+                                                    'Unable to remove friend at the moment'),
+                                                elevation: 10,
+                                                duration: Duration(seconds: 2)),
+                                          );
+                                        }
                                       }
                                     },
                                     color: isFriend
@@ -201,7 +235,7 @@ class _FriendCardState extends State<FriendCard> {
     );
   }
 
-  /* _launchURL(String url) async {
+/* _launchURL(String url) async {
     if (await canLaunch(url)) {
       await launch(url);
     } else {
