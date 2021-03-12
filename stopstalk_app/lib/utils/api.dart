@@ -193,6 +193,30 @@ Future<Map<String, dynamic>> getSearchFriends(
   return null;
 }
 
+Future<bool> markFriend(String friendId) async{
+  var url = await getURL('mark_friend/'+friendId,{});
+  var headers = await getAuthHeader();
+  var res = await http.get(url, headers: headers);
+  if (res.statusCode == 200) {
+    print("Added friend: " + friendId);
+    return true;
+  }
+  print("Unable to add friend at the moment");
+  return false;
+}
+
+Future<bool> unFriend(String friendId)async{
+  var url = await getURL('unfriend/'+friendId,{});
+  var headers = await getAuthHeader();
+  var res = await http.get(url, headers: headers);
+  if (res.statusCode == 200) {
+    print("remove friend: " + friendId);
+    return true;
+  }
+  print("Unable to remove friend at the moment");
+  return false;
+}
+
 Future<Map<String, dynamic>> getLeaderboard(bool global) async {
   var url = await getURL('leaderboard', {});
   var res;

@@ -26,7 +26,7 @@ class RecentFriendSubmissions extends StatelessWidget {
       child: Column(
         children: [
           Text(
-            "Add More Friends",
+            "Recent Friends Submissions",
             style: TextStyle(
               fontSize: 20.0,
               fontWeight: FontWeight.bold,
