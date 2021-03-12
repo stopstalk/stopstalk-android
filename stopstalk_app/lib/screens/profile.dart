@@ -327,12 +327,10 @@ class _ProfileState extends State<ProfileScreen> {
                           );
                         } else {
                           if (!isFriend) {
-                            var handle =
-                                widget.friend.stopStalkHandle;
                             Scaffold.of(context).showSnackBar(
                               SnackBar(
                                   content: Text(
-                                      'Added $handle to friend list'),
+                                      'Added ${widget.friend.stopStalkHandle} to friend list'),
                                   elevation: 10,
                                   duration: Duration(seconds: 2)),
                             );
