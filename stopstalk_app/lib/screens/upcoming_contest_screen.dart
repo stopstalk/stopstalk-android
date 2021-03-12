@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart' as http;
+import 'package:html/parser.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'dart:convert';
 import 'package:timer_builder/timer_builder.dart';
@@ -24,41 +25,32 @@ class UpcomingContestScreen extends StatefulWidget {
 
 class _UpcomingContestState extends State<UpcomingContestScreen> {
   Future<List<Contest>> _getContests() async {
-    String url = "https://kontests.net/api/v1/all";
+    String url = "https://www.stopstalk.com/contests.json";
     var data = await http.get(url);
-    var jsonData = List<Map<String, dynamic>>.from(jsonDecode(data.body));
+    var jsonData = Map<String, dynamic>.from(jsonDecode(data.body));
     List<Contest> contests = [];
-    for (var contest in jsonData) {
-      Contest cont = Contest(contest["name"], contest["url"], contest["site"],
-          contest["start_time"], contest["duration"], contest["end_time"]);
-      if (contest["site"] == 'HackerRank' ||
-          contest["site"] == 'CodeChef' ||
-          contest["site"] == 'HackerEarth' ||
-          contest["site"] == 'Codeforces' ||
-          contest["site"] == 'AtCoder' ||
-          contest["site"] == 'Spoj' ||
-          contest["site"] == 'Timus' ||
-          contest["site"] == 'Uva')
-        contests.add(cont);
+    var document = parse(jsonData["table"]);
+    final tableRows = document.querySelector("tbody").querySelectorAll("tr");
+    for (final tableRow in tableRows) {
+      Contest cont = Contest(
+        name: tableRow.children[0].text,
+        platform:
+            tableRow.children[1].querySelector('img').attributes["title"],
+      startTime: tableRow.children[2].innerHtml,
+        duration: tableRow.children[3].text,
+        url: tableRow.children[4].querySelector('a').attributes["href"],
+        endTime: tableRow.children[3].text,
+      );
+      contests.add(cont);
     }
-    return contests.reversed.toList();
+    return contests.toList();
   }
 
   List<String> startTimes = ["Loading"];
 
-  // Future<List<String>> _getStartTimes() async {
-  //   startTimes = [];
-  //   String url = "https://www.stopstalk.com/contests.json";
-  //   var data = await http.get(url);
-  //   var jsonData = jsonDecode(data.body);
-  //   for (var contest in jsonData["upcoming"]) {
-  //     startTimes.add(timeToDate(contest["StartTime"]));
-  //   }
-  // }
-
   String timeToDate(String startTime) {
     String date =
-        startTime.substring(0, 10) + " " + startTime.substring(11, 19) + 'Z';
+        startTime.substring(0, 4) + "-" + startTime.substring(5, 7) + '-'+startTime.substring(8,19);
     return date;
   }
 
@@ -143,6 +135,7 @@ class _UpcomingContestState extends State<UpcomingContestScreen> {
           future: _getContests(),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (snapshot.data == null) {
+              print(snapshot.error);
               return Preloader();
             } else {
               return ListView.builder(
@@ -153,11 +146,14 @@ class _UpcomingContestState extends State<UpcomingContestScreen> {
                       frontWidget: frontWidget(
                           snapshot.data[index].name,
                           snapshot.data[index].platform,
-                          snapshot.data[index].startTime),
+                          snapshot.data[index].startTime,
+                      snapshot.data[index].endTime),
                       innerTopWidget: innerTopWidget(
                           snapshot.data[index].name,
                           snapshot.data[index].platform,
-                          snapshot.data[index].startTime),
+                          snapshot.data[index].startTime,
+                        snapshot.data[index].endTime
+                      ),
                       innerBottomWidget: innerBottomWidget(
                           snapshot.data[index].startTime,
                           snapshot.data[index].url),
@@ -177,9 +173,16 @@ class _UpcomingContestState extends State<UpcomingContestScreen> {
     );
   }
 
-  Widget frontWidget(String name, String image, String startTime) {
-    String date = startTime.substring(0, 10);
-    String time = startTime.substring(11, 19);
+  Widget frontWidget(String name, String image, String startTime,String endTime) {
+    String date,time;
+    if(startTime!='-') {
+      date = startTime.substring(0, 9);
+      time = startTime.substring(11, 19);
+    }
+    else{
+      date = endTime.substring(0, 9);
+      time = endTime.substring(11, 19);
+    }
     return Builder(
       builder: (BuildContext context) {
         return GestureDetector(
@@ -349,9 +352,16 @@ class _UpcomingContestState extends State<UpcomingContestScreen> {
     );
   }
 
-  Widget innerTopWidget(String name, String image, String startTime) {
-    String date = startTime.substring(0, 10);
-    String time = startTime.substring(11, 19);
+  Widget innerTopWidget(String name, String image, String startTime,String endTime) {
+    String date,time;
+    if(startTime!='-') {
+      date = startTime.substring(0, 9);
+      time = startTime.substring(11, 19);
+    }
+    else{
+      date = endTime.substring(0, 9);
+      time = endTime.substring(11, 19);
+    }
     return GestureDetector(
       onTap: null,
       child: ClipRRect(
@@ -512,7 +522,7 @@ class _UpcomingContestState extends State<UpcomingContestScreen> {
                       Padding(
                         padding: EdgeInsets.only(right: 8.0),
                       ),
-                      TimerBuilder.periodic(Duration(seconds: 1),
+                      startTime!='-'?TimerBuilder.periodic(Duration(seconds: 1),
                           builder: (context) {
                         return Text(
                           timeLeft(DateTime.parse(timeToDate(startTime))),
@@ -521,6 +531,9 @@ class _UpcomingContestState extends State<UpcomingContestScreen> {
                           ),
                         );
                       })
+                          :Text("Contest Started",style: TextStyle(
+                        fontSize: 18.0,
+                      ),),
                     ],
                   ),
                   Padding(

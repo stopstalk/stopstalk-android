@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:html/parser.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'dart:convert';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -15,24 +16,25 @@ class UpcomingContests extends StatelessWidget {
   final images = platformImgs;
 
   Future<List<Contest>> _getContests() async {
-    String url = "https://kontests.net/api/v1/all";
+    String url = "https://www.stopstalk.com/contests.json";
     var data = await http.get(url);
-    var jsonData = List<Map<String, dynamic>>.from(jsonDecode(data.body));
+    var jsonData = Map<String, dynamic>.from(jsonDecode(data.body));
     List<Contest> contests = [];
-    for (var contest in jsonData) {
-      Contest cont = Contest(contest["name"], contest["url"], contest["site"],
-          contest["start_time"], contest["duration"], contest["end_time"]);
-      if (contest["site"] == 'HackerRank' ||
-          contest["site"] == 'CodeChef' ||
-          contest["site"] == 'HackerEarth' ||
-          contest["site"] == 'Codeforces' ||
-          contest["site"] == 'AtCoder' ||
-          contest["site"] == 'Spoj' ||
-          contest["site"] == 'Timus' ||
-          contest["site"] == 'Uva')
-        contests.add(cont);
+    var document = parse(jsonData["table"]);
+    final tableRows = document.querySelector("tbody").querySelectorAll("tr");
+    for (final tableRow in tableRows) {
+      Contest cont = Contest(
+        name: tableRow.children[0].text,
+        platform:
+        tableRow.children[1].querySelector('img').attributes["title"],
+        startTime: tableRow.children[2].innerHtml,
+        duration: tableRow.children[3].text,
+        url: tableRow.children[4].querySelector('a').attributes["href"],
+        endTime: tableRow.children[3].text,
+      );
+      contests.add(cont);
     }
-    return contests.reversed.toList();
+    return contests.toList();
   }
 
   _launchURL(String url) async {

@@ -6,6 +6,6 @@ class Contest {
   final String duration;
   final String endTime;
 
-  Contest(this.name, this.url, this.platform, this.startTime, this.duration,
-      this.endTime);
+  Contest({this.name, this.url, this.platform, this.startTime, this.duration,
+      this.endTime});
 }
