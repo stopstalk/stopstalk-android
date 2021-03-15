@@ -9,6 +9,7 @@ import '../screens/search_friends_screen.dart';
 import '../screens/search_problems_screen.dart';
 import '../screens/trending_problems_screen.dart';
 import '../screens/upcoming_contest_screen.dart';
+
 // import '../screens/user_editorials.dart';
 import '../screens/dashboard.dart';
 import '../screens/todoList_screen.dart';
@@ -67,7 +68,9 @@ class _AppDrawerState extends State<AppDrawer> {
                           PageTransition(
                               type: PageTransitionType.fade,
                               child: ProfileScreen(
-                                  handle: _userData.stopstalkHandle,isUserItself: true,)));
+                                handle: _userData.stopstalkHandle,
+                                isUserItself: true,
+                              )));
                     },
                   )
                 : ListTile(
@@ -172,7 +175,7 @@ class _AppDrawerState extends State<AppDrawer> {
                 );
               },
             ),
-            Divider(),
+            _userData != null ? Divider() : SizedBox(),
             _userData != null
                 ? ListTile(
                     leading: Icon(Icons.exit_to_app),
@@ -194,7 +197,7 @@ class _AppDrawerState extends State<AppDrawer> {
               },
               child: Container(
                 margin: EdgeInsets.only(top: 0.0),
-                height: 80.0,
+                height: 70.0,
                 decoration: BoxDecoration(
                   color: Color(0xFF2542ff),
                 ),

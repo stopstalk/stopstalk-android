@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:stopstalkapp/classes/dashboard_class.dart';
 import 'package:stopstalkapp/utils/googleLogin.dart';
 import 'package:url_launcher/url_launcher.dart';
