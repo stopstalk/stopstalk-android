@@ -193,12 +193,10 @@ class _AppDrawerState extends State<AppDrawer> {
                         child: DevelopersInfo()));
               },
               child: Container(
+                margin: EdgeInsets.only(top: 0.0),
                 height: 80.0,
                 decoration: BoxDecoration(
                   color: Color(0xFF2542ff),
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(20.0),
-                      topRight: Radius.circular(20.0)),
                 ),
                 child: Center(
                   child: ListTile(
