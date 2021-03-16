@@ -6,6 +6,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:stopstalkapp/classes/user.dart';
 
 import '../screens/profile.dart';
+import '../utils/auth.dart';
 import '../utils/api.dart';
 import '../classes/user.dart';
 import '../classes/searched_friends_class.dart';
@@ -42,6 +43,8 @@ class _FriendCardState extends State<FriendCard> {
 
   @override
   Widget build(BuildContext context) {
+    final Friends args = ModalRoute.of(context).settings.arguments;
+    //args.loggedIn =  isAuthenticated();
     return FadeTransition(
       opacity: widget.animation,
       child: SlideTransition(
@@ -107,6 +110,7 @@ class _FriendCardState extends State<FriendCard> {
                                       ),
                                     ],
                                   ),
+                                  args.loggedIn?
                                   MaterialButton(
                                     onPressed: () async{
                                       final friendProfile =await getProfileFromHandle(
@@ -168,6 +172,25 @@ class _FriendCardState extends State<FriendCard> {
                                         right: 14),
                                     shape: CircleBorder(),
                                   )
+                                      :MaterialButton(onPressed:(){
+                                      Scaffold.of(context).showSnackBar(
+                                    SnackBar(
+                                        content: Text(
+                                            'Login to Add Friends'),
+                                        elevation: 10,
+                                        duration: Duration(seconds: 2)),
+                                  );},
+                                    color:Theme.of(context).buttonColor,
+                                    textColor: Colors.white,
+                                    child: Icon(FontAwesomeIcons.userPlus,
+                                      size: 18,
+                                    ),
+                                    padding: EdgeInsets.only(
+                                        top: 12,
+                                        bottom: 16,
+                                        left: 14,
+                                        right: 14),
+                                    shape: CircleBorder(),),
                                 ],
                               )),
                         ),

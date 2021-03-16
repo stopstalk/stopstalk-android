@@ -3,6 +3,7 @@ import 'package:stopstalkapp/classes/dashboard_class.dart';
 import 'package:stopstalkapp/utils/googleLogin.dart';
 
 import '../dashboard.dart';
+import '../upcoming_contest_screen.dart';
 import 'login_form.dart';
 
 // ignore: must_be_immutable
@@ -45,8 +46,7 @@ class Login extends StatelessWidget {
               FlatButton(
                 onPressed: () {
                   Navigator.of(context).pushReplacementNamed(
-                      Dashboard.routeName,
-                      arguments: DashboardClass(loggedin: false));
+                      UpcomingContestScreen.routeName);
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
