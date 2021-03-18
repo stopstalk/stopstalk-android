@@ -78,7 +78,7 @@ class _SearchProblemsScreenState extends State<SearchProblemsScreen> {
 
   Future<List> _initProblemTags() async {
     final List<Map<String, dynamic>> problemTags = new List();
-    var tags = await getSearchProblems({});
+    var tags = await getSearchProblems({}, context);
     if (tags == null) return [];
     List res = tags['generalized_tags'];
     res.forEach((tag) => problemTags.add({

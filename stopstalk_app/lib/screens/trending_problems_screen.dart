@@ -68,7 +68,7 @@ class _TrendingProblemsScreenState extends State<TrendingProblemsScreen> {
   }
 
   Future<List<Problems>> _getTrendingFriendsProblems() async {
-    var probs = await getFriendsTrendingprobs();
+    var probs = await getFriendsTrendingprobs(context);
     if (probs == null) return [];
     List result = probs['problems'];
     for (int i = 0; i < result.length; i++) {

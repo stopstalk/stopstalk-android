@@ -36,7 +36,7 @@ class _RecentSubmissionsScreenState extends State<RecentSubmissionsScreen> {
       GlobalKey<AnimatedListState>();
 
   Future<List<Recent>> _getRecentSubmissions() async {
-    var resp = await getFriendsSubmissions();
+    var resp = await getFriendsSubmissions(context);
     print("sun");
     print(resp);
     var result = resp["submissions"];

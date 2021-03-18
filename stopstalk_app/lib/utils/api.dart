@@ -1,6 +1,9 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:stopstalkapp/screens/login/login_screen.dart';
 import 'dart:convert';
 import 'package:stopstalkapp/utils/storage.dart';
 
@@ -97,68 +100,94 @@ Future<Map<String, dynamic>> getGlobalTrendingprobs() async {
   return null;
 }
 
-Future<Map<String, dynamic>> getFriendsSubmissions() async {
+Future<Map<String, dynamic>> getFriendsSubmissions(BuildContext context) async {
   var url = await getURL('submissions', {});
   var headers = await getAuthHeader();
   var res = await http.get(url, headers: headers);
   if (res.statusCode == 200) {
     return jsonDecode(res.body);
   }
+  if (res.statusCode == 401) {
+    deleteAllDataSecureStore();
+    Navigator.of(context).pushReplacementNamed(LoginPage.routeName);
+  }
   return null;
 }
 
-Future<Map<String, dynamic>> getFriendsTrendingprobs() async {
+Future<Map<String, dynamic>> getFriendsTrendingprobs(
+    BuildContext context) async {
   var url = await getURL('problems/friends_trending', {});
   var headers = await getAuthHeader();
   var res = await http.get(url, headers: headers);
   if (res.statusCode == 200) {
     return jsonDecode(res.body);
   }
+  if (res.statusCode == 401) {
+    deleteAllDataSecureStore();
+    Navigator.of(context).pushReplacementNamed(LoginPage.routeName);
+  }
   return null;
 }
 
-Future<Map<String, dynamic>> getTodos() async {
+Future<Map<String, dynamic>> getTodos(BuildContext context) async {
   var url = await getURL('todo', {});
   var headers = await getAuthHeader();
   var res = await http.get(url, headers: headers);
   if (res.statusCode == 200) {
     return jsonDecode(res.body);
   }
+  if (res.statusCode == 401) {
+    deleteAllDataSecureStore();
+    Navigator.of(context).pushReplacementNamed(LoginPage.routeName);
+  }
   return null;
 }
 
-Future<String> addTodoUsingId(String id) async {
+Future<String> addTodoUsingId(String id, BuildContext context) async {
   var url = await getURL('problems/add_todo_problem', {'pid': id});
   var headers = await getAuthHeader();
   var res = await http.get(url, headers: headers);
   if (res.statusCode == 200) {
     return res.body;
   }
+  if (res.statusCode == 401) {
+    deleteAllDataSecureStore();
+    Navigator.of(context).pushReplacementNamed(LoginPage.routeName);
+  }
   return null;
 }
 
-Future<void> deleteTodoUsingLink(String link) async {
+Future<void> deleteTodoUsingLink(String link, BuildContext context) async {
   var url = await getURL('remove_todo', {'plink': link});
   var headers = await getAuthHeader();
   var res = await http.get(url, headers: headers);
   if (res.statusCode == 200) {
     print("deleted todo: " + link);
   }
+  if (res.statusCode == 401) {
+    deleteAllDataSecureStore();
+    Navigator.of(context).pushReplacementNamed(LoginPage.routeName);
+  }
   return null;
 }
 
-Future<Map<String, dynamic>> getRecommendedProblems() async {
+Future<Map<String, dynamic>> getRecommendedProblems(
+    BuildContext context) async {
   var url = await getURL('problems/recommendations.json', {});
   var headers = await getAuthHeader();
   var res = await http.get(url, headers: headers);
   if (res.statusCode == 200) {
     return jsonDecode(res.body);
   }
+  if (res.statusCode == 401) {
+    deleteAllDataSecureStore();
+    Navigator.of(context).pushReplacementNamed(LoginPage.routeName);
+  }
   return null;
 }
 
 Future<Map<String, dynamic>> getSearchProblems(
-    Map<String, String> filters) async {
+    Map<String, String> filters, BuildContext context) async {
   var url = await getURL('problems/search', filters);
   var jwt = await getDataSecureStore("jwt");
   var res;
@@ -171,11 +200,15 @@ Future<Map<String, dynamic>> getSearchProblems(
   if (res.statusCode == 200) {
     return jsonDecode(res.body);
   }
+  if (res.statusCode == 401) {
+    deleteAllDataSecureStore();
+    Navigator.of(context).pushReplacementNamed(LoginPage.routeName);
+  }
   return null;
 }
 
 Future<Map<String, dynamic>> getSearchFriends(
-    Map<String, String> filters) async {
+    Map<String, String> filters, BuildContext context) async {
   var url = await getURL('search', filters);
   print(url);
   var jwt = await getDataSecureStore("jwt");
@@ -190,34 +223,47 @@ Future<Map<String, dynamic>> getSearchFriends(
   if (res.statusCode == 200) {
     return jsonDecode(res.body);
   }
+  if (res.statusCode == 401) {
+    deleteAllDataSecureStore();
+    Navigator.of(context).pushReplacementNamed(LoginPage.routeName);
+  }
   return null;
 }
 
-Future<bool> markFriend(String friendId) async{
-  var url = await getURL('mark_friend/'+friendId,{});
+Future<bool> markFriend(String friendId, BuildContext context) async {
+  var url = await getURL('mark_friend/' + friendId, {});
   var headers = await getAuthHeader();
   var res = await http.get(url, headers: headers);
   if (res.statusCode == 200) {
     print("Added friend: " + friendId);
     return true;
   }
+  if (res.statusCode == 401) {
+    deleteAllDataSecureStore();
+    Navigator.of(context).pushReplacementNamed(LoginPage.routeName);
+  }
   print("Unable to add friend at the moment");
   return false;
 }
 
-Future<bool> unFriend(String friendId)async{
-  var url = await getURL('unfriend/'+friendId,{});
+Future<bool> unFriend(String friendId, BuildContext context) async {
+  var url = await getURL('unfriend/' + friendId, {});
   var headers = await getAuthHeader();
   var res = await http.get(url, headers: headers);
   if (res.statusCode == 200) {
     print("remove friend: " + friendId);
     return true;
   }
+  if (res.statusCode == 401) {
+    deleteAllDataSecureStore();
+    Navigator.of(context).pushReplacementNamed(LoginPage.routeName);
+  }
   print("Unable to remove friend at the moment");
   return false;
 }
 
-Future<Map<String, dynamic>> getLeaderboard(bool global) async {
+Future<Map<String, dynamic>> getLeaderboard(
+    bool global, BuildContext context) async {
   var url = await getURL('leaderboard', {});
   var res;
   if (global) {
@@ -228,6 +274,10 @@ Future<Map<String, dynamic>> getLeaderboard(bool global) async {
   }
   if (res.statusCode == 200) {
     return jsonDecode(res.body);
+  }
+  if (res.statusCode == 401) {
+    deleteAllDataSecureStore();
+    Navigator.of(context).pushReplacementNamed(LoginPage.routeName);
   }
   return null;
 }
