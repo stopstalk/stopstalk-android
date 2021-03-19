@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:stopstalkapp/classes/user.dart';
-
+import 'dart:developer';
 import '../screens/profile.dart';
 import '../utils/auth.dart';
 import '../utils/api.dart';
@@ -18,8 +18,8 @@ class FriendCard extends StatefulWidget {
   final BuildContext context;
   final int i;
   final Animation animation;
-
-  FriendCard(this.friend, this.context, this.i, this.animation);
+  bool loggedIn;
+  FriendCard(this.friend, this.context, this.i, this.animation,this.loggedIn);
 
   static const platformImgs = platforms.platformImgs;
 
@@ -40,11 +40,8 @@ class _FriendCardState extends State<FriendCard> {
     isFriend = widget.friend.isFriend;
     super.initState();
   }
-
   @override
   Widget build(BuildContext context) {
-    final Friends args = ModalRoute.of(context).settings.arguments;
-    //args.loggedIn =  isAuthenticated();
     return FadeTransition(
       opacity: widget.animation,
       child: SlideTransition(
@@ -110,7 +107,7 @@ class _FriendCardState extends State<FriendCard> {
                                       ),
                                     ],
                                   ),
-                                  args.loggedIn?
+                                  !widget.loggedIn?
                                   MaterialButton(
                                     onPressed: () async{
                                       final friendProfile =await getProfileFromHandle(
