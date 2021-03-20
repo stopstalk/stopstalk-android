@@ -6,7 +6,7 @@ class Recent {
   final String problemName;
   final String problemNameStopStalkUrl;
   final String date;
-  final bool status;
+  final String status;
 
   Recent({
     this.name,
