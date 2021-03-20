@@ -105,6 +105,7 @@ class _SearchFriendsScreenState extends State<SearchFriendsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final bool args = ModalRoute.of(context).settings.arguments;
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -318,7 +319,7 @@ class _SearchFriendsScreenState extends State<SearchFriendsScreen> {
                           initialItemCount: snapshot.data.length,
                           itemBuilder: (context, i, animation) {
                             return FriendCard(
-                                snapshot.data[i], context, i, animation);
+                                snapshot.data[i], context, i, animation,args);
                           },
                         )),
                       ],

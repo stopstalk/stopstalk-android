@@ -9,6 +9,7 @@ import '../screens/search_friends_screen.dart';
 import '../screens/search_problems_screen.dart';
 import '../screens/trending_problems_screen.dart';
 import '../screens/upcoming_contest_screen.dart';
+
 // import '../screens/user_editorials.dart';
 import '../screens/dashboard.dart';
 import '../screens/todoList_screen.dart';
@@ -67,7 +68,9 @@ class _AppDrawerState extends State<AppDrawer> {
                           PageTransition(
                               type: PageTransitionType.fade,
                               child: ProfileScreen(
-                                  handle: _userData.stopstalkHandle,isUserItself: true,)));
+                                handle: _userData.stopstalkHandle,
+                                isUserItself: true,
+                              )));
                     },
                   )
                 : ListTile(
@@ -107,23 +110,12 @@ class _AppDrawerState extends State<AppDrawer> {
                   )
                 : Container(),
             _userData != null ? Divider() : Container(),
-            // ListTile(
-            //   leading: Icon(FontAwesomeIcons.solidEdit),
-            //   title: Text('User Editorials'),
-            //   onTap: () {
-            //     Navigator.of(context).pushNamed(UserEditorialScreen.routeName);
-            //   },
-            // ),
-            // Divider(),
             ListTile(
               leading: Icon(Icons.search),
               title: Text('Search Friends'),
               onTap: () {
-                Navigator.push(
-                    context,
-                    PageTransition(
-                        type: PageTransitionType.fade,
-                        child: SearchFriendsScreen()));
+                Navigator.of(context).pushNamed(SearchFriendsScreen.routeName,
+                    arguments:_userData != null ? false : true);
               },
             ),
             Divider(),
@@ -172,7 +164,7 @@ class _AppDrawerState extends State<AppDrawer> {
                 );
               },
             ),
-            Divider(),
+            _userData != null ? Divider() : SizedBox(),
             _userData != null
                 ? ListTile(
                     leading: Icon(Icons.exit_to_app),
@@ -193,12 +185,10 @@ class _AppDrawerState extends State<AppDrawer> {
                         child: DevelopersInfo()));
               },
               child: Container(
-                height: 80.0,
+                margin: EdgeInsets.only(top: 0.0),
+                height: 70.0,
                 decoration: BoxDecoration(
                   color: Color(0xFF2542ff),
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(20.0),
-                      topRight: Radius.circular(20.0)),
                 ),
                 child: Center(
                   child: ListTile(

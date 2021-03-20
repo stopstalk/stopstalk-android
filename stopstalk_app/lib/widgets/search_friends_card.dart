@@ -4,8 +4,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:stopstalkapp/classes/user.dart';
-
+import 'dart:developer';
 import '../screens/profile.dart';
+import '../utils/auth.dart';
 import '../utils/api.dart';
 import '../classes/user.dart';
 import '../classes/searched_friends_class.dart';
@@ -17,8 +18,8 @@ class FriendCard extends StatefulWidget {
   final BuildContext context;
   final int i;
   final Animation animation;
-
-  FriendCard(this.friend, this.context, this.i, this.animation);
+  bool loggedIn;
+  FriendCard(this.friend, this.context, this.i, this.animation,this.loggedIn);
 
   static const platformImgs = platforms.platformImgs;
 
@@ -39,7 +40,6 @@ class _FriendCardState extends State<FriendCard> {
     isFriend = widget.friend.isFriend;
     super.initState();
   }
-
   @override
   Widget build(BuildContext context) {
     return FadeTransition(
@@ -107,6 +107,7 @@ class _FriendCardState extends State<FriendCard> {
                                       ),
                                     ],
                                   ),
+                                  !widget.loggedIn?
                                   MaterialButton(
                                     onPressed: () async {
                                       final friendProfile =
@@ -171,6 +172,25 @@ class _FriendCardState extends State<FriendCard> {
                                         right: 14),
                                     shape: CircleBorder(),
                                   )
+                                      :MaterialButton(onPressed:(){
+                                      Scaffold.of(context).showSnackBar(
+                                    SnackBar(
+                                        content: Text(
+                                            'Login to Add Friends'),
+                                        elevation: 10,
+                                        duration: Duration(seconds: 2)),
+                                  );},
+                                    color:Theme.of(context).buttonColor,
+                                    textColor: Colors.white,
+                                    child: Icon(FontAwesomeIcons.userPlus,
+                                      size: 18,
+                                    ),
+                                    padding: EdgeInsets.only(
+                                        top: 12,
+                                        bottom: 16,
+                                        left: 14,
+                                        right: 14),
+                                    shape: CircleBorder(),),
                                 ],
                               )),
                         ),
