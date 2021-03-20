@@ -63,6 +63,9 @@ class _SearchedProblemsScreenState extends State<SearchedProblemsScreen> {
       else if(element["link"].contains('uva.onlinejudge.org') || element["link"].contains('uhunt.felix-halim.net')){
         platform='Uva';
       }
+      else if(element["link"].contains('leetcode.com/')){
+        platform='Leetcode';
+      }
       else{
         platform='Other';
       }
