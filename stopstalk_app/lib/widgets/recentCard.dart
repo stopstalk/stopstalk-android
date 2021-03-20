@@ -102,12 +102,15 @@ class RecentCard extends StatelessWidget {
                         child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text(
-                                rec.problemName,
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                    fontSize: 18, color: Colors.black),
+                              SizedBox(
+                                width:220,
+                                child: Text(
+                                  rec.problemName,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                      fontSize: 18, color: Colors.black),
+                                ),
                               ),
                               SizedBox(width: 5),
                               Icon(
@@ -138,14 +141,21 @@ class RecentCard extends StatelessWidget {
                               TextStyle(fontSize: 15, color: Colors.grey[800]),
                         ),
                         WidgetSpan(
-                            child: rec.status == true
+                            child: rec.status == 'AC'
                                 ? Icon(
-                                    Icons.check,
-                                    size: 20,
-                                    color: Colors.green,
-                                  )
-                                : Icon(Icons.close,
-                                    size: 20, color: Colors.red))
+                              Icons.check,
+                              size: 20,
+                              color: Colors.green,
+                            )
+                                : rec.status=='PS'
+                            ?Icon(Icons.check,
+                                size: 20, color: Colors.yellow)
+                          :rec.status=='TLE'
+                                ?Icon(Icons.timelapse,
+                                size: 20, color: Colors.red)
+                                :Icon(Icons.close,
+                                size: 20, color: Colors.red)
+                        ),
                       ],
                     ),
                   )

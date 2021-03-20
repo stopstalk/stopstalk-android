@@ -4,6 +4,7 @@ import 'package:stopstalkapp/utils/googleLogin.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../dashboard.dart';
+import '../upcoming_contest_screen.dart';
 import 'login_form.dart';
 
 // ignore: must_be_immutable

@@ -49,7 +49,7 @@ class _RecentSubmissionsScreenState extends State<RecentSubmissionsScreen> {
           problemNameStopStalkUrl: element["problem_details"]["link"],
           date: element["time_stamp"],
           id: element["id"].toString(),
-          status: element["status"] == 'AC');
+          status: element["status"]);
       recents.add(rec);
     });
     recents.length == 0 ? flag = true : flag = false;

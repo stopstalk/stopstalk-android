@@ -110,23 +110,12 @@ class _AppDrawerState extends State<AppDrawer> {
                   )
                 : Container(),
             _userData != null ? Divider() : Container(),
-            // ListTile(
-            //   leading: Icon(FontAwesomeIcons.solidEdit),
-            //   title: Text('User Editorials'),
-            //   onTap: () {
-            //     Navigator.of(context).pushNamed(UserEditorialScreen.routeName);
-            //   },
-            // ),
-            // Divider(),
             ListTile(
               leading: Icon(Icons.search),
               title: Text('Search Friends'),
               onTap: () {
-                Navigator.push(
-                    context,
-                    PageTransition(
-                        type: PageTransitionType.fade,
-                        child: SearchFriendsScreen()));
+                Navigator.of(context).pushNamed(SearchFriendsScreen.routeName,
+                    arguments:_userData != null ? false : true);
               },
             ),
             Divider(),
