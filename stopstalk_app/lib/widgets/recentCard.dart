@@ -14,12 +14,15 @@ class RecentCard extends StatelessWidget {
   final Recent rec;
   final BuildContext context;
   final int i;
+
   RecentCard(
     this.rec,
     this.context,
     this.i,
   );
+
   static const platformImgs = platforms.platformImgs;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -40,36 +43,35 @@ class RecentCard extends StatelessWidget {
                 //SizedBox(width: 20),
                 Flexible(
                   child: Padding(
-                      padding: new EdgeInsets.only(
-                          left: 0.0, right: 6.0, top: 6.0, bottom: 6.0),
-                      child: InkWell(
-                          child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  rec.name,
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                      fontSize: 20, color: Colors.black),
-                                ),
-                                SizedBox(width: 5),
-                                Icon(
-                                  FontAwesomeIcons.externalLinkAlt,
-                                  size: 15,
-                                ),
-                              ]),
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                PageTransition(
-                                    type: PageTransitionType.fade,
-                                    child: ProfileScreen(
-                                      handle: rec.name,
-                                      isUserItself: false,
-                                    )));
-                          })),
-                ),
+                    padding: new EdgeInsets.only(
+                        left: 0.0, right: 6.0, top: 6.0, bottom: 6.0),
+                    child: InkWell(
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              rec.name,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style:
+                                  TextStyle(fontSize: 20, color: Colors.black),
+                            ),
+                            SizedBox(width: 5),
+                            Icon(
+                              FontAwesomeIcons.externalLinkAlt,
+                              size: 15,
+                            ),
+                          ]),
+                      onTap: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return ProfileScreen(
+                              handle: rec.name, isUserItself: true);
+                        }));
+                      },
+                    ),
+                  ),
+                )
               ]),
               Divider(
                 color: Colors.grey,
