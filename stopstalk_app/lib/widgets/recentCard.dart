@@ -5,7 +5,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../screens/profile.dart';
-
+import 'package:stopstalkapp/classes/searched_friends_class.dart';
 import '../classes/recent_submissions_class.dart';
 
 import '../utils/platforms.dart' as platforms;
@@ -66,7 +66,7 @@ class RecentCard extends StatelessWidget {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
                           return ProfileScreen(
-                              handle: rec.name, isUserItself: true);
+                              handle: rec.name, isUserItself: false,friend: Friends(isFriend: true));
                         }));
                       },
                     ),
