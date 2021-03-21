@@ -83,8 +83,7 @@ class Login extends StatelessWidget {
                   FlatButton(
                     onPressed: () {
                       Navigator.of(context).pushReplacementNamed(
-                          Dashboard.routeName,
-                          arguments: DashboardClass(loggedin: false));
+                          UpcomingContestScreen.routeName);
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
