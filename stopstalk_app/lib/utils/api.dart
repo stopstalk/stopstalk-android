@@ -70,7 +70,7 @@ Future<String> resetToken(String token) async {
 }
 
 Future<Map<String, dynamic>> getUserLoadByHandle(String handle) async {
-  var url = await getURL('user/profile.json/' + handle, {});
+  var url = await getURL('user/profile/' + handle, {});
   var res = await http.get(url);
   if (res.statusCode == 200) {
     return jsonDecode(res.body);
@@ -80,7 +80,7 @@ Future<Map<String, dynamic>> getUserLoadByHandle(String handle) async {
 
 Future<Map<String, dynamic>> getProfileLoadById(String id) async {
   var url = await getURL(
-      'user/get_stopstalk_user_stats.json', {'user_id': id, 'custom': 'false'});
+      'user/get_stopstalk_user_stats', {'user_id': id, 'custom': 'false'});
   var res = await http.get(url);
   if (res.statusCode == 200) {
     return jsonDecode(res.body);
@@ -90,6 +90,15 @@ Future<Map<String, dynamic>> getProfileLoadById(String id) async {
 
 Future<Map<String, dynamic>> getGlobalTrendingprobs() async {
   var url = await getURL('problems/global_trending', {});
+  var res = await http.get(url);
+  if (res.statusCode == 200) {
+    return jsonDecode(res.body);
+  }
+  return null;
+}
+
+Future<Map<String, dynamic>> getUserEditorials() async {
+  var url = await getURL('user_editorials', {});
   var res = await http.get(url);
   if (res.statusCode == 200) {
     return jsonDecode(res.body);
@@ -193,8 +202,8 @@ Future<Map<String, dynamic>> getSearchFriends(
   return null;
 }
 
-Future<bool> markFriend(String friendId) async{
-  var url = await getURL('mark_friend/'+friendId,{});
+Future<bool> markFriend(String friendId) async {
+  var url = await getURL('mark_friend/' + friendId, {});
   var headers = await getAuthHeader();
   var res = await http.get(url, headers: headers);
   if (res.statusCode == 200) {
@@ -205,8 +214,8 @@ Future<bool> markFriend(String friendId) async{
   return false;
 }
 
-Future<bool> unFriend(String friendId)async{
-  var url = await getURL('unfriend/'+friendId,{});
+Future<bool> unFriend(String friendId) async {
+  var url = await getURL('unfriend/' + friendId, {});
   var headers = await getAuthHeader();
   var res = await http.get(url, headers: headers);
   if (res.statusCode == 200) {
