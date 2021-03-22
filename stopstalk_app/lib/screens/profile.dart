@@ -14,38 +14,37 @@ import '../widgets/platform_data_profile.dart';
 import '../widgets/acceptance_graph.dart';
 import '../widgets/preloader.dart';
 
-class ProfileScreen extends StatefulWidget{
+class ProfileScreen extends StatefulWidget {
   static const routeName = '/profile';
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final Friends friend;
   final String handle;
   final bool isUserItself;
 
-  ProfileScreen({Key key, this.handle, this.isUserItself, this.friend}) : super(key: key);
+  ProfileScreen({Key key, this.handle, this.isUserItself, this.friend})
+      : super(key: key);
 
   @override
   _ProfileState createState() => _ProfileState();
 }
 
 class _ProfileState extends State<ProfileScreen> {
-
   bool isFriend = false;
 
   @override
   void initState() {
-    if(widget.isUserItself){
+    if (widget.isUserItself) {
       isFriend = false;
-    }
-    else{
+    } else {
       isFriend = widget.friend.isFriend;
     }
     super.initState();
   }
 
   TextStyle get titleTextStyle => TextStyle(
-    color: Colors.black,
-    fontWeight: FontWeight.bold,
-  );
+        color: Colors.black,
+        fontWeight: FontWeight.bold,
+      );
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +65,7 @@ class _ProfileState extends State<ProfileScreen> {
                           children: [
                             Container(
                               height: MediaQuery.of(context).orientation ==
-                                  Orientation.landscape
+                                      Orientation.landscape
                                   ? MediaQuery.of(context).size.height * 0.4
                                   : MediaQuery.of(context).size.height * 0.2,
                             ),
@@ -74,7 +73,7 @@ class _ProfileState extends State<ProfileScreen> {
                               child: Container(
                                 width: MediaQuery.of(context).size.width,
                                 height: MediaQuery.of(context).orientation ==
-                                    Orientation.landscape
+                                        Orientation.landscape
                                     ? MediaQuery.of(context).size.height * 0.2
                                     : MediaQuery.of(context).size.height * 0.12,
                                 decoration: BoxDecoration(
@@ -108,14 +107,14 @@ class _ProfileState extends State<ProfileScreen> {
                             ),
                             Positioned(
                               top: MediaQuery.of(context).orientation ==
-                                  Orientation.landscape
+                                      Orientation.landscape
                                   ? MediaQuery.of(context).size.height * 0.075
                                   : MediaQuery.of(context).size.height * 0.07,
                               left: MediaQuery.of(context).size.width * 0.15,
                               child: Container(
                                 width: MediaQuery.of(context).size.width * 0.7,
                                 height: MediaQuery.of(context).orientation ==
-                                    Orientation.landscape
+                                        Orientation.landscape
                                     ? MediaQuery.of(context).size.height * 0.3
                                     : MediaQuery.of(context).size.height * 0.12,
                                 decoration: BoxDecoration(
@@ -131,13 +130,13 @@ class _ProfileState extends State<ProfileScreen> {
                                 ),
                                 child: Row(
                                   mainAxisAlignment:
-                                  MainAxisAlignment.spaceAround,
+                                      MainAxisAlignment.spaceAround,
                                   children: [
                                     Expanded(
                                       flex: 2,
                                       child: Column(
                                         mainAxisAlignment:
-                                        MainAxisAlignment.center,
+                                            MainAxisAlignment.center,
                                         //crossAxisAlignment: CrossAxisAlignment.center,
                                         children: [
                                           AutoSizeText(
@@ -170,13 +169,13 @@ class _ProfileState extends State<ProfileScreen> {
                                       flex: 1,
                                       child: Column(
                                         mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
+                                            MainAxisAlignment.spaceAround,
                                         crossAxisAlignment:
-                                        CrossAxisAlignment.center,
+                                            CrossAxisAlignment.center,
                                         children: [
                                           FutureBuilder(
                                               future:
-                                              snapshot.data.getFlagURL(),
+                                                  snapshot.data.getFlagURL(),
                                               builder: (context, snapshot) {
                                                 if (snapshot.data == null)
                                                   return Preloader();
@@ -196,99 +195,99 @@ class _ProfileState extends State<ProfileScreen> {
                           ],
                         ),
                         snapshot.data.getSitesDetails() != null &&
-                            snapshot.data.getSitesDetails().isEmpty == false
+                                snapshot.data.getSitesDetails().isEmpty == false
                             ? Column(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: Text(
-                                'Platforms',
-                                style: TextStyle(
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                            Container(
-                              height: MediaQuery.of(context)
-                                  .orientation ==
-                                  Orientation.landscape
-                                  ? MediaQuery.of(context).size.height *
-                                  0.3
-                                  : MediaQuery.of(context).size.height *
-                                  0.15,
-                              width: MediaQuery.of(context).size.width,
-                              child: ListView(
-                                  scrollDirection: Axis.horizontal,
-                                  children: listPlatform(
-                                      snapshot.data.getSitesDetails())),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: Text(
-                                'Streaks',
-                                style: TextStyle(
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                            Container(
-                              height: MediaQuery.of(context)
-                                  .orientation ==
-                                  Orientation.landscape
-                                  ? MediaQuery.of(context).size.height *
-                                  0.3
-                                  : MediaQuery.of(context).size.height *
-                                  0.15,
-                              width: MediaQuery.of(context).size.width,
-                              child: ListView(
-                                scrollDirection: Axis.horizontal,
-                                children: <Widget>[
-                                  Streaks(
-                                    heading: "Days",
-                                    subtitle1: "Current",
-                                    subtitle2: "Maximum",
-                                    value1: snapshot.data.dayCurrent,
-                                    value2: snapshot.data.dayMaximum,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: Text(
+                                      'Platforms',
+                                      style: TextStyle(
+                                        fontSize: 17,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
                                   ),
-                                  Streaks(
-                                    heading: "Accepted Solutions",
-                                    subtitle1: "Current",
-                                    subtitle2: "Maximum",
-                                    value1:
-                                    snapshot.data.acceptedSolnCurrent,
-                                    value2:
-                                    snapshot.data.acceptedSolnMaximum,
+                                  Container(
+                                    height: MediaQuery.of(context)
+                                                .orientation ==
+                                            Orientation.landscape
+                                        ? MediaQuery.of(context).size.height *
+                                            0.3
+                                        : MediaQuery.of(context).size.height *
+                                            0.15,
+                                    width: MediaQuery.of(context).size.width,
+                                    child: ListView(
+                                        scrollDirection: Axis.horizontal,
+                                        children: listPlatform(
+                                            snapshot.data.getSitesDetails())),
                                   ),
-                                  Streaks(
-                                    heading: "Problems",
-                                    subtitle1: "Solved",
-                                    subtitle2: "Total",
-                                    value1: snapshot.data.problemsSolved,
-                                    value2: snapshot.data.problemsTotal,
+                                  Padding(
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: Text(
+                                      'Streaks',
+                                      style: TextStyle(
+                                        fontSize: 17,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    height: MediaQuery.of(context)
+                                                .orientation ==
+                                            Orientation.landscape
+                                        ? MediaQuery.of(context).size.height *
+                                            0.3
+                                        : MediaQuery.of(context).size.height *
+                                            0.15,
+                                    width: MediaQuery.of(context).size.width,
+                                    child: ListView(
+                                      scrollDirection: Axis.horizontal,
+                                      children: <Widget>[
+                                        Streaks(
+                                          heading: "Days",
+                                          subtitle1: "Current",
+                                          subtitle2: "Maximum",
+                                          value1: snapshot.data.dayCurrent,
+                                          value2: snapshot.data.dayMaximum,
+                                        ),
+                                        Streaks(
+                                          heading: "Accepted Solutions",
+                                          subtitle1: "Current",
+                                          subtitle2: "Maximum",
+                                          value1:
+                                              snapshot.data.acceptedSolnCurrent,
+                                          value2:
+                                              snapshot.data.acceptedSolnMaximum,
+                                        ),
+                                        Streaks(
+                                          heading: "Problems",
+                                          subtitle1: "Solved",
+                                          subtitle2: "Total",
+                                          value1: snapshot.data.problemsSolved,
+                                          value2: snapshot.data.problemsTotal,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: Text(
+                                      'Acceptance Graph',
+                                      style: TextStyle(
+                                        fontSize: 17,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                  AcceptanceGraph(
+                                    handle: snapshot.data.user.stopstalkHandle,
+                                    graph: snapshot.data.acceptanceGraph != null
+                                        ? snapshot.data.acceptanceGraph
+                                        : {},
                                   ),
                                 ],
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: Text(
-                                'Acceptance Graph',
-                                style: TextStyle(
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                            AcceptanceGraph(
-                              handle: snapshot.data.user.stopstalkHandle,
-                              graph: snapshot.data.acceptanceGraph != null
-                                  ? snapshot.data.acceptanceGraph
-                                  : {},
-                            ),
-                          ],
-                        )
+                              )
                             : noHandles(),
                       ],
                     ),
@@ -300,88 +299,91 @@ class _ProfileState extends State<ProfileScreen> {
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: !widget.isUserItself
           ? Container(
-        height: 55.0,
-        width: 55.0,
-        child: FutureBuilder(
-          //to delay showing the floating button
-            future: getProfileFromHandle(widget.handle),
-            builder: (context, snapshot) {
-              if (snapshot.data == null) return Container();
-              return FloatingActionButton(
-                child: Icon(isFriend? FontAwesomeIcons.user : FontAwesomeIcons.userPlus,),
-                backgroundColor: isFriend ? Colors.green : Theme.of(context).buttonColor,
-                onPressed: () async {
-                  bool isLoggedin = await isAuthenticated();
-                  if (!isLoggedin) {
-                    Scaffold.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text("Please login to add friends"),
-                        elevation: 10,
-                        duration: Duration(seconds: 2),
-                        action: SnackBarAction(
-                          label: 'LOGIN',
-                          onPressed: () {
-                            Navigator.of(context).pushNamed('/login');
-                          },
-                        ),
+              height: 55.0,
+              width: 55.0,
+              child: FutureBuilder(
+                  //to delay showing the floating button
+                  future: getProfileFromHandle(widget.handle),
+                  builder: (context, snapshot) {
+                    if (snapshot.data == null) return Container();
+                    return FloatingActionButton(
+                      child: Icon(
+                        isFriend
+                            ? FontAwesomeIcons.user
+                            : FontAwesomeIcons.userPlus,
                       ),
+                      backgroundColor: isFriend
+                          ? Colors.green
+                          : Theme.of(context).buttonColor,
+                      onPressed: () async {
+                        bool isLoggedin = await isAuthenticated();
+                        if (!isLoggedin) {
+                          Scaffold.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text("Please login to add friends"),
+                              elevation: 10,
+                              duration: Duration(seconds: 2),
+                              action: SnackBarAction(
+                                label: 'LOGIN',
+                                onPressed: () {
+                                  Navigator.of(context).pushNamed('/login');
+                                },
+                              ),
+                            ),
+                          );
+                        } else {
+                          if (!isFriend) {
+                            bool friend = await markFriend(
+                                snapshot.data.user.id.toString(), context);
+                            if (friend) {
+                              Scaffold.of(context).showSnackBar(
+                                SnackBar(
+                                    content: Text(
+                                        'Added ${snapshot.data.user.stopstalkHandle} to friend list'),
+                                    elevation: 10,
+                                    duration: Duration(seconds: 2)),
+                              );
+                              setState(() {
+                                isFriend = true;
+                              });
+                            } else {
+                              Scaffold.of(context).showSnackBar(
+                                SnackBar(
+                                    content: Text(
+                                        'Unable to add friend at the moment'),
+                                    elevation: 10,
+                                    duration: Duration(seconds: 2)),
+                              );
+                            }
+                          } else {
+                            bool checkres = await unFriend(
+                                snapshot.data.user.id.toString(), context);
+                            if (checkres) {
+                              Scaffold.of(context).showSnackBar(
+                                SnackBar(
+                                    content: Text(
+                                        'Removed ${snapshot.data.user.stopstalkHandle} from friend list'),
+                                    elevation: 10,
+                                    duration: Duration(seconds: 2)),
+                              );
+                              setState(() {
+                                isFriend = false;
+                              });
+                            } else {
+                              Scaffold.of(context).showSnackBar(
+                                SnackBar(
+                                    content: Text(
+                                        'Unable to remove friend at the moment'),
+                                    elevation: 10,
+                                    duration: Duration(seconds: 2)),
+                              );
+                            }
+                          }
+                        }
+                      },
                     );
-                  } else {
-                    if (!isFriend) {
-                      bool friend=await markFriend(snapshot.data.user.id.toString());
-                      if(friend) {
-                        Scaffold.of(context).showSnackBar(
-                          SnackBar(
-                              content: Text(
-                                  'Added ${snapshot.data.user
-                                      .stopstalkHandle} to friend list'),
-                              elevation: 10,
-                              duration: Duration(seconds: 2)),
-                        );
-                        setState(() {
-                          isFriend = true;
-                        });
-                      }
-                      else{
-                        Scaffold.of(context).showSnackBar(
-                          SnackBar(
-                              content: Text(
-                                  'Unable to add friend at the moment'),
-                              elevation: 10,
-                              duration: Duration(seconds: 2)),
-                        );
-                      }
-                    }
-                    else{
-                      bool checkres = await unFriend(snapshot.data.user.id.toString());
-                      if(checkres) {
-                        Scaffold.of(context).showSnackBar(
-                          SnackBar(
-                              content: Text(
-                                  'Removed ${snapshot.data.user
-                                      .stopstalkHandle} from friend list'),
-                              elevation: 10,
-                              duration: Duration(seconds: 2)),
-                        );
-                        setState(() {
-                          isFriend = false;
-                        });
-                      }
-                      else{
-                        Scaffold.of(context).showSnackBar(
-                          SnackBar(
-                              content: Text(
-                                  'Unable to remove friend at the moment'),
-                              elevation: 10,
-                              duration: Duration(seconds: 2)),
-                        );
-                      }
-                    }
-                  }
-                },
-              );
-            }),
-      )
+                  }),
+            )
           : Container(),
     );
   }
@@ -394,9 +396,9 @@ class _ProfileState extends State<ProfileScreen> {
         padding: const EdgeInsets.all(8.0),
         child: Center(
             child: Text(
-              'Please add your competitive coding site handles on the website to view your stats and progress.',
-              style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
-            )),
+          'Please add your competitive coding site handles on the website to view your stats and progress.',
+          style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+        )),
       ),
     );
   }

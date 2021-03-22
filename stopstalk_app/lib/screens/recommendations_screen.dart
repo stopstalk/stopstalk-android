@@ -20,7 +20,7 @@ class _RecommendationsScreenState extends State<RecommendationsScreen> {
   bool flag = false;
 
   Future<List<Problems>> _getRecommendations() async {
-    var resp = await getRecommendedProblems();
+    var resp = await getRecommendedProblems(context);
     if (resp["recommendations_length"] == 0) {
       flag = true;
       return [];

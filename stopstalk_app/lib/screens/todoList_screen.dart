@@ -29,7 +29,7 @@ class _ToDoListScreenState extends State<ToDoListScreen> {
       GlobalKey<AnimatedListState>();
 
   Future<List<ToDoList>> _getToDoList() async {
-    var probs = await getTodos();
+    var probs = await getTodos(context);
     if (probs == null) return [];
     List todosFetched = probs['todos'];
     todosFetched.forEach((element) {
@@ -321,7 +321,7 @@ class _ToDoListScreenState extends State<ToDoListScreen> {
     ));
     Future.delayed(const Duration(seconds: 3), () {
       if (deletedToDo.isChecked) {
-        _senddelrequest(deletedToDo.link);
+        _senddelrequest(deletedToDo.link, context);
       }
     });
     if (todos.length == 0) {
@@ -332,7 +332,7 @@ class _ToDoListScreenState extends State<ToDoListScreen> {
   _deleteAll() {
     int initialLength = todos.length;
     for (int i = 0; i < initialLength; i++) {
-      _senddelrequest(todos[0].link);
+      _senddelrequest(todos[0].link, context);
       deletedToDo = todos[0];
       _animatedListKey.currentState.removeItem(
         0,
@@ -405,6 +405,6 @@ class _ToDoListScreenState extends State<ToDoListScreen> {
   }
 }
 
-_senddelrequest(String link) async {
-  deleteTodoUsingLink(link);
+_senddelrequest(String link, BuildContext context) async {
+  deleteTodoUsingLink(link, context);
 }

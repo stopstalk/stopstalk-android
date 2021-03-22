@@ -53,29 +53,29 @@ class ProblemsCard extends StatelessWidget {
                     children: [
                       recom.platform != null
                           ? GestureDetector(
-                          onTap: () {
-                            _launchURL(recom.problemUrl);
-                          },
-                          child: CircleAvatar(
-                              radius: 30,
-                              backgroundColor: Color(0xFF2542ff),
+                              onTap: () {
+                                _launchURL(recom.problemUrl);
+                              },
                               child: CircleAvatar(
-                                backgroundColor: Color(0XFFeeeeee),
-                                radius: 28,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(3.0),
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(15),
-                                    child:Image.asset(
-                                    ProblemsCard.platformImgs[
-                                        recom.platform.toLowerCase()],
-                                    height: 40,
-                                    width: 40,
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ),
-                            )))
+                                  radius: 30,
+                                  backgroundColor: Color(0xFF2542ff),
+                                  child: CircleAvatar(
+                                    backgroundColor: Color(0XFFeeeeee),
+                                    radius: 28,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(3.0),
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(15),
+                                        child: Image.asset(
+                                          ProblemsCard.platformImgs[
+                                              recom.platform.toLowerCase()],
+                                          height: 40,
+                                          width: 40,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    ),
+                                  )))
                           : SizedBox(width: 0),
                       Flexible(
                         flex: 2,
@@ -170,7 +170,7 @@ _addToTodo(BuildContext context, Problems problem) async {
   if (!isLoggedin)
     _showToLogin(context);
   else {
-    var resp = await addTodoUsingId(problem.id.toString());
+    var resp = await addTodoUsingId(problem.id.toString(), context);
     Scaffold.of(context).showSnackBar(
       SnackBar(
           content: Text(resp.toString()),

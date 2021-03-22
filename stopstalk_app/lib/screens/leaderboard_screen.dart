@@ -39,7 +39,7 @@ class _LeaderBoardScreenState extends State<LeaderBoardScreen> {
       );
 
   Future<List<LeaderBoard>> _getLeaderBoard(bool global) async {
-    final jsonData = await getLeaderboard(global);
+    final jsonData = await getLeaderboard(global, context);
     if (jsonData == null) return null;
     List<LeaderBoard> users = [];
     for (var user in jsonData["users"]) {

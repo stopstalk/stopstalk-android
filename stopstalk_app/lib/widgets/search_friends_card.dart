@@ -70,7 +70,7 @@ class _FriendCardState extends State<FriendCard> {
                                   left: 0.0, right: 6.0, top: 6.0, bottom: 6.0),
                               child: Row(
                                 mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -78,8 +78,8 @@ class _FriendCardState extends State<FriendCard> {
                                       SizedBox(width: 20),
                                       SizedBox(
                                         width:
-                                        MediaQuery.of(context).size.width /
-                                            2,
+                                            MediaQuery.of(context).size.width /
+                                                2,
                                         child: InkWell(
                                             child: Text(
                                               widget.friend.firstName +
@@ -109,10 +109,13 @@ class _FriendCardState extends State<FriendCard> {
                                   ),
                                   !widget.loggedIn?
                                   MaterialButton(
-                                    onPressed: () async{
-                                      final friendProfile =await getProfileFromHandle(
-                                          widget.friend.stopStalkHandle);
-                                      bool checkres=await markFriend(friendProfile.user.id.toString());
+                                    onPressed: () async {
+                                      final friendProfile =
+                                          await getProfileFromHandle(
+                                              widget.friend.stopStalkHandle);
+                                      bool checkres = await markFriend(
+                                          friendProfile.user.id.toString(),
+                                          context);
                                       var handle =
                                           widget.friend.stopStalkHandle;
                                       if (!isFriend) {
@@ -126,10 +129,11 @@ class _FriendCardState extends State<FriendCard> {
                                         setState(() {
                                           isFriend = true;
                                         });
-                                      }
-                                      else{
-                                        bool checkres = await unFriend(friendProfile.user.id.toString());
-                                        if(checkres) {
+                                      } else {
+                                        bool checkres = await unFriend(
+                                            friendProfile.user.id.toString(),
+                                            context);
+                                        if (checkres) {
                                           Scaffold.of(context).showSnackBar(
                                             SnackBar(
                                                 content: Text(
@@ -140,8 +144,7 @@ class _FriendCardState extends State<FriendCard> {
                                           setState(() {
                                             isFriend = false;
                                           });
-                                        }
-                                        else{
+                                        } else {
                                           Scaffold.of(context).showSnackBar(
                                             SnackBar(
                                                 content: Text(
