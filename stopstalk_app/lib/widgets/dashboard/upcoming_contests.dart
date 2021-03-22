@@ -11,30 +11,30 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../classes/contest_class.dart';
 import '../../screens/upcoming_contest_screen.dart';
 import '../../utils/platforms.dart';
+import '../../utils/api.dart';
 
 class UpcomingContests extends StatelessWidget {
   final images = platformImgs;
 
-  Future<List<Contest>> _getContests() async {
-    String url = "https://www.stopstalk.com/contests.json";
-    var data = await http.get(url);
-    var jsonData = Map<String, dynamic>.from(jsonDecode(data.body));
-    List<Contest> contests = [];
-    var document = parse(jsonData["table"]);
-    final tableRows = document.querySelector("tbody").querySelectorAll("tr");
-    for (final tableRow in tableRows) {
-      Contest cont = Contest(
-        name: tableRow.children[0].text,
-        platform:
-        tableRow.children[1].querySelector('img').attributes["title"],
-        startTime: tableRow.children[2].innerHtml,
-        duration: tableRow.children[3].text,
-        url: tableRow.children[4].querySelector('a').attributes["href"],
-        endTime: tableRow.children[3].text,
-      );
-      contests.add(cont);
-    }
-    return contests.toList();
+    Future<List<Contest>> _getContests() async {
+      final jsonData = await getContests();
+      if (jsonData == null) {
+        return null;
+      }
+      List<Contest> contests = [];
+      for (final contest in jsonData["contests"]) {
+        Contest cont = Contest(
+          status: contest["status"].toString(),
+          name: contest["name"].toString(),
+          platform: contest["site"].toString(),
+          startTime: contest["start_time"].toString(),
+          duration: contest["duration"].toString(),
+          url: contest["url"].toString(),
+          endTime: contest["end_time"].toString(),
+        );
+        contests.add(cont);
+      }
+      return contests;
   }
 
   _launchURL(String url) async {

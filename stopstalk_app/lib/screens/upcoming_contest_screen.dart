@@ -15,6 +15,7 @@ import '../widgets/app_drawer.dart';
 import '../widgets/preloader.dart';
 import '../classes/contest_class.dart';
 import '../utils/platforms.dart';
+import '../utils/api.dart';
 
 class UpcomingContestScreen extends StatefulWidget {
   static const routeName = '/upcoming-contests';
@@ -25,34 +26,27 @@ class UpcomingContestScreen extends StatefulWidget {
 
 class _UpcomingContestState extends State<UpcomingContestScreen> {
   Future<List<Contest>> _getContests() async {
-    String url = "https://www.stopstalk.com/contests.json";
-    var data = await http.get(url);
-    var jsonData = Map<String, dynamic>.from(jsonDecode(data.body));
+    final jsonData = await getContests();
+    if (jsonData == null) {
+      return null;
+    }
     List<Contest> contests = [];
-    var document = parse(jsonData["table"]);
-    final tableRows = document.querySelector("tbody").querySelectorAll("tr");
-    for (final tableRow in tableRows) {
+    for (final contest in jsonData["contests"]) {
       Contest cont = Contest(
-        name: tableRow.children[0].text,
-        platform:
-            tableRow.children[1].querySelector('img').attributes["title"],
-      startTime: tableRow.children[2].innerHtml,
-        duration: tableRow.children[3].text,
-        url: tableRow.children[4].querySelector('a').attributes["href"],
-        endTime: tableRow.children[3].text,
+        status: contest["status"].toString(),
+        name: contest["name"].toString(),
+        platform: contest["site"].toString(),
+        startTime: contest["start_time"].toString(),
+        duration: contest["duration"].toString(),
+        url: contest["url"].toString(),
+        endTime: contest["end_time"].toString(),
       );
       contests.add(cont);
     }
-    return contests.toList();
+    return contests;
   }
 
   List<String> startTimes = ["Loading"];
-
-  String timeToDate(String startTime) {
-    String date =
-        startTime.substring(0, 4) + "-" + startTime.substring(5, 7) + '-'+startTime.substring(8,19);
-    return date;
-  }
 
   String timeLeft(DateTime due) {
     String retVal;
@@ -175,14 +169,9 @@ class _UpcomingContestState extends State<UpcomingContestScreen> {
 
   Widget frontWidget(String name, String image, String startTime,String endTime) {
     String date,time;
-    if(startTime!='-') {
-      date = startTime.substring(0, 9);
+      date = startTime.substring(0, 10);
       time = startTime.substring(11, 19);
-    }
-    else{
-      date = endTime.substring(0, 9);
-      time = endTime.substring(11, 19);
-    }
+
     return Builder(
       builder: (BuildContext context) {
         return GestureDetector(
@@ -354,14 +343,9 @@ class _UpcomingContestState extends State<UpcomingContestScreen> {
 
   Widget innerTopWidget(String name, String image, String startTime,String endTime) {
     String date,time;
-    if(startTime!='-') {
-      date = startTime.substring(0, 9);
+      date = startTime.substring(0, 10);
       time = startTime.substring(11, 19);
-    }
-    else{
-      date = endTime.substring(0, 9);
-      time = endTime.substring(11, 19);
-    }
+
     return GestureDetector(
       onTap: null,
       child: ClipRRect(
@@ -522,18 +506,15 @@ class _UpcomingContestState extends State<UpcomingContestScreen> {
                       Padding(
                         padding: EdgeInsets.only(right: 8.0),
                       ),
-                      startTime!='-'?TimerBuilder.periodic(Duration(seconds: 1),
+                      TimerBuilder.periodic(Duration(seconds: 1),
                           builder: (context) {
                         return Text(
-                          timeLeft(DateTime.parse(timeToDate(startTime))),
+                          timeLeft(DateTime.parse(startTime)),
                           style: TextStyle(
                             fontSize: 18.0,
                           ),
                         );
                       })
-                          :Text("Contest Started",style: TextStyle(
-                        fontSize: 18.0,
-                      ),),
                     ],
                   ),
                   Padding(
