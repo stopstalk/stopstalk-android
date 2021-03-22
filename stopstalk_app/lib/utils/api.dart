@@ -100,8 +100,7 @@ Future<Map<String, dynamic>> getGlobalTrendingprobs() async {
   return null;
 }
 
-Future<Map<String, dynamic>> getFriendsSubmissions() async {
-
+Future<Map<String, dynamic>> getFriendsSubmissions(BuildContext context) async {
   var url = await getURL('submissions', {});
   var headers = await getAuthHeader();
   var res = await http.get(url, headers: headers);
@@ -208,6 +207,15 @@ Future<Map<String, dynamic>> getSearchProblems(
   return null;
 }
 
+Future<Map<String, dynamic>> getUserEditorials() async {
+  var url = await getURL('user_editorials', {});
+  var res = await http.get(url);
+  if (res.statusCode == 200) {
+    return jsonDecode(res.body);
+  }
+  return null;
+}
+
 Future<Map<String, dynamic>> getSearchFriends(
     Map<String, String> filters, BuildContext context) async {
   var url = await getURL('search', filters);
@@ -231,7 +239,7 @@ Future<Map<String, dynamic>> getSearchFriends(
   return null;
 }
 
-Future<bool> markFriend(String friendId) async {
+Future<bool> markFriend(String friendId, BuildContext context) async {
   var url = await getURL('mark_friend/' + friendId, {});
   var headers = await getAuthHeader();
   var res = await http.get(url, headers: headers);
@@ -247,7 +255,7 @@ Future<bool> markFriend(String friendId) async {
   return false;
 }
 
-Future<bool> unFriend(String friendId) async {
+Future<bool> unFriend(String friendId, BuildContext context) async {
   var url = await getURL('unfriend/' + friendId, {});
   var headers = await getAuthHeader();
   var res = await http.get(url, headers: headers);
