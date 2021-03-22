@@ -11,7 +11,7 @@ class RecentFriendSubmissions extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width * 0.9,
-      padding: EdgeInsets.only(left: 10.0, right: 10.0),
+      padding: EdgeInsets.all(10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
         color: Color(0xffeeeeee),
