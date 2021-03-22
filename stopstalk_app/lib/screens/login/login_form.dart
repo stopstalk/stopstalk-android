@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../profile.dart';
 
@@ -35,6 +36,14 @@ class _LoginFormState extends State<LoginForm> {
             ),
             content: Text(text)),
       );
+
+  _launchURL(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -96,7 +105,7 @@ class _LoginFormState extends State<LoginForm> {
                     color: Colors.white,
                   ),
                   onPressed: () {
-                    // Update the state i.e. toogle the state of passwordVisible variable
+                    // Update the state i.e. toggle the state of passwordVisible variable
                     setState(() {
                       _passwordVisible = !_passwordVisible;
                     });
@@ -111,7 +120,9 @@ class _LoginFormState extends State<LoginForm> {
             ),
           ),
           FlatButton(
-            onPressed: () {},
+            onPressed: () {
+              _launchURL("https://www.stopstalk.com/");
+            },
             child: Text(
               "Forgot Password ?",
               style: TextStyle(

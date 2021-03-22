@@ -19,11 +19,8 @@ class _RecommendationsScreenState extends State<RecommendationsScreen> {
   List<Problems> recom = [];
   bool flag = false;
 
-  final GlobalKey<AnimatedListState> _animatedListKey =
-      GlobalKey<AnimatedListState>();
-
   Future<List<Problems>> _getRecommendations() async {
-    var resp = await getRecommendedProblems();
+    var resp = await getRecommendedProblems(context);
     if (resp["recommendations_length"] == 0) {
       flag = true;
       return [];
@@ -36,10 +33,41 @@ class _RecommendationsScreenState extends State<RecommendationsScreen> {
           .replaceAll('[', '')
           .replaceAll('u', '')
           .split(',');
+      var platform;
+      if(element["link"].contains('kenkoooo.com/') || element["link"].contains('atcoder.jp/')){
+        platform='Atcoder';
+      }
+      else if(element["link"].contains('codechef.com/')){
+        platform='Codechef';
+      }
+      else if(element["link"].contains('codeforces.com/')){
+        platform='Codeforces';
+      }
+      else if(element["link"].contains('hackerearth.com/')){
+        platform='Hackerearth';
+      }
+      else if(element["link"].contains('hackerrank.com/')){
+        platform='Hackerrank';
+      }
+      else if(element["link"].contains('spoj.com/')){
+        platform='Spoj';
+      }
+      else if(element["link"].contains('acm.timus.ru/')){
+        platform='Timus';
+      }
+      else if(element["link"].contains('uva.onlinejudge.org') || element["link"].contains('uhunt.felix-halim.net')){
+        platform='Uva';
+      }
+      else if(element["link"].contains('leetcode.com/')){
+        platform='Leetcode';
+      }
+      else{
+        platform='Other';
+      }
       Problems prob = Problems(
           id: element["id"],
           problemName: element["name"],
-          platform: 'Codechef',
+          platform: platform,
           problemUrl: element["link"],
           editorialUrl: element["editorial_link"],
           accuracy: (element["solved_submissions"] *
@@ -76,42 +104,28 @@ class _RecommendationsScreenState extends State<RecommendationsScreen> {
       drawer: AppDrawer(),
       body: Container(
         padding: EdgeInsets.all(8),
-        child: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
-          child: Column(
-            children: [
-              FutureBuilder(
-                future: myF,
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    return Container(
-                      height: MediaQuery.of(context).size.height,
-                      child: flag != true
-                          ? AnimatedList(
-                              key: _animatedListKey,
-                              primary: true,
-                              shrinkWrap: true,
-                              physics: BouncingScrollPhysics(),
-                              initialItemCount: snapshot.data.length,
-                              itemBuilder: (context, i, animation) {
-                                return ProblemsCard(
-                                    snapshot.data[i], context, i);
-                              },
-                            )
-                          : _showNoRecommendation(),
-                    );
-                  } else if (snapshot.hasError) {
-                    return Text(snapshot.error);
-                  } else {
-                    return Padding(
-                      padding: const EdgeInsets.only(top: 20.0),
-                      child: Center(child: Preloader()),
-                    );
-                  }
-                },
-              ),
-            ],
-          ),
+        child: FutureBuilder(
+          future: myF,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return flag != true
+                  ? ListView.builder(
+                      itemCount: snapshot.data.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return ProblemsCard(
+                            snapshot.data[index], context, index);
+                      },
+                    )
+                  : _showNoRecommendation();
+            } else if (snapshot.hasError) {
+              return Text(snapshot.error);
+            } else {
+              return Padding(
+                padding: const EdgeInsets.only(top: 20.0),
+                child: Center(child: Preloader()),
+              );
+            }
+          },
         ),
       ),
     );

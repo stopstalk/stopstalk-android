@@ -4,6 +4,7 @@ class Friends {
   final String stopStalkHandle;
   final List<dynamic> handles;
   final bool isFriend;
+  final bool loggedIn;
 
   Friends({
     this.firstName,
@@ -11,5 +12,6 @@ class Friends {
     this.stopStalkHandle,
     this.handles,
     this.isFriend,
+    this.loggedIn
   });
 }

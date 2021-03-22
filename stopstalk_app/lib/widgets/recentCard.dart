@@ -5,7 +5,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../screens/profile.dart';
-
+import 'package:stopstalkapp/classes/searched_friends_class.dart';
 import '../classes/recent_submissions_class.dart';
 
 import '../utils/platforms.dart' as platforms;
@@ -14,12 +14,15 @@ class RecentCard extends StatelessWidget {
   final Recent rec;
   final BuildContext context;
   final int i;
+
   RecentCard(
     this.rec,
     this.context,
     this.i,
   );
+
   static const platformImgs = platforms.platformImgs;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -40,36 +43,35 @@ class RecentCard extends StatelessWidget {
                 //SizedBox(width: 20),
                 Flexible(
                   child: Padding(
-                      padding: new EdgeInsets.only(
-                          left: 0.0, right: 6.0, top: 6.0, bottom: 6.0),
-                      child: InkWell(
-                          child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  rec.name,
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                      fontSize: 20, color: Colors.black),
-                                ),
-                                SizedBox(width: 5),
-                                Icon(
-                                  FontAwesomeIcons.externalLinkAlt,
-                                  size: 15,
-                                ),
-                              ]),
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                PageTransition(
-                                    type: PageTransitionType.fade,
-                                    child: ProfileScreen(
-                                      handle: rec.name,
-                                      isUserItself: false,
-                                    )));
-                          })),
-                ),
+                    padding: new EdgeInsets.only(
+                        left: 0.0, right: 6.0, top: 6.0, bottom: 6.0),
+                    child: InkWell(
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              rec.name,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style:
+                                  TextStyle(fontSize: 20, color: Colors.black),
+                            ),
+                            SizedBox(width: 5),
+                            Icon(
+                              FontAwesomeIcons.externalLinkAlt,
+                              size: 15,
+                            ),
+                          ]),
+                      onTap: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return ProfileScreen(
+                              handle: rec.name, isUserItself: false,friend: Friends(isFriend: true));
+                        }));
+                      },
+                    ),
+                  ),
+                )
               ]),
               Divider(
                 color: Colors.grey,
@@ -102,12 +104,15 @@ class RecentCard extends StatelessWidget {
                         child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text(
-                                rec.problemName,
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                    fontSize: 18, color: Colors.black),
+                              SizedBox(
+                                width:220,
+                                child: Text(
+                                  rec.problemName,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                      fontSize: 18, color: Colors.black),
+                                ),
                               ),
                               SizedBox(width: 5),
                               Icon(
@@ -138,14 +143,21 @@ class RecentCard extends StatelessWidget {
                               TextStyle(fontSize: 15, color: Colors.grey[800]),
                         ),
                         WidgetSpan(
-                            child: rec.status == true
+                            child: rec.status == 'AC'
                                 ? Icon(
-                                    Icons.check,
-                                    size: 20,
-                                    color: Colors.green,
-                                  )
-                                : Icon(Icons.close,
-                                    size: 20, color: Colors.red))
+                              Icons.check,
+                              size: 20,
+                              color: Colors.green,
+                            )
+                                : rec.status=='PS'
+                            ?Icon(Icons.check,
+                                size: 20, color: Colors.yellow)
+                          :rec.status=='TLE'
+                                ?Icon(Icons.timelapse,
+                                size: 20, color: Colors.red)
+                                :Icon(Icons.close,
+                                size: 20, color: Colors.red)
+                        ),
                       ],
                     ),
                   )
