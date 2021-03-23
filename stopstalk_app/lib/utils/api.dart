@@ -290,3 +290,13 @@ Future<Map<String, dynamic>> getLeaderboard(
   }
   return null;
 }
+Future<Map<String, dynamic>> getContests() async {
+  var url = await getURL('contests', {});
+  var res;
+  //var headers = await getAuthHeader();
+  res = await http.get(url);
+  if (res.statusCode == 200) {
+    return jsonDecode(res.body);
+  }
+  return null;
+}
