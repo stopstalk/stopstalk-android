@@ -1,6 +1,4 @@
 import 'dart:async';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -8,12 +6,11 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../classes/user_editorial_class.dart';
 import '../widgets/preloader.dart';
+import '../utils/api.dart';
 
 class EditorialLeaderboard extends StatelessWidget {
   Future<List<UserEditorial>> _getUsers() async {
-    String url = "https://www.stopstalk.com/user_editorials.json";
-    var data = await http.get(url);
-    var jsonData = jsonDecode(data.body);
+    var jsonData = await getUserEditorials();
     List<UserEditorial> users = [];
     for (var user in jsonData["table_rows"]) {
       UserEditorial userEditorial = UserEditorial(

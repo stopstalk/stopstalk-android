@@ -73,7 +73,7 @@ Future<String> resetToken(String token) async {
 }
 
 Future<Map<String, dynamic>> getUserLoadByHandle(String handle) async {
-  var url = await getURL('user/profile.json/' + handle, {});
+  var url = await getURL('user/profile/' + handle, {});
   var res = await http.get(url);
   if (res.statusCode == 200) {
     return jsonDecode(res.body);
@@ -83,7 +83,7 @@ Future<Map<String, dynamic>> getUserLoadByHandle(String handle) async {
 
 Future<Map<String, dynamic>> getProfileLoadById(String id) async {
   var url = await getURL(
-      'user/get_stopstalk_user_stats.json', {'user_id': id, 'custom': 'false'});
+      'user/get_stopstalk_user_stats', {'user_id': id, 'custom': 'false'});
   var res = await http.get(url);
   if (res.statusCode == 200) {
     return jsonDecode(res.body);
@@ -203,6 +203,15 @@ Future<Map<String, dynamic>> getSearchProblems(
   if (res.statusCode == 401) {
     deleteAllDataSecureStore();
     Navigator.of(context).pushReplacementNamed(LoginPage.routeName);
+  }
+  return null;
+}
+
+Future<Map<String, dynamic>> getUserEditorials() async {
+  var url = await getURL('user_editorials', {});
+  var res = await http.get(url);
+  if (res.statusCode == 200) {
+    return jsonDecode(res.body);
   }
   return null;
 }
