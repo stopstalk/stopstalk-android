@@ -9,6 +9,7 @@ import '../screens/search_friends_screen.dart';
 import '../screens/search_problems_screen.dart';
 import '../screens/trending_problems_screen.dart';
 import '../screens/upcoming_contest_screen.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 // import '../screens/user_editorials.dart';
 import '../screens/dashboard.dart';
@@ -31,6 +32,14 @@ class _AppDrawerState extends State<AppDrawer> {
   void setUser() async {
     var user = await getCurrentUser();
     setState(() => _userData = user);
+  }
+
+  _launchURL(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 
   @override
@@ -176,6 +185,15 @@ class _AppDrawerState extends State<AppDrawer> {
                     },
                   )
                 : SizedBox(),
+            Divider(),
+            ListTile(
+              leading: Icon(Icons.feedback_outlined),
+              title: Text('Feedback'),
+              subtitle: Text('Review your Experience!'),
+              onTap: () {
+                _launchURL("https://forms.gle/jPT1K3caydudhhyq5");
+              },
+            ),
             GestureDetector(
               onTap: () {
                 Navigator.push(
