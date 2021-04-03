@@ -288,7 +288,8 @@ class _ProfileState extends State<ProfileScreen> {
                                   ),
                                 ],
                               )
-                            : noHandles(),
+                            : noHandles(snapshot.data.user.stopstalkHandle,
+                                widget.isUserItself),
                       ],
                     ),
                   ),
@@ -388,7 +389,7 @@ class _ProfileState extends State<ProfileScreen> {
     );
   }
 
-  Widget noHandles() {
+  Widget noHandles(String stopstalkHandle, bool isUserItself) {
     return Container(
       width: 300,
       height: 300,
@@ -396,7 +397,9 @@ class _ProfileState extends State<ProfileScreen> {
         padding: const EdgeInsets.all(8.0),
         child: Center(
             child: Text(
-          'Please add your competitive coding site handles on the website to view your stats and progress.',
+          isUserItself
+              ? 'Please add your competitive coding site handles on the website to view your stats and progress.'
+              : '${stopstalkHandle} has not added any competitive coding site handles.',
           style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
         )),
       ),
