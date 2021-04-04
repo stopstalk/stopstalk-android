@@ -8,8 +8,7 @@ import 'package:stopstalkapp/utils/storage.dart';
 
 GoogleSignIn _googleSignIn = GoogleSignIn(
   scopes: <String>[
-    'email',
-    'https://www.googleapis.com/auth/contacts.readonly',
+    'email'
   ],
 );
 Future loginWithGoogle(BuildContext context) async {
