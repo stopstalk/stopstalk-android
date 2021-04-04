@@ -198,7 +198,7 @@ class ProblemsCard extends StatelessWidget {
                     children:
                         List<Widget>.generate(recom.tags.length, (int index) {
                       return Chip(
-                        label: Text(recom.tags[index]),
+                        label: Text(recom.tags[index].replaceAll(RegExp(r"'"), '')),
                       );
                     }),
                   ),
