@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="be79f1de-22b4-430e-9273-26bf3d21d81a" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stopstalk_app/android/app/google-services.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stopstalk_app/android/google-services.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stopstalk_app/android/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/stopstalk_app/android/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stopstalk_app/android/app/src/debug/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/stopstalk_app/android/app/src/debug/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stopstalk_app/android/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/stopstalk_app/android/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stopstalk_app/android/app/src/main/kotlin/devluplabs/stopstalkapp/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/stopstalk_app/android/app/src/main/kotlin/devluplabs/stopstalkapp/MainActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stopstalk_app/android/app/src/profile/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/stopstalk_app/android/app/src/profile/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stopstalk_app/android/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/stopstalk_app/android/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stopstalk_app/ios/Runner.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/stopstalk_app/ios/Runner.xcodeproj/project.pbxproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stopstalk_app/lib/screens/login/login.dart" beforeDir="false" afterPath="$PROJECT_DIR$/stopstalk_app/lib/screens/login/login.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stopstalk_app/lib/utils/api.dart" beforeDir="false" afterPath="$PROJECT_DIR$/stopstalk_app/lib/utils/api.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stopstalk_app/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/stopstalk_app/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stopstalk_app/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/stopstalk_app/pubspec.yaml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1mqnCIUwPcEt1M14efDDxRLLS9s" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="configurable.group.tools" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="be79f1de-22b4-430e-9273-26bf3d21d81a" name="Default Changelist" comment="" />
+      <created>1610229861469</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1610229861469</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="222" y="87" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1610232098889">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="222" y="87" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.824@0.0.1536.824" timestamp="1610232098889" />
+    <state x="276" y="74" key="SettingsEditor" timestamp="1610231660807">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="276" y="74" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1610231660807" />
+    <state x="167" y="140" width="1200" height="584" key="com.android.tools.idea.avdmanager.AvdListDialog" timestamp="1614429291191">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="167" y="140" width="1200" height="584" key="com.android.tools.idea.avdmanager.AvdListDialog/0.0.1536.824@0.0.1536.824" timestamp="1614429291191" />
+    <state x="465" y="236" key="com.intellij.ide.util.TipDialog" timestamp="1614429220927">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="465" y="236" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1614429220927" />
+  </component>
+</project>
