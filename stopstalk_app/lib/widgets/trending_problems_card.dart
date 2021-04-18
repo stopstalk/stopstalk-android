@@ -121,7 +121,7 @@ class ProblemsCard extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: <Widget>[
                             Text(
-                              "In " + recom.users.toString() + " Todos",
+                              recom.users.toString() + " Users",
                               style: TextStyle(
                                   fontSize: 15, color: Colors.grey[800]),
                             ),
