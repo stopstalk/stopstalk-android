@@ -244,8 +244,11 @@ class _SearchProblemsScreenState extends State<SearchProblemsScreen> {
                           fillColor: Color(0xffeeeeee),
                           onSaved: (value) {
                             if (value == null) return;
+                            var ls = [];
+                            value.forEach((e) =>
+                                {ls.add(e.toString().replaceAll(' ', '+'))});
                             setState(() {
-                              selectedProblemTagDropdown = value;
+                              selectedProblemTagDropdown = ls;
                             });
                           },
                         );
